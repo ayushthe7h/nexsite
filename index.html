@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO & Social Meta Tags -->
+  <title>NexCoreMC | India's Premier Minecraft Network | Survival SMP, Bedwars & Practice</title>
+  <meta name="description"
+    content="Join NexCoreMC (IP: nexcoremc.in) - India's dedicated Minecraft network with low latency hosting. Experience Survival SMP, Practice Duels, Bedwars, Parkour and tournaments on Java and Bedrock (1.8 - 1.21+).">
+  <meta name="keywords"
+    content="NexCoreMC, Minecraft Server India, Indian Minecraft Server, nexcoremc.in, Bedwars India, Survival SMP India, Minecraft Practice Server, Low Ping Minecraft India">
+  <meta name="author" content="NexCoreMC Network">
+  <meta name="theme-color" content="#09090b">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nexcoremc.in/">
+  <meta property="og:title" content="NexCoreMC | India's Premier Minecraft Network">
+  <meta property="og:description"
+    content="Low ping Indian Minecraft server. Join players in Survival SMP, Practice Duels, Bedwars and more. IP: nexcoremc.in">
+  <meta property="og:image" content="assets/hero_bg.jpg">
+
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://nexcoremc.in/">
+  <meta property="twitter:title" content="NexCoreMC | India's Premier Minecraft Network">
+  <meta property="twitter:description"
+    content="Low ping Indian Minecraft server. Join players in Survival SMP, Practice Duels, Bedwars and more. IP: nexcoremc.in">
+  <meta property="twitter:image" content="assets/hero_bg.jpg">
+
+  <!-- Google Fonts: Chakra Petch (Display/Headings) + Inter (Body) + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,700&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background Canvas for Subtle Particles -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Ambient Glow Effects -->
+  <div class="ambient-glow glow-top-left" aria-hidden="true"></div>
+  <div class="ambient-glow glow-top-right" aria-hidden="true"></div>
+  <div class="ambient-glow glow-center" aria-hidden="true"></div>
+
+  <!-- STICKY NAVBAR -->
+  <header class="navbar-wrapper" id="main-header">
+    <nav class="navbar container" aria-label="Main Navigation">
+      <!-- Logo -->
+      <a href="#hero" class="brand-logo" aria-label="NexCoreMC Homepage">
+        <div class="logo-icon-wrap">
+          <svg class="logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="20,2 38,11 38,29 20,38 2,29 2,11" stroke="url(#logo-grad)" stroke-width="2.5"
+              fill="rgba(15, 23, 42, 0.8)" />
+            <path d="M20 9L31 16V26L20 32L9 26V16L20 9Z" fill="url(#core-grad)" fill-opacity="0.35" />
+            <path d="M15 15L25 25M25 15L15 25" stroke="#ff2e2e" stroke-width="2.5" stroke-linecap="round" />
+            <circle cx="20" cy="20" r="4" fill="#b91c1c" />
+            <defs>
+              <linearGradient id="logo-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#ff2e2e" />
+                <stop offset="1" stop-color="#b91c1c" />
+              </linearGradient>
+              <linearGradient id="core-grad" x1="9" y1="9" x2="31" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#ff2e2e" />
+                <stop offset="1" stop-color="#b91c1c" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">NEXCORE<span class="highlight">MC</span></span>
+          <span class="brand-tag">INDIA NETWORK</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="#modes" class="nav-link">Game Modes</a></li>
+          <li><a href="#how-to-join" class="nav-link">How to Join</a></li>
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li>
+            <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+              class="nav-link discord-nav-link">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+              </svg>
+              Discord
+            </a>
+          </li>
+          <li>
+            <a href="#store" class="nav-link store-link">
+              <span class="store-badge">STORE</span>
+              VIP & Ranks
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Live Server Status & Quick CTA -->
+      <div class="nav-actions">
+        <div class="server-status-pill" id="navbar-status" title="Server Status">
+          <span class="status-dot pulsing" id="nav-status-dot"></span>
+          <span class="status-text" id="nav-status-text">ONLINE</span>
+          <span class="player-count-badge" id="nav-player-count"></span>
+        </div>
+
+        <button type="button" class="btn btn-sm btn-glow copy-ip-btn" data-ip="nexcoremc.in" id="nav-copy-btn">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span class="btn-text">Copy IP</span>
+        </button>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="hamburger-btn" id="hamburger-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-drawer" id="mobile-drawer">
+      <div class="drawer-header">
+        <div class="brand-text">
+          <span class="brand-name">NEXCORE<span class="highlight">MC</span></span>
+        </div>
+        <button class="drawer-close" id="drawer-close-btn" aria-label="Close menu">&times;</button>
+      </div>
+
+      <div class="drawer-status">
+        <div class="server-status-pill" id="drawer-status-pill">
+          <span class="status-dot pulsing" id="drawer-status-dot"></span>
+          <span class="status-text" id="drawer-status-text">SERVER ONLINE</span>
+          <span class="player-count-badge" id="drawer-player-count"></span>
+        </div>
+      </div>
+
+      <ul class="drawer-links">
+        <li><a href="#hero" class="drawer-link">Home</a></li>
+        <li><a href="#modes" class="drawer-link">Game Modes</a></li>
+        <li><a href="#how-to-join" class="drawer-link">How to Join</a></li>
+        <li><a href="#features" class="drawer-link">Features</a></li>
+        <li><a href="#faq" class="drawer-link">FAQ & Rules</a></li>
+        <li><a href="#store" class="drawer-link highlight-store">Server Store & Ranks</a></li>
+        <li><a href="privacy.html" class="drawer-link">Privacy Policy</a></li>
+        <li><a href="terms.html" class="drawer-link">Terms & Conditions</a></li>
+      </ul>
+
+      <div class="drawer-actions">
+        <button class="btn btn-primary btn-full copy-ip-btn" data-ip="nexcoremc.in">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span class="btn-text">Copy Server IP</span>
+        </button>
+        <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+          class="btn btn-discord btn-full">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+          </svg>
+          <span>Join Official Discord</span>
+        </a>
+      </div>
+    </div>
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-container">
+
+        <!-- Announcement Badge -->
+        <div class="hero-badge reveal">
+          <span class="badge-text">JAVA & BEDROCK 1.8 TO 1.21+ SUPPORTED</span>
+          <span class="badge-tag">SERVER NETWORK</span>
+        </div>
+
+        <!-- Main Heading -->
+        <h1 class="hero-title reveal">
+          INDIA'S DEDICATED <br>
+          <span class="gradient-text-hero">MINECRAFT NETWORK</span>
+        </h1>
+
+        <!-- Subheading -->
+        <p class="hero-subtitle reveal">
+          Connect to low-latency Indian servers. Play custom Survival SMP, Practice Duels, Bedwars, and Parkour with balanced mechanics on Java and Bedrock editions.
+        </p>
+
+        <!-- Prominent Server IP Box Card -->
+        <div class="server-ip-card reveal" id="hero-ip-card">
+          <div class="ip-card-header">
+            <div class="ip-ping-indicator">
+              <span class="ping-dot"></span>
+              <span class="ping-val">14ms Low Ping Hosting (Mumbai, India)</span>
+            </div>
+            <div class="ip-version-badge">
+              <span>Java & Bedrock Compatible</span>
+            </div>
+          </div>
+
+          <div class="ip-box-main">
+            <div class="ip-info-group">
+              <span class="ip-label">SERVER ADDRESS:</span>
+              <div class="ip-address-display" id="hero-ip-text">nexcoremc.in</div>
+            </div>
+            <button class="btn btn-copy-glow copy-ip-btn" data-ip="nexcoremc.in" id="hero-main-copy-btn"
+              title="Click to copy server IP">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span class="btn-text">COPY IP</span>
+            </button>
+          </div>
+
+          <div class="ip-card-footer">
+            <div class="port-info">
+              <span class="port-chip"><strong class="highlight">Server IP:</strong> nexcoremc.in</span>
+              <span class="port-chip"><strong>Port:</strong> 25567</span>
+            </div>
+            <div class="live-player-badge" id="hero-live-status-wrap">
+              <span class="player-dot" id="hero-player-dot"></span>
+              <span id="hero-player-status-text">Server is Live - Join Now!</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary & Secondary CTA Buttons -->
+        <div class="hero-actions reveal">
+          <button class="btn btn-lg btn-primary copy-ip-btn" data-ip="nexcoremc.in">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copy Server IP</span>
+          </button>
+          <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+            class="btn btn-lg btn-discord">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+            </svg>
+            <span>Join Discord</span>
+          </a>
+          <a href="#how-to-join" class="btn btn-lg btn-outline">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="10 8 16 12 10 16 10 8"></polygon>
+            </svg>
+            <span>How to Join</span>
+          </a>
+        </div>
+
+        <!-- Verified Network Specifications Strip -->
+        <div class="stats-strip reveal">
+          <div class="stat-card">
+            <div class="stat-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">10 - 20ms</div>
+              <div class="stat-label">Tier-4 Mumbai Hosting</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">Enterprise</div>
+              <div class="stat-label">Anti-Cheat & DDoS Guard</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">99.9%</div>
+              <div class="stat-label">High-Availability Uptime</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">5 Realms</div>
+              <div class="stat-label">Survival, PvP, Bedwars & Hub</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- GAME MODES SECTION -->
+    <section class="section modes-section" id="modes">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-pill">REALMS & GAME MODES</div>
+          <h2 class="section-title">CHOOSE YOUR <span class="gradient-text">GAME MODE</span></h2>
+          <p class="section-desc">From relaxed SMP economies to competitive practice duels, NexCoreMC provides balanced game modes for every player.</p>
+        </div>
+
+        <div class="modes-grid">
+
+          <!-- Mode 1: Survival SMP -->
+          <div class="mode-card featured-card reveal" data-mode="survival">
+            <div class="mode-img-wrap">
+              <img src="assets/survival.jpg" alt="Survival SMP Realm" class="mode-bg-img" loading="lazy">
+              <div class="mode-overlay"></div>
+              <span class="mode-badge badge-hot">FEATURED REALM</span>
+            </div>
+            <div class="mode-content">
+              <div class="mode-header">
+                <div class="mode-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="mode-name">SURVIVAL SMP</h3>
+                  <span class="mode-tagline">Custom Enchants | Clan Wars | Player Economy</span>
+                </div>
+              </div>
+              <p class="mode-description">
+                Our main SMP realm featuring custom boss encounters, player auction houses, grief prevention land claims, quest systems, and clan territory wars.
+              </p>
+              <div class="mode-features-list">
+                <span class="feature-tag">50+ Custom Enchants</span>
+                <span class="feature-tag">Land Claims & Anti-Grief</span>
+                <span class="feature-tag">Player Shops & Economy</span>
+                <span class="feature-tag">World Boss Dungeons</span>
+              </div>
+              <div class="mode-footer">
+                <button class="btn btn-sm btn-mode copy-ip-btn" data-ip="nexcoremc.in">
+                  <span>Connect to Survival</span>
+                  <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mode 2: Practice PvP -->
+          <div class="mode-card reveal" data-mode="practice">
+            <div class="mode-img-wrap">
+              <div class="mode-visual-banner practice-banner">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 54px; height: 54px; color: var(--red-primary);">
+                  <polyline points="14.5 2 6 2 6 22 18 22 18 7.5 14.5 2"></polyline>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="12" y1="18" x2="12" y2="12"></line>
+                  <line x1="9" y1="15" x2="15" y2="15"></line>
+                </svg>
+              </div>
+              <div class="mode-overlay"></div>
+              <span class="mode-badge">1v1 RANKED</span>
+            </div>
+            <div class="mode-content">
+              <div class="mode-header">
+                <div class="mode-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="mode-name">PRACTICE PVP</h3>
+                  <span class="mode-tagline">Duels | NoDebuff | Elo Ladder</span>
+                </div>
+              </div>
+              <p class="mode-description">
+                Refine combat mechanics on 20 TPS duel arenas. Queues for NoDebuff, Boxing, Combo, Sumo, BuildUHC, and Gapple with ranked leaderboards.
+              </p>
+              <div class="mode-features-list">
+                <span class="feature-tag">Matchmaking Queues</span>
+                <span class="feature-tag">Boxing & NoDebuff</span>
+                <span class="feature-tag">Ranked Elo Ladder</span>
+                <span class="feature-tag">20 TPS Low Latency</span>
+              </div>
+              <div class="mode-footer">
+                <button class="btn btn-sm btn-mode copy-ip-btn" data-ip="nexcoremc.in">
+                  <span>Connect to Practice</span>
+                  <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mode 3: Bedwars -->
+          <div class="mode-card reveal" data-mode="bedwars">
+            <div class="mode-img-wrap">
+              <img src="assets/bedwars.jpg" alt="Bedwars Battle Arena" class="mode-bg-img" loading="lazy">
+              <div class="mode-overlay"></div>
+              <span class="mode-badge">TOURNAMENTS</span>
+            </div>
+            <div class="mode-content">
+              <div class="mode-header">
+                <div class="mode-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 4v16"></path>
+                    <path d="M2 8h18a2 2 0 0 1 2 2v10"></path>
+                    <path d="M2 17h20"></path>
+                    <path d="M6 8v9"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="mode-name">BEDWARS</h3>
+                  <span class="mode-tagline">Solo | Doubles | 4v4v4v4</span>
+                </div>
+              </div>
+              <p class="mode-description">
+                Defend your bed, bridge across floating islands, gather diamond and emerald upgrades, and eliminate opposing teams in organized lobbies.
+              </p>
+              <div class="mode-features-list">
+                <span class="feature-tag">Solo, Doubles & Squads</span>
+                <span class="feature-tag">Balanced Map Pool</span>
+                <span class="feature-tag">Cosmetic Effects</span>
+                <span class="feature-tag">Community Tournaments</span>
+              </div>
+              <div class="mode-footer">
+                <button class="btn btn-sm btn-mode copy-ip-btn" data-ip="nexcoremc.in">
+                  <span>Connect to Bedwars</span>
+                  <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mode 4: Parkour Paradise -->
+          <div class="mode-card reveal" data-mode="parkour">
+            <div class="mode-img-wrap">
+              <div class="mode-visual-banner parkour-banner">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 54px; height: 54px; color: var(--text-primary);">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+              </div>
+              <div class="mode-overlay"></div>
+              <span class="mode-badge">SPEEDRUNS</span>
+            </div>
+            <div class="mode-content">
+              <div class="mode-header">
+                <div class="mode-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="mode-name">PARKOUR PARADISE</h3>
+                  <span class="mode-tagline">Timed Courses | Checkpoints</span>
+                </div>
+              </div>
+              <p class="mode-description">
+                Complete jump courses designed with checkpoint timing, leaderboard tracking, and difficulty tiers ranging from Easy to Expert.
+              </p>
+              <div class="mode-features-list">
+                <span class="feature-tag">Checkpoint Timer</span>
+                <span class="feature-tag">Multiple Difficulty Tiers</span>
+                <span class="feature-tag">Course Leaderboards</span>
+                <span class="feature-tag">In-Game Coin Rewards</span>
+              </div>
+              <div class="mode-footer">
+                <button class="btn btn-sm btn-mode copy-ip-btn" data-ip="nexcoremc.in">
+                  <span>Connect to Parkour</span>
+                  <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mode 5: Mini-Games Hub -->
+          <div class="mode-card reveal" data-mode="minigames">
+            <div class="mode-img-wrap">
+              <div class="mode-visual-banner minigames-banner">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 54px; height: 54px; color: var(--text-primary);">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <div class="mode-overlay"></div>
+              <span class="mode-badge">CASUAL MODES</span>
+            </div>
+            <div class="mode-content">
+              <div class="mode-header">
+                <div class="mode-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="mode-name">MINI-GAMES HUB</h3>
+                  <span class="mode-tagline">The Bridge | SkyWars | Wool Wars</span>
+                </div>
+              </div>
+              <p class="mode-description">
+                Jump into casual multiplayer modes with friends. Score in The Bridge, loot island chests in SkyWars, or duel in Wool Wars arenas.
+              </p>
+              <div class="mode-features-list">
+                <span class="feature-tag">The Bridge 1v1 & 2v2</span>
+                <span class="feature-tag">SkyWars Arenas</span>
+                <span class="feature-tag">Wool Wars</span>
+                <span class="feature-tag">Rotating Weekend Lobbies</span>
+              </div>
+              <div class="mode-footer">
+                <button class="btn btn-sm btn-mode copy-ip-btn" data-ip="nexcoremc.in">
+                  <span>Connect to Hub</span>
+                  <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW TO JOIN SECTION -->
+    <section class="section join-section" id="how-to-join">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-pill">CONNECTION GUIDE</div>
+          <h2 class="section-title">HOW TO <span class="gradient-text">JOIN THE SERVER</span></h2>
+          <p class="section-desc">Connect on PC, Mobile, or Console using the straightforward steps below.</p>
+        </div>
+
+        <!-- Edition Selector Tabs -->
+        <div class="edition-tabs reveal" role="tablist">
+          <button class="edition-tab active" id="tab-java" role="tab" aria-selected="true" aria-controls="panel-java">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            <span class="tab-label">Java Edition (PC / Mac)</span>
+          </button>
+          <button class="edition-tab" id="tab-bedrock" role="tab" aria-selected="false" aria-controls="panel-bedrock">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            <span class="tab-label">Bedrock Edition (PE / Win10 / Consoles)</span>
+          </button>
+        </div>
+
+        <!-- Java Steps Panel -->
+        <div class="steps-container reveal" id="panel-java" role="tabpanel" aria-labelledby="tab-java">
+          <div class="steps-grid">
+
+            <div class="step-card">
+              <div class="step-badge">STEP 1</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+              <h3 class="step-title">Launch Minecraft</h3>
+              <p class="step-desc">Open your Minecraft Java client. Versions from <strong>1.8.x to 1.21.x</strong> are fully supported (1.20+ recommended for SMP).</p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-badge">STEP 2</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="16"></line>
+                  <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+              </div>
+              <h3 class="step-title">Click Multiplayer</h3>
+              <p class="step-desc">From the main menu, click on <strong>Multiplayer</strong>, then click the <strong>Add Server</strong> button at the bottom.</p>
+            </div>
+
+            <div class="step-card active-step">
+              <div class="step-badge">STEP 3</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+              </div>
+              <h3 class="step-title">Enter Server IP</h3>
+              <p class="step-desc">Server Name: <strong>NexCoreMC</strong><br>Server Address: <code class="inline-code">nexcoremc.in</code></p>
+              <div class="step-copy-wrap">
+                <button class="btn btn-sm btn-glow copy-ip-btn" data-ip="nexcoremc.in">
+                  <span>Copy nexcoremc.in</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-badge">STEP 4</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </div>
+              <h3 class="step-title">Connect & Register</h3>
+              <p class="step-desc">Join the server and type <code class="inline-code">/register &lt;password&gt; &lt;confirm password&gt;</code> in chat on your first login.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Bedrock Steps Panel -->
+        <div class="steps-container reveal hidden" id="panel-bedrock" role="tabpanel" aria-labelledby="tab-bedrock">
+          <div class="steps-grid">
+
+            <div class="step-card">
+              <div class="step-badge">STEP 1</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                  <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                </svg>
+              </div>
+              <h3 class="step-title">Open Minecraft PE</h3>
+              <p class="step-desc">Open Minecraft on your Android, iOS, Windows 10/11 edition, or console platform.</p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-badge">STEP 2</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="12 6 12 12 16 14"></polygon>
+                </svg>
+              </div>
+              <h3 class="step-title">Go to Servers Tab</h3>
+              <p class="step-desc">Click <strong>Play</strong>, select the <strong>Servers</strong> tab, and scroll down to <strong>Add Server</strong>.</p>
+            </div>
+
+            <div class="step-card active-step">
+              <div class="step-badge">STEP 3</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+              </div>
+              <h3 class="step-title">Enter Server Details</h3>
+              <p class="step-desc">
+                Server IP: <code class="inline-code">nexcoremc.in</code><br>
+                Port: <code class="inline-code">25567</code>
+              </p>
+              <div class="step-copy-wrap">
+                <button class="btn btn-sm btn-glow copy-ip-btn" data-ip="nexcoremc.in">
+                  <span>Copy IP (nexcoremc.in)</span>
+                </button>
+                <button class="btn btn-sm btn-outline copy-ip-btn" data-ip="25567">
+                  <span>Copy Port (25567)</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-badge">STEP 4</div>
+              <div class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </div>
+              <h3 class="step-title">Play & Register</h3>
+              <p class="step-desc">Click <strong>Play</strong> to connect. Type <code class="inline-code">/register &lt;password&gt; &lt;confirm password&gt;</code> in chat to set up your account.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Direct Connect Quick Bar -->
+        <div class="join-quick-bar reveal">
+          <div class="quick-bar-content">
+            <span class="quick-bar-label">Direct Connect:</span>
+            <span class="quick-bar-ip">nexcoremc.in <span class="quick-bar-port-tag">Port: 25567</span></span>
+          </div>
+          <div class="quick-bar-btns">
+            <button class="btn btn-glow copy-ip-btn" data-ip="nexcoremc.in">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy IP</span>
+            </button>
+            <button class="btn btn-outline copy-ip-btn" data-ip="25567">
+              <span>Copy Port (25567)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="section features-section" id="features">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-pill">SERVER FEATURES</div>
+          <h2 class="section-title">ENGINEERED FOR <span class="gradient-text">PERFORMANCE</span></h2>
+          <p class="section-desc">NexCoreMC is built on stable infrastructure with anti-cheat detection and low latency routing for Indian networks.</p>
+        </div>
+
+        <div class="features-grid">
+
+          <div class="feature-card reveal">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <h3 class="feature-title">Low Ping Indian Routing</h3>
+            <p class="feature-text">
+              Hosted in Mumbai data centers with optimized routes for Jio, Airtel, Vi, and ACT fibers to maintain steady latency.
+            </p>
+            <div class="feature-badge">Sub-20ms Average Ping</div>
+          </div>
+
+          <div class="feature-card reveal">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Anti-Cheat Protection</h3>
+            <p class="feature-text">
+              Automated detection systems prevent combat cheats, auto-clickers, and movement hacks to maintain fair multiplayer competition.
+            </p>
+            <div class="feature-badge">Fair Play Standard</div>
+          </div>
+
+          <div class="feature-card reveal">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Custom Server Plugins</h3>
+            <p class="feature-text">
+              Custom enchants, player economy markets, land claim protection, and interactive GUI menus configured specifically for the network.
+            </p>
+            <div class="feature-badge">Custom Configured</div>
+          </div>
+
+          <div class="feature-card reveal">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Community Tournaments</h3>
+            <p class="feature-text">
+              Regular weekend Bedwars and PvP tournaments organized via Discord with rank rewards and cosmetic server prizes.
+            </p>
+            <div class="feature-badge">Weekly Schedules</div>
+          </div>
+
+          <div class="feature-card reveal">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path>
+                <line x1="12" y1="6" x2="12" y2="8"></line>
+                <line x1="12" y1="16" x2="12" y2="18"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Balanced Economy</h3>
+            <p class="feature-text">
+              Non-pay-to-win design philosophy. Store ranks offer cosmetic tags, convenience commands, and vault space without compromising core combat.
+            </p>
+            <div class="feature-badge">Fair Gameplay</div>
+          </div>
+
+          <div class="feature-card reveal">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Active Discord Support</h3>
+            <p class="feature-text">
+              Community voice channels, server announcements, player matchmaking, and responsive staff ticket assistance.
+            </p>
+            <div class="feature-badge">24/7 Ticket System</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- DISCORD COMMUNITY CTA BANNER -->
+    <section class="section discord-section" id="discord">
+      <div class="container">
+        <div class="discord-banner-card reveal">
+
+          <div class="discord-content">
+            <div class="discord-badge">
+              <span class="discord-led"></span>
+              <span>OFFICIAL DISCORD COMMUNITY</span>
+            </div>
+
+            <h2 class="discord-title">
+              JOIN THE <span class="highlight">NEXCORE DISCORD</span> FOR EVENTS & SUPPORT
+            </h2>
+
+            <p class="discord-desc">
+              Connect with players, find teammates for Bedwars & SMP, view scheduled tournaments, and submit support tickets.
+            </p>
+
+            <div class="discord-perks">
+              <div class="perk-item">
+                <span class="perk-check">
+                  <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                </span>
+                <span>Server Announcements & Maintenance Updates</span>
+              </div>
+              <div class="perk-item">
+                <span class="perk-check">
+                  <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                </span>
+                <span>Tournament Registrations & Rules</span>
+              </div>
+              <div class="perk-item">
+                <span class="perk-check">
+                  <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                </span>
+                <span>Staff Ticket Support Desk</span>
+              </div>
+              <div class="perk-item">
+                <span class="perk-check">
+                  <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                </span>
+                <span>Community Text & Voice Channels</span>
+              </div>
+            </div>
+
+            <div class="discord-btn-group">
+              <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+                class="btn btn-lg btn-discord-cta">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+                </svg>
+                <span>Join Discord Server</span>
+              </a>
+              <button class="btn btn-lg btn-outline copy-ip-btn" data-ip="nexcoremc.in">
+                <span>Copy Server IP</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="discord-card-graphic">
+            <div class="discord-stat-bubble">
+              <div class="stat-bubble-top">
+                <span class="green-dot"></span>
+                Official Community Hub
+              </div>
+              <span class="stat-bubble-sub">discord.gg/7e6vX6EgFt</span>
+            </div>
+            <div class="discord-preview-box">
+              <div class="preview-header"># announcements</div>
+              <div class="preview-msg">
+                <span class="user-tag highlight-tag">NexCore Staff:</span> "Season updates, server events, and rank deliveries are managed via Discord tickets."
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- STORE SECTION -->
+    <section class="section store-section" id="store">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-pill">SERVER STORE</div>
+          <h2 class="section-title">OPTIONAL <span class="gradient-text-gold">RANKS & PERKS</span></h2>
+          <p class="section-desc">Support the network to unlock cosmetic prefixes, expanded personal vaults, and convenience perks. All ranks are monthly subscriptions.</p>
+
+          <!-- Currency Switcher -->
+          <div class="currency-toggle-wrapper">
+            <span class="currency-label">Select Currency:</span>
+            <div class="currency-toggle-group" role="group" aria-label="Currency Selector">
+              <button type="button" class="currency-pill active" data-currency="INR" id="currency-inr-btn">
+                <span class="curr-symbol">₹</span> INR (₹)
+              </button>
+              <button type="button" class="currency-pill" data-currency="USD" id="currency-usd-btn">
+                <span class="curr-symbol">$</span> USD ($)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ranks-grid reveal">
+
+          <!-- Rank 1: VIP+ -->
+          <div class="rank-card vip-plus-rank">
+            <div class="rank-header">
+              <span class="rank-tier">TIER 1 - STARTER VIP</span>
+              <h3 class="rank-title rank-glow-green">VIP+</h3>
+              <div class="rank-price">
+                <span class="price-val" data-inr="₹129" data-usd="$1.35">₹129</span>
+                <span class="price-period">/ Month</span>
+              </div>
+              <div class="price-alt"><span class="price-alt-val" data-inr="or $1.35 USD" data-usd="or ₹129 INR">or $1.35 USD</span></div>
+            </div>
+
+            <div class="rank-perks-wrap">
+              <span class="perks-heading">Perks Included:</span>
+              <ul class="rank-perks-list">
+                <li><span class="perk-dot dot-green"></span> <strong>VIP+</strong> Chat Prefix & In-Game Tag</li>
+                <li><span class="perk-dot dot-green"></span> Create up to <strong>5 Homes</strong></li>
+                <li><span class="perk-dot dot-green"></span> <strong>3 Personal Vaults</strong> (/pv 1-3)</li>
+                <li><span class="perk-dot dot-green"></span> Claim Fly for <strong>10min</strong></li>
+                <li><span class="perk-dot dot-green"></span> <strong>VIP+</strong> Kit Access</li>
+              </ul>
+            </div>
+
+            <div class="rank-commands-block">
+              <span class="commands-label">Commands:</span>
+              <span class="badge-coming-soon">COMING SOON</span>
+            </div>
+
+            <div class="rank-card-actions">
+              <button type="button" class="btn btn-sm btn-outline-rank kit-preview-btn" data-rank="VIP+">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Kit Preview</span>
+              </button>
+              <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+                class="btn btn-sm btn-rank-buy" data-rank="VIP+">
+                <span>Purchase Rank</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Rank 2: CORE -->
+          <div class="rank-card core-rank">
+            <div class="rank-header">
+              <span class="rank-tier">TIER 2 - ESSENTIAL</span>
+              <h3 class="rank-title rank-glow-blue">CORE</h3>
+              <div class="rank-price">
+                <span class="price-val" data-inr="₹249" data-usd="$2.61">₹249</span>
+                <span class="price-period">/ Month</span>
+              </div>
+              <div class="price-alt"><span class="price-alt-val" data-inr="or $2.61 USD" data-usd="or ₹249 INR">or $2.61 USD</span></div>
+            </div>
+
+            <div class="rank-perks-wrap">
+              <span class="perks-heading">Perks Included:</span>
+              <ul class="rank-perks-list">
+                <li><span class="perk-dot dot-blue"></span> <strong>CORE</strong> Chat Prefix & In-Game Tag</li>
+                <li><span class="perk-dot dot-blue"></span> Create up to <strong>6 Homes</strong></li>
+                <li><span class="perk-dot dot-blue"></span> <strong>4 Personal Vaults</strong> (/pv 1-4)</li>
+                <li><span class="perk-dot dot-blue"></span> Claim Fly for <strong>20min</strong></li>
+                <li><span class="perk-dot dot-blue"></span> <strong>CORE</strong> Kit Access</li>
+              </ul>
+            </div>
+
+            <div class="rank-commands-block">
+              <span class="commands-label">Commands:</span>
+              <span class="badge-coming-soon">COMING SOON</span>
+            </div>
+
+            <div class="rank-card-actions">
+              <button type="button" class="btn btn-sm btn-outline-rank kit-preview-btn" data-rank="CORE">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Kit Preview</span>
+              </button>
+              <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+                class="btn btn-sm btn-rank-buy" data-rank="CORE">
+                <span>Purchase Rank</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Rank 3: BOSS -->
+          <div class="rank-card boss-rank featured-rank">
+            <div class="popular-ribbon">POPULAR</div>
+            <div class="rank-header">
+              <span class="rank-tier">TIER 3 - POPULAR</span>
+              <h3 class="rank-title rank-glow-red">BOSS</h3>
+              <div class="rank-price">
+                <span class="price-val" data-inr="₹459" data-usd="$4.81">₹459</span>
+                <span class="price-period">/ Month</span>
+              </div>
+              <div class="price-alt"><span class="price-alt-val" data-inr="or $4.81 USD" data-usd="or ₹459 INR">or $4.81 USD</span></div>
+            </div>
+
+            <div class="rank-perks-wrap">
+              <span class="perks-heading">Perks Included:</span>
+              <ul class="rank-perks-list">
+                <li><span class="perk-dot dot-red"></span> <strong>BOSS</strong> Chat Prefix & In-Game Tag</li>
+                <li><span class="perk-dot dot-red"></span> Create up to <strong>7 Homes</strong></li>
+                <li><span class="perk-dot dot-red"></span> <strong>5 Personal Vaults</strong> (/pv 1-5)</li>
+                <li><span class="perk-dot dot-red"></span> Claim Fly for <strong>20min</strong></li>
+                <li><span class="perk-dot dot-red"></span> <strong>BOSS</strong> Kit Access</li>
+              </ul>
+            </div>
+
+            <div class="rank-commands-block">
+              <span class="commands-label">Commands / Tools:</span>
+              <div class="cmd-chips-wrap">
+                <span class="cmd-chip">AntMan Custom Tool (10 days)</span>
+              </div>
+            </div>
+
+            <div class="rank-card-actions">
+              <button type="button" class="btn btn-sm btn-outline-rank kit-preview-btn" data-rank="BOSS">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Kit Preview</span>
+              </button>
+              <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+                class="btn btn-sm btn-rank-buy" data-rank="BOSS">
+                <span>Purchase Rank</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Rank 4: GOD -->
+          <div class="rank-card god-rank">
+            <div class="rank-header">
+              <span class="rank-tier">TIER 4 - SUPREME</span>
+              <h3 class="rank-title rank-glow-cyan">GOD</h3>
+              <div class="rank-price">
+                <span class="price-val" data-inr="₹899" data-usd="$9.42">₹899</span>
+                <span class="price-period">/ Month</span>
+              </div>
+              <div class="price-alt"><span class="price-alt-val" data-inr="or $9.42 USD" data-usd="or ₹899 INR">or $9.42 USD</span></div>
+            </div>
+
+            <div class="rank-perks-wrap">
+              <span class="perks-heading">Perks Included:</span>
+              <ul class="rank-perks-list">
+                <li><span class="perk-dot dot-cyan"></span> <strong>GOD</strong> Chat Prefix & In-Game Tag</li>
+                <li><span class="perk-dot dot-cyan"></span> Create up to <strong>8 Homes</strong></li>
+                <li><span class="perk-dot dot-cyan"></span> <strong>8 Personal Vaults</strong> (/pv 1-8)</li>
+                <li><span class="perk-dot dot-cyan"></span> Claim Fly for <strong>Infinite Duration</strong></li>
+                <li><span class="perk-dot dot-cyan"></span> ClaimBlocks allocation every <strong>15 days</strong></li>
+                <li><span class="perk-dot dot-cyan"></span> <strong>GOD</strong> Kit Access</li>
+              </ul>
+            </div>
+
+            <div class="rank-commands-block">
+              <span class="commands-label">Commands (7 Instant):</span>
+              <div class="cmd-chips-wrap">
+                <span class="cmd-chip">/anvil</span>
+                <span class="cmd-chip">/grindstone</span>
+                <span class="cmd-chip">/enderchest</span>
+                <span class="cmd-chip">/recipe</span>
+                <span class="cmd-chip">/smithingtable</span>
+                <span class="cmd-chip">/stonecutter</span>
+                <span class="cmd-chip">/claimblocks</span>
+              </div>
+            </div>
+
+            <div class="rank-card-actions">
+              <button type="button" class="btn btn-sm btn-outline-rank kit-preview-btn" data-rank="GOD">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Kit Preview</span>
+              </button>
+              <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+                class="btn btn-sm btn-rank-buy" data-rank="GOD">
+                <span>Purchase Rank</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Rank 5: NEX -->
+          <div class="rank-card nex-rank featured-rank">
+            <div class="popular-ribbon ribbon-red">SERVER ELITE</div>
+            <div class="rank-header">
+              <span class="rank-tier">TIER 5 - SIGNATURE</span>
+              <h3 class="rank-title rank-glow-red">NEX</h3>
+              <div class="rank-price">
+                <span class="price-val" data-inr="₹1199" data-usd="$12.56">₹1199</span>
+                <span class="price-period">/ Month</span>
+              </div>
+              <div class="price-alt"><span class="price-alt-val" data-inr="or $12.56 USD" data-usd="or ₹1199 INR">or $12.56 USD</span></div>
+            </div>
+
+            <div class="rank-perks-wrap">
+              <span class="perks-heading">Perks Included:</span>
+              <ul class="rank-perks-list">
+                <li><span class="perk-dot dot-red"></span> <strong>NEX</strong> Chat Prefix & In-Game Tag</li>
+                <li><span class="perk-dot dot-red"></span> Create up to <strong>10 Homes</strong></li>
+                <li><span class="perk-dot dot-red"></span> <strong>10 Personal Vaults</strong> (/pv 1-10)</li>
+                <li><span class="perk-dot dot-red"></span> Claim Fly for <strong>Infinite Duration</strong></li>
+                <li><span class="perk-dot dot-red"></span> ClaimBlocks allocation every <strong>15 days</strong></li>
+                <li><span class="perk-dot dot-red"></span> <strong>NEX</strong> Kit Access</li>
+              </ul>
+            </div>
+
+            <div class="rank-commands-block">
+              <span class="commands-label">Commands (7 Instant):</span>
+              <div class="cmd-chips-wrap">
+                <span class="cmd-chip">/anvil</span>
+                <span class="cmd-chip">/grindstone</span>
+                <span class="cmd-chip">/enderchest</span>
+                <span class="cmd-chip">/recipe</span>
+                <span class="cmd-chip">/smithingtable</span>
+                <span class="cmd-chip">/stonecutter</span>
+                <span class="cmd-chip">/claimblocks</span>
+              </div>
+            </div>
+
+            <div class="rank-card-actions">
+              <button type="button" class="btn btn-sm btn-outline-rank kit-preview-btn" data-rank="NEX">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Kit Preview</span>
+              </button>
+              <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+                class="btn btn-sm btn-rank-buy" data-rank="NEX">
+                <span>Purchase Rank</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Rank 6: CUSTOM -->
+          <div class="rank-card custom-rank">
+            <div class="popular-ribbon">EXCLUSIVE</div>
+            <div class="rank-header">
+              <span class="rank-tier">SPECIAL TIER - CUSTOM VIP</span>
+              <h3 class="rank-title">CUSTOM</h3>
+              <div class="rank-price">
+                <span class="price-val" data-inr="₹1899" data-usd="$19.79">₹1899</span>
+                <span class="price-period">/ Month</span>
+              </div>
+              <div class="price-alt"><span class="price-alt-val" data-inr="or $19.79 USD" data-usd="or ₹1899 INR">or $19.79 USD</span></div>
+            </div>
+
+            <div class="rank-perks-wrap">
+              <span class="perks-heading">Perks Included:</span>
+              <ul class="rank-perks-list">
+                <li><span class="perk-dot dot-red"></span> <strong>CUSTOM</strong> Chat Prefix & In-Game Tag</li>
+                <li><span class="perk-dot dot-red"></span> Create up to <strong>10 Homes</strong></li>
+                <li><span class="perk-dot dot-red"></span> <strong>20 Personal Vaults</strong> (/pv 1-20)</li>
+                <li><span class="perk-dot dot-red"></span> Claim Fly for <strong>Infinite Duration</strong></li>
+                <li><span class="perk-dot dot-red"></span> ClaimBlocks allocation every <strong>15 days</strong></li>
+                <li><span class="perk-dot dot-red"></span> Custom In-Game Name Display</li>
+                <li><span class="perk-dot dot-red"></span> Custom Chat Color</li>
+                <li><span class="perk-dot dot-red"></span> Custom Kit Setup</li>
+              </ul>
+            </div>
+
+            <div class="rank-commands-block">
+              <span class="commands-label">Commands & Gear:</span>
+              <div class="cmd-chips-wrap">
+                <span class="cmd-chip">Custom Non-OP Commands</span>
+                <span class="cmd-chip">2x Custom Tool Items</span>
+              </div>
+            </div>
+
+            <div class="rank-card-actions">
+              <button type="button" class="btn btn-sm btn-outline-rank kit-preview-btn" data-rank="CUSTOM">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Kit Preview</span>
+              </button>
+              <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+                class="btn btn-sm btn-rank-buy" data-rank="CUSTOM">
+                <span>Get Custom Rank</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Perks Comparison Matrix Drawer -->
+        <div class="perks-comparator reveal">
+          <button type="button" class="btn btn-outline comparator-toggle-btn" id="comparator-toggle-btn"
+            aria-expanded="false">
+            <span>Compare All 6 Ranks Side-by-Side</span>
+          </button>
+
+          <div class="comparator-table-wrap hidden" id="comparator-table-wrap">
+            <table class="comparator-table">
+              <thead>
+                <tr>
+                  <th>Rank Feature</th>
+                  <th>VIP+</th>
+                  <th>CORE</th>
+                  <th>BOSS</th>
+                  <th>GOD</th>
+                  <th>NEX</th>
+                  <th>CUSTOM</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Price (Monthly)</strong></td>
+                  <td class="text-green"><span class="price-val" data-inr="₹129" data-usd="$1.35">₹129</span></td>
+                  <td class="text-blue"><span class="price-val" data-inr="₹249" data-usd="$2.61">₹249</span></td>
+                  <td class="text-red"><span class="price-val" data-inr="₹459" data-usd="$4.81">₹459</span></td>
+                  <td class="text-cyan"><span class="price-val" data-inr="₹899" data-usd="$9.42">₹899</span></td>
+                  <td class="text-red"><span class="price-val" data-inr="₹1199" data-usd="$12.56">₹1199</span></td>
+                  <td class="text-red"><span class="price-val" data-inr="₹1899" data-usd="$19.79">₹1899</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Homes Allowed</strong></td>
+                  <td>5 Homes</td>
+                  <td>6 Homes</td>
+                  <td>7 Homes</td>
+                  <td>8 Homes</td>
+                  <td>10 Homes</td>
+                  <td>10 Homes</td>
+                </tr>
+                <tr>
+                  <td><strong>Personal Vaults (/pv)</strong></td>
+                  <td>3 Vaults</td>
+                  <td>4 Vaults</td>
+                  <td>5 Vaults</td>
+                  <td>8 Vaults</td>
+                  <td>10 Vaults</td>
+                  <td><strong>20 Vaults</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Claim Flight Duration</strong></td>
+                  <td>10 min</td>
+                  <td>20 min</td>
+                  <td>20 min</td>
+                  <td><strong>Infinite</strong></td>
+                  <td><strong>Infinite</strong></td>
+                  <td><strong>Infinite</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>ClaimBlocks Access</strong></td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>Every 15 days</td>
+                  <td>Every 15 days</td>
+                  <td>Every 15 days</td>
+                </tr>
+                <tr>
+                  <td><strong>Kit Access</strong></td>
+                  <td>VIP+ Kit</td>
+                  <td>CORE Kit</td>
+                  <td>BOSS Kit</td>
+                  <td>GOD Kit</td>
+                  <td>NEX Kit</td>
+                  <td><strong>Custom Kit</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Slash Commands (/anvil, etc.)</strong></td>
+                  <td>Coming Soon</td>
+                  <td>Coming Soon</td>
+                  <td>-</td>
+                  <td>7 Commands</td>
+                  <td>7 Commands</td>
+                  <td>Custom Commands</td>
+                </tr>
+                <tr>
+                  <td><strong>Exclusive OP Tools</strong></td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>AntMan (10d)</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td><strong>2x OP Tools</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Custom Name & Chat Color</strong></td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td>No</td>
+                  <td><strong>Included</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="section faq-section" id="faq">
+      <div class="container faq-container">
+        <div class="section-header reveal">
+          <div class="section-pill">FREQUENTLY ASKED</div>
+          <h2 class="section-title">COMMON <span class="gradient-text">QUESTIONS</span></h2>
+          <p class="section-desc">Find answers to common questions about server connection, versions, and rules.</p>
+        </div>
+
+        <div class="faq-accordion reveal">
+
+          <div class="faq-item active">
+            <button class="faq-question" aria-expanded="true">
+              <span>Can I join using TLauncher or non-premium Minecraft?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. NexCoreMC is accessible to both official Mojang/Microsoft accounts and non-premium clients. Enter <code class="inline-code">nexcoremc.in</code> (Port: <code class="inline-code">25567</code>) into your multiplayer list and register with <code class="inline-code">/register &lt;password&gt; &lt;confirm password&gt;</code> on first login.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What Minecraft versions are supported?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>NexCoreMC supports versions from <strong>1.8 to 1.21.x</strong>. For Practice Duels & Bedwars, 1.8.9 is recommended for PvP mechanics. For Survival SMP, version 1.20+ is recommended for modern block features.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can mobile and Bedrock players join?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. Enter Server IP <code class="inline-code">nexcoremc.in</code> and Port <code class="inline-code">25567</code> in Minecraft Bedrock / Pocket Edition (Android, iOS, Windows 10/11, Consoles). Type <code class="inline-code">/register &lt;password&gt; &lt;confirm password&gt;</code> upon connecting.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I claim starter items?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>When spawning in the Survival SMP or lobby area, type <code class="inline-code">/kit starter</code> or interact with the spawn NPC to receive standard starter gear and tools.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I report players or appeal bans?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Join our Discord server at <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer" class="text-link">discord.gg/7e6vX6EgFt</a> and open a ticket in the support channel.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer-wrapper">
+    <div class="container">
+      <div class="footer-top">
+
+        <!-- Brand Info -->
+        <div class="footer-brand">
+          <a href="#hero" class="brand-logo footer-logo">
+            <div class="logo-icon-wrap">
+              <svg class="logo-svg" viewBox="0 0 40 40" fill="none">
+                <polygon points="20,2 38,11 38,29 20,38 2,29 2,11" stroke="#ff2e2e" stroke-width="2.5"
+                  fill="rgba(15, 23, 42, 0.8)" />
+                <path d="M15 15L25 25M25 15L15 25" stroke="#ff2e2e" stroke-width="2.5" stroke-linecap="round" />
+                <circle cx="20" cy="20" r="4" fill="#b91c1c" />
+              </svg>
+            </div>
+            <div class="brand-text">
+              <span class="brand-name">NEXCORE<span class="highlight">MC</span></span>
+            </div>
+          </a>
+          <p class="footer-desc">
+            India's dedicated Minecraft network. Low-latency hosting, custom survival mechanics, and fair competition.
+          </p>
+          <div class="footer-server-ip-box">
+            <span>Server IP & Port:</span>
+            <strong class="copy-trigger copy-ip-btn" data-ip="nexcoremc.in" title="Click to copy IP">nexcoremc.in</strong>
+            <span class="footer-port-badge">Port: 25567</span>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#modes">Game Modes</a></li>
+            <li><a href="#how-to-join">How to Join</a></li>
+            <li><a href="#features">Server Features</a></li>
+            <li><a href="#store">Server Store</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal Links -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Legal & Policies</h4>
+          <ul class="footer-links">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="#faq">Server Rules</a></li>
+          </ul>
+        </div>
+
+        <!-- Community & Socials -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Community</h4>
+          <p class="footer-social-sub">Follow official channels for announcements and tournaments.</p>
+          <div class="social-icons-grid">
+            <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+              class="social-btn discord-btn" aria-label="Discord">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+              </svg>
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-btn youtube-btn"
+              aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+              </svg>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-btn instagram-btn"
+              aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-btn twitter-btn"
+              aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-legal">
+          <p class="copyright">&copy; 2026 NexCoreMC Network. All rights reserved.</p>
+          <p class="disclaimer">
+            Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MINECRAFT RANK & KIT PREVIEW MODAL -->
+  <div class="modal-backdrop rank-modal-backdrop hidden" id="rank-kit-modal" role="dialog" aria-modal="true"
+    aria-labelledby="mc-modal-title">
+    <div class="rank-modal-container">
+      <div class="mc-tooltip-card">
+        <!-- Close Button -->
+        <button class="mc-modal-close" id="rank-modal-close-btn" aria-label="Close Preview">&times;</button>
+
+        <!-- Header -->
+        <div class="mc-lore-header">
+          <div class="mc-enchanted-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px; color: var(--red-primary);">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <div class="mc-header-info">
+            <div class="mc-tier-tag" id="mc-modal-tier">TIER 1 - STARTER VIP</div>
+            <h3 class="mc-rank-name" id="mc-modal-title">VIP+</h3>
+            <div class="mc-rank-price-tag" id="mc-modal-price">₹129 / $1.35</div>
+          </div>
+        </div>
+
+        <!-- Lore Content Body -->
+        <div class="mc-lore-body">
+          <div class="mc-lore-section">
+            <div class="mc-section-title mc-white">Perks:</div>
+            <div class="mc-perks-list" id="mc-modal-perks">
+              <!-- Dynamically Populated -->
+            </div>
+          </div>
+
+          <div class="mc-lore-section" id="mc-modal-commands-wrap">
+            <div class="mc-section-title mc-white">Commands:</div>
+            <div class="mc-commands-list" id="mc-modal-commands">
+              <!-- Dynamically Populated -->
+            </div>
+          </div>
+
+          <div class="mc-item-meta">
+            <div class="mc-meta-text mc-darkgray">minecraft:enchanted_book</div>
+            <div class="mc-meta-text mc-darkgray">16 component(s)</div>
+          </div>
+        </div>
+
+        <!-- Modal Actions -->
+        <div class="mc-modal-actions">
+          <button type="button" class="btn btn-sm btn-outline copy-rank-order-btn" id="copy-rank-order-btn">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span id="copy-order-btn-text">Copy Rank Order Code</span>
+          </button>
+          <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+            class="btn btn-sm btn-primary" id="modal-discord-btn">
+            <span>Purchase on Discord</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- FLOATING MOBILE BOTTOM ACTION BAR -->
+  <div class="mobile-bottom-bar" id="mobile-bottom-bar">
+    <button class="bottom-action-btn copy-ip-btn" data-ip="nexcoremc.in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <span>Copy IP</span>
+    </button>
+    <a href="https://discord.gg/7e6vX6EgFt" target="_blank" rel="noopener noreferrer"
+      class="bottom-action-btn discord-action">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+      </svg>
+      <span>Discord</span>
+    </a>
+    <a href="#how-to-join" class="bottom-action-btn join-action">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polygon points="10 8 16 12 10 16 10 8"></polygon>
+      </svg>
+      <span>How to Join</span>
+    </a>
+  </div>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+
+</html>

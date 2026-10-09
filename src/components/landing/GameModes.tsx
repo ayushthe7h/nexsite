@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Swords, Compass, Trophy, Flame, Target, ChevronRight, Check, Gamepad2 } from "lucide-react";
+import { Swords, Compass, Trophy, Flame, Target, ChevronRight, Check, Gamepad2, type LucideIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 interface GameMode {
@@ -11,7 +11,7 @@ interface GameMode {
   title: string;
   badge: string;
   badgeColor: string;
-  icon: any;
+  icon: LucideIcon;
   image: string;
   description: string;
   features: string[];

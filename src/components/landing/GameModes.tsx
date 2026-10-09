@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Swords, Compass, Trophy, Flame, Target, ChevronRight, Check } from "lucide-react";
+import { Swords, Compass, Trophy, Flame, Target, ChevronRight, Check, Gamepad2 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 interface GameMode {
@@ -17,6 +17,7 @@ interface GameMode {
   features: string[];
   version: string;
   playerCapacity: string;
+  isWide?: boolean;
 }
 
 export function GameModes() {
@@ -95,6 +96,25 @@ export function GameModes() {
       version: "Universal Support",
       playerCapacity: "Single & Multiplayer",
     },
+    {
+      id: "minigames",
+      title: "MINI-GAMES HUB",
+      badge: "PARTY GAMES",
+      badgeColor: "bg-rose-500/20 text-rose-400 border-rose-500/30",
+      icon: Gamepad2,
+      image: "/assets/hero_bg.jpg",
+      description:
+        "Fast-paced party games including The Bridge, SkyWars, and Wool Wars - quick rounds, easy to jump into with friends.",
+      features: [
+        "The Bridge (1v1 & 2v2)",
+        "Fast-Paced SkyWars",
+        "Wool Wars Team Battles",
+        "Weekend Community Events",
+      ],
+      version: "1.8 - 1.20+ Supported",
+      playerCapacity: "Party & Solo Queues",
+      isWide: true,
+    },
   ];
 
   return (
@@ -116,32 +136,40 @@ export function GameModes() {
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
             Engineered from scratch for flawless competitive integrity, smooth
-            hit registration, and endless community gameplay.
+            hit registration, and endless community gameplay across 5 custom realms.
           </p>
         </motion.div>
 
-        {/* Game Mode Cards Grid */}
+        {/* Game Mode Cards Grid (5 Cards balanced) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {gameModes.map((mode, index) => {
             const Icon = mode.icon;
+            const isWideCard = mode.isWide;
+
             return (
               <motion.div
                 key={mode.id}
                 initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+                transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
                 whileHover={{ y: -4 }}
-                className="group relative rounded-2xl bg-[#111115]/95 border border-white/10 hover:border-[#ff2e2e]/45 overflow-hidden transition-all duration-300 flex flex-col justify-between hover:shadow-2xl hover:shadow-[#ff2e2e]/12"
+                className={`group relative rounded-2xl bg-[#111115]/95 border border-white/10 hover:border-[#ff2e2e]/45 overflow-hidden transition-all duration-300 flex flex-col justify-between hover:shadow-2xl hover:shadow-[#ff2e2e]/12 ${
+                  isWideCard ? "md:col-span-2" : ""
+                }`}
               >
                 {/* Mode Top Thumbnail Area */}
-                <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-[#181820]">
+                <div
+                  className={`relative w-full overflow-hidden bg-[#181820] ${
+                    isWideCard ? "h-52 sm:h-64" : "h-48 sm:h-56"
+                  }`}
+                >
                   <Image
                     src={mode.image}
                     alt={mode.title}
                     fill
                     className="object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 100vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#111115] via-[#111115]/60 to-transparent" />
 
@@ -158,19 +186,23 @@ export function GameModes() {
                   </div>
 
                   <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-2xl font-extrabold font-['Chakra_Petch'] text-white tracking-wide">
+                    <h3 className="text-2xl sm:text-3xl font-extrabold font-['Chakra_Petch'] text-white tracking-wide">
                       {mode.title}
                     </h3>
                   </div>
                 </div>
 
                 {/* Mode Body */}
-                <div className="p-6 flex-1 flex flex-col justify-between">
+                <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                   <p className="text-zinc-300 text-sm leading-relaxed mb-6">
                     {mode.description}
                   </p>
 
-                  <div className="space-y-2 mb-6">
+                  <div
+                    className={`space-y-2 mb-6 ${
+                      isWideCard ? "grid grid-cols-1 sm:grid-cols-2 gap-2 space-y-0" : ""
+                    }`}
+                  >
                     {mode.features.map((feature, idx) => (
                       <div
                         key={idx}

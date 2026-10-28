@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Copy, Check, ExternalLink, ArrowRight, Server, Shield, Sparkles, Terminal } from "lucide-react";
+import { Copy, Check, ExternalLink, ArrowRight, Swords, Play } from "lucide-react";
 import { LiveStatusBadge } from "./LiveStatusBadge";
 import { useToastNotification } from "./ToastContext";
 import confetti from "canvas-confetti";
@@ -45,11 +47,11 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] pt-36 pb-24 flex flex-col items-center justify-center overflow-hidden bg-grid-pattern"
+      className="relative min-h-[calc(100vh-104px)] pt-32 pb-20 flex flex-col items-center justify-center overflow-hidden bg-pixel-grid"
     >
       {/* Dynamic Ambient Spotlights & Background Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[480px] bg-[#ff2e2e]/12 blur-[150px] rounded-full pointer-events-none animate-pulse-glow" />
-      <div className="absolute top-1/3 left-1/4 w-[380px] h-[380px] bg-[#b91c1c]/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[480px] bg-[#ff2e2e]/14 blur-[160px] rounded-full pointer-events-none animate-pulse-glow" />
+      <div className="absolute top-1/3 left-1/4 w-[380px] h-[380px] bg-[#b91c1c]/12 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 w-full flex flex-col items-center text-center relative z-10">
         {/* Top Region Pill + Live Status Pill */}
@@ -57,86 +59,104 @@ export function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="mb-6 flex flex-wrap items-center justify-center gap-2.5"
+          className="mb-7 flex flex-wrap items-center justify-center gap-2.5"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111115]/90 border border-[#ff2e2e]/30 text-[#ff4545] text-xs font-bold font-['Chakra_Petch'] tracking-wider uppercase shadow-md shadow-black/40">
-            <span className="w-2 h-2 rounded-full bg-[#ff2e2e] animate-ping" />
-            <span>INDIA SERVER NETWORK</span>
+          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#1a120f] text-[#ff4545] text-[10px] font-pixel tracking-wide uppercase">
+            <span className="w-2 h-2 bg-[#ff2e2e] animate-pulse" />
+            <span>India Server Network</span>
           </div>
           <LiveStatusBadge />
         </motion.div>
 
-        {/* Main Hero Headline */}
+        {/* Official NexCore MC 3D Planet Logo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85, y: -15 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="relative mb-6 group"
+        >
+          <div className="absolute inset-0 bg-[#ff2e2e]/25 blur-3xl rounded-full pointer-events-none -z-10 group-hover:bg-[#ff2e2e]/40 transition-all duration-500" />
+          <Image
+            src="/logo.png"
+            alt="NexCore MC Official Logo"
+            width={240}
+            height={240}
+            className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-contain drop-shadow-[0_12px_40px_rgba(255,46,46,0.45)] hover:scale-105 transition-transform duration-300 mx-auto select-none"
+            priority
+            style={{ imageRendering: "pixelated" }}
+          />
+        </motion.div>
+
+        {/* Main Hero Headline - the one bold pixel-font moment on the page */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="max-w-4xl font-['Plus_Jakarta_Sans'] text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.08] mb-6"
+          className="max-w-4xl font-pixel text-xl sm:text-3xl md:text-4xl font-normal tracking-tight text-white leading-[1.6] mb-6"
         >
-          INDIA&apos;S PREMIER{" "}
-          <span className="text-gradient-red block sm:inline">
-            MINECRAFT NETWORK
-          </span>
+          INDIA&apos;S PREMIER
+          <br />
+          <span className="text-[#ff4545]">MINECRAFT NETWORK</span>
         </motion.h1>
 
-        {/* Tagline / Subtitle */}
+        {/* Tagline / Subtitle - stays in the readable sans so the page
+            doesn't force pixel-font onto long-form reading text */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-          className="max-w-2xl text-base sm:text-lg md:text-xl text-zinc-300 font-normal leading-relaxed mb-10"
+          className="max-w-2xl text-base sm:text-lg md:text-xl text-zinc-300 font-normal leading-relaxed mb-9"
         >
-          Survival SMP, Bedwars, Practice PvP, and Custom Minigames hosted on
+          Survival SMP, Competitive Bedwars, Practice PvP, and Custom Minigames hosted on
           dedicated low-latency Mumbai infrastructure with enterprise anti-cheat.
         </motion.p>
 
-        {/* Masterclass Server IP Terminal Card */}
+        {/* Server IP Panel - built as a Minecraft inventory-style panel:
+            sunken "screen" for the IP readout, raised pixel buttons */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-          className="w-full max-w-xl p-5 sm:p-6 rounded-2xl bg-[#111115]/95 border border-white/10 hover:border-[#ff2e2e]/45 backdrop-blur-2xl shadow-2xl shadow-black/90 mb-10 text-left relative group transition-all duration-300 hover:shadow-[#ff2e2e]/10"
+          className="mc-panel w-full max-w-xl p-5 sm:p-6 bg-[#1a120f] mb-9 text-left relative"
         >
           {/* Top terminal bar */}
           <div className="flex items-center justify-between border-b border-white/10 pb-3.5 mb-4">
             <div className="flex items-center gap-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+              <div className="w-2.5 h-2.5 bg-red-500/80" />
+              <div className="w-2.5 h-2.5 bg-yellow-500/80" />
+              <div className="w-2.5 h-2.5 bg-emerald-500/80" />
               <span className="text-[11px] font-mono text-zinc-500 ml-2">
                 nexcoremc.network.terminal
               </span>
             </div>
-            <span className="text-[11px] font-mono text-emerald-400 font-semibold flex items-center gap-1.5 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              PORT 25565 / 25567
+            <span className="text-[10px] font-pixel text-emerald-400 flex items-center gap-1.5 bg-emerald-500/10 px-2 py-1 border border-emerald-500/20">
+              <span className="w-1.5 h-1.5 bg-emerald-400 animate-pulse" />
+              25565 / 25567
             </span>
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-            <div className="flex flex-col">
-              <span className="text-[10px] font-bold font-['Chakra_Petch'] text-zinc-400 tracking-wider uppercase mb-1">
-                Server IP Address
+            <div className="mc-panel-sunken flex flex-col px-4 py-3 bg-black/40">
+              <span className="text-[10px] font-pixel text-zinc-400 uppercase mb-1.5">
+                Server IP
               </span>
               <span className="font-mono text-2xl sm:text-3xl font-extrabold text-white tracking-wide selection:bg-[#ff2e2e]/40">
                 nexcoremc.in
               </span>
-              <span className="text-xs text-zinc-400 mt-1 font-mono">
-                Supports Java (1.8 - 1.20+) & Bedrock / MCPE
+              <span className="text-xs text-zinc-400 mt-1.5 font-mono">
+                Java (1.8 - 1.20+) & Bedrock / MCPE
               </span>
             </div>
 
-            <div className="flex sm:flex-col gap-2 shrink-0">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+            <div className="flex sm:flex-col gap-2.5 shrink-0">
+              <button
                 onClick={handleCopyJava}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-white text-xs font-bold font-['Chakra_Petch'] tracking-wide shadow-md shadow-[#ff2e2e]/25 transition-all cursor-pointer"
+                className="mc-btn flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-white text-[10px] font-pixel cursor-pointer"
               >
                 {copiedJava ? (
                   <>
                     <Check className="w-3.5 h-3.5 text-white" />
-                    <span>COPIED JAVA</span>
+                    <span>COPIED</span>
                   </>
                 ) : (
                   <>
@@ -144,18 +164,16 @@ export function Hero() {
                     <span>COPY JAVA IP</span>
                   </>
                 )}
-              </motion.button>
+              </button>
 
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              <button
                 onClick={handleCopyBedrock}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#181822] hover:bg-[#20202e] border border-white/10 text-zinc-200 text-xs font-bold font-['Chakra_Petch'] tracking-wide transition-all cursor-pointer"
+                className="mc-btn flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#241a15] hover:bg-[#2c1f18] text-zinc-200 text-[10px] font-pixel cursor-pointer"
               >
                 {copiedBedrock ? (
                   <>
                     <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>COPIED BEDROCK</span>
+                    <span>COPIED</span>
                   </>
                 ) : (
                   <>
@@ -163,39 +181,44 @@ export function Hero() {
                     <span>BEDROCK: 25567</span>
                   </>
                 )}
-              </motion.button>
+              </button>
             </div>
           </div>
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons Linking to Separate Pages */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
           className="flex flex-wrap items-center justify-center gap-4"
         >
-          <motion.a
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-            href="/#how-to-join"
-            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-white font-['Chakra_Petch'] font-bold text-xs tracking-wider shadow-lg shadow-[#ff2e2e]/30 hover:shadow-[#ff2e2e]/50 transition-all duration-200"
+          <Link
+            href="/how-to-join"
+            className="mc-btn inline-flex items-center gap-2.5 px-6 py-4 bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-white font-pixel text-[10px]"
           >
+            <Play className="w-4 h-4 fill-white" />
             <span>HOW TO JOIN</span>
             <ArrowRight className="w-4 h-4" />
-          </motion.a>
+          </Link>
 
-          <motion.a
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-            href="https://discord.gg/7e6vX6EgFt"
+          <Link
+            href="/modes"
+            className="mc-btn inline-flex items-center gap-2.5 px-6 py-4 bg-[#1a120f] hover:bg-[#241a15] text-white font-pixel text-[10px]"
+          >
+            <Swords className="w-4 h-4 text-[#ff2e2e]" />
+            <span>GAME MODES</span>
+          </Link>
+
+          <a
+            href="https://discord.gg/nexcoremc"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl bg-[#5865f2] hover:bg-[#4752c4] text-white font-['Chakra_Petch'] font-bold text-xs tracking-wider shadow-lg shadow-[#5865f2]/25 hover:shadow-[#5865f2]/40 transition-all duration-200"
+            className="mc-btn inline-flex items-center gap-2.5 px-6 py-4 bg-[#5865f2] hover:bg-[#4752c4] text-white font-pixel text-[10px]"
           >
-            <span>JOIN OFFICIAL DISCORD</span>
+            <span>DISCORD</span>
             <ExternalLink className="w-4 h-4 opacity-75" />
-          </motion.a>
+          </a>
         </motion.div>
       </div>
     </section>

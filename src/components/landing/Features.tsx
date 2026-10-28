@@ -49,11 +49,11 @@ export function Features() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff2e2e]/10 border border-[#ff2e2e]/25 text-[#ff4545] text-xs font-bold font-['Chakra_Petch'] tracking-wider uppercase mb-4 shadow-sm">
-            NETWORK ADVANTAGES
+          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
+            Network Advantages
           </div>
-          <h2 className="font-['Plus_Jakarta_Sans'] text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-            WHY PLAY ON <span className="text-gradient-red">NEXCOREMC</span>
+          <h2 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
+            WHY PLAY ON <span className="text-[#ff4545]">NEXCOREMC</span>
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
             Built by competitive Minecraft veterans for gamers who demand high performance, fair play, and an active community.
@@ -71,11 +71,10 @@ export function Features() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.45, delay: idx * 0.08, ease: "easeOut" }}
-                whileHover={{ y: -4 }}
-                className="group relative p-7 rounded-2xl bg-[#111115]/95 border border-white/10 hover:border-[#ff2e2e]/45 transition-all duration-300 hover:shadow-xl hover:shadow-[#ff2e2e]/10 flex flex-col justify-between"
+                className="mc-panel group relative p-7 bg-[#1a120f] hover:bg-[#201712] transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 flex items-center justify-center text-[#ff2e2e] mb-6 group-hover:bg-[#ff2e2e]/20 group-hover:border-[#ff2e2e]/40 group-hover:scale-110 transition-all duration-300 shadow-sm shadow-[#ff2e2e]/15">
+                  <div className="mc-outline w-12 h-12 bg-[#ff2e2e]/10 flex items-center justify-center text-[#ff2e2e] mb-6 group-hover:bg-[#ff2e2e]/20 group-hover:scale-110 transition-all duration-300">
                     <Icon className="w-6 h-6" />
                   </div>
 
@@ -90,10 +89,10 @@ export function Features() {
 
                 <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-zinc-500">
                   <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#ff2e2e]" />
+                    <span className="w-1.5 h-1.5 bg-[#ff2e2e]" />
                     <span>Verified Infrastructure</span>
                   </div>
-                  <span className="text-[10px] text-zinc-600 font-bold font-['Chakra_Petch']">0{idx + 1}</span>
+                  <span className="text-[9px] text-zinc-600 font-pixel">0{idx + 1}</span>
                 </div>
               </motion.div>
             );

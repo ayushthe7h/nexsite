@@ -18,13 +18,26 @@
   --color-red-subtle: rgba(255, 46, 46, 0.1);
   --color-red-border: rgba(255, 46, 46, 0.28);
 
-  --font-display: var(--font-display);
-  --font-heading: var(--font-heading);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  /* Minecraft pixel-panel palette - warm near-black (stone/cave tones)
+     instead of cool grey, so the red accent reads like a torch/lava glow
+     rather than a generic dark-mode SaaS accent. */
+  --color-mc-bg: #0d0806;
+  --color-mc-panel: #1a120f;
+  --color-mc-panel-light: #241a15;
+
+  --font-display: 'Chakra Petch', system-ui, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-pixel: 'Press Start 2P', monospace;
 }
 
 :root {
+  --font-display: 'Chakra Petch', system-ui, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-pixel: 'Press Start 2P', monospace;
   --background: #09090b;
   --foreground: #f4f4f6;
   --card: #111115;
@@ -127,7 +140,7 @@ body {
 
 .bg-grid-pattern {
   background-size: 36px 36px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
@@ -153,4 +166,90 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ============================================================
+   Minecraft pixel-panel system
+   ------------------------------------------------------------
+   Built from CSS only (box-shadow bevels + a procedural SVG
+   noise texture) - no copied game textures or fonts. Mimics
+   how Minecraft's own GUI is constructed (hard-edged rectangles,
+   a 2px raised/sunken pixel bevel, chunky offset shadows) but
+   recolored into NexCoreMC's red-on-warm-black identity instead
+   of vanilla grey stone.
+   ============================================================ */
+
+.font-pixel {
+  font-family: var(--font-pixel);
+}
+
+/* Raised panel/button bevel - light edge top-left, dark edge
+   bottom-right, plus a hard (non-blurred) offset shadow. This is
+   the base look for cards, buttons and badges in "up" state. */
+.mc-panel {
+  border-radius: 0;
+  box-shadow:
+    inset 2px 2px 0 0 rgba(255, 255, 255, 0.12),
+    inset -2px -2px 0 0 rgba(0, 0, 0, 0.6),
+    4px 4px 0 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Sunken bevel - the reverse direction, used for inputs, the
+   "selected inventory slot" look, and pressed states. */
+.mc-panel-sunken {
+  border-radius: 0;
+  box-shadow:
+    inset -2px -2px 0 0 rgba(255, 255, 255, 0.08),
+    inset 2px 2px 0 0 rgba(0, 0, 0, 0.65);
+}
+
+/* Interactive pixel button - raised bevel that presses flat on
+   click, the way a Minecraft GUI button depresses. */
+.mc-btn {
+  border-radius: 0;
+  box-shadow:
+    inset 2px 2px 0 0 rgba(255, 255, 255, 0.2),
+    inset -2px -2px 0 0 rgba(0, 0, 0, 0.55),
+    4px 4px 0 0 rgba(0, 0, 0, 0.55);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+}
+.mc-btn:hover {
+  filter: brightness(1.08);
+}
+.mc-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow:
+    inset 2px 2px 0 0 rgba(0, 0, 0, 0.45),
+    inset -2px -2px 0 0 rgba(255, 255, 255, 0.06),
+    1px 1px 0 0 rgba(0, 0, 0, 0.5);
+}
+
+/* A thin single-pixel outline variant, for small chips/badges
+   where the full offset shadow would be too heavy. */
+.mc-outline {
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 0 rgba(255, 255, 255, 0.14),
+    inset -1px -1px 0 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Procedural pixel-grain texture (SVG feTurbulence, tinted deep
+   red/brown) - evokes stone/nether grain in the background
+   without using any actual game artwork. Keep opacity low; it's
+   a material cue, not a pattern to read. */
+.bg-pixel-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.45 0 0 0 0 0.08 0 0 0 0 0.04 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  image-rendering: pixelated;
+}
+
+/* Tight pixel grid, scaled smaller + red-tinted vs. the existing
+   .bg-grid-pattern, for panels that want a subtle "block grid"
+   cue instead of plain noise. */
+.bg-pixel-grid {
+  background-size: 8px 8px;
+  background-image:
+    linear-gradient(to right, rgba(255, 46, 46, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 46, 46, 0.06) 1px, transparent 1px);
 }

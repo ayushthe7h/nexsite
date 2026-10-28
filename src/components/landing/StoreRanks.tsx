@@ -1,16 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Crown, Check, ExternalLink, ShieldCheck, Eye, Zap, Info } from "lucide-react";
+import { motion } from "framer-motion";
+import { Crown, ExternalLink, Eye, Info, Loader2, Sparkles } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+
+// Flips the storefront from "Coming Soon" Discord links to live Tebex
+// checkout once TEBEX_PUBLIC_TOKEN + the package env vars are set on the
+// server. See .env.example and docs/ARCHITECTURE-tebex-checkout.md.
+const TEBEX_ENABLED = process.env.NEXT_PUBLIC_TEBEX_ENABLED === "true";
+const USERNAME_PATTERN = /^[A-Za-z0-9_]{3,16}$/;
+const DISCORD_URL = "https://discord.gg/nexcoremc";
 
 interface Rank {
   id: string;
   name: string;
   badge: string;
   color: string;
-  borderColor: string;
   glowColor: string;
   priceInr: string;
   priceUsd: string;
@@ -23,166 +29,221 @@ interface Rank {
 export function StoreRanks() {
   const [currency, setCurrency] = useState<"inr" | "usd">("inr");
   const [selectedRank, setSelectedRank] = useState<Rank | null>(null);
+  const [buyRank, setBuyRank] = useState<Rank | null>(null);
+  const [username, setUsername] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
 
+  // CUSTOM rank request flow - this tier is bespoke (hand-built armor,
+  // tag color, kit) so it isn't sold through Tebex. Instead we build a
+  // plaintext summary, copy it to the clipboard, and hand the player off
+  // to Discord to open a ticket with staff.
+  const [customTicketOpen, setCustomTicketOpen] = useState(false);
+  const [customUsername, setCustomUsername] = useState("");
+  const [customPlatform, setCustomPlatform] = useState<"java" | "bedrock">("java");
+  const [customRequest, setCustomRequest] = useState("");
+  const [customTicketError, setCustomTicketError] = useState("");
+
+  // Real perks, prices and kit contents pulled from the live /ranks GUI
+  // config - not invented copy. Where the config doesn't name a specific
+  // enchant level (VIP+ through NEX), we describe the armor the way the
+  // owner described it rather than guessing exact enchantment tiers.
   const ranks: Rank[] = [
     {
       id: "vip",
       name: "VIP+",
       badge: "ENTRY TIER",
       color: "text-emerald-400",
-      borderColor: "hover:border-emerald-500/50",
       glowColor: "group-hover:bg-emerald-500/10",
       priceInr: "₹129",
       priceUsd: "$1.35",
       tag: "[VIP+]",
       perks: [
         "Chat Prefix: [VIP+]",
-        "Priority Server Queue bypass",
-        "2x /sethome slots (Total: 3)",
-        "+2 Auction House listing slots",
-        "Access to /fly in Hub & Lobby",
+        "5 Homes (/sethome)",
+        "3 Personal Vaults",
+        "Claim Fly for 10 minutes",
+        "VIP+ Exclusive Kit",
       ],
-      commands: ["/fly", "/workbench", "/feed", "/hat"],
-      pvpKit: [
-        "Full Protection II Iron Armor Set",
-        "Sharpness II Iron Sword",
-        "64x Cooked Beef",
-        "2x Golden Apples",
-      ],
+      commands: ["Kit preview: /playerkits preview vip+", "Bonus commands: coming soon"],
+      pvpKit: ["Diamond Armor Set — half enchanted"],
     },
     {
       id: "core",
       name: "CORE",
       badge: "POPULAR",
       color: "text-blue-400",
-      borderColor: "hover:border-blue-500/50",
       glowColor: "group-hover:bg-blue-500/10",
       priceInr: "₹249",
       priceUsd: "$2.61",
       tag: "[CORE]",
       perks: [
         "Chat Prefix: [CORE]",
-        "Instant Server Queue bypass",
-        "4x /sethome slots (Total: 5)",
-        "+4 Auction House listing slots",
-        "Access to /craft & /enderchest",
-        "Custom Death Message broadcast",
+        "6 Homes (/sethome)",
+        "4 Personal Vaults",
+        "Claim Fly for 20 minutes",
+        "CORE Exclusive Kit",
       ],
-      commands: ["/ec", "/craft", "/near", "/fly (Hub)", "/feed"],
-      pvpKit: [
-        "Full Protection III Diamond Armor Set",
-        "Sharpness III Diamond Sword",
-        "Power II Bow + 64x Arrows",
-        "4x Golden Apples",
-      ],
+      commands: ["Kit preview: /playerkits preview core", "Bonus commands: coming soon"],
+      pvpKit: ["Diamond Armor Set — better enchants than VIP+"],
     },
     {
       id: "boss",
       name: "BOSS",
       badge: "TIER 3",
       color: "text-cyan-400",
-      borderColor: "hover:border-cyan-500/50",
       glowColor: "group-hover:bg-cyan-500/10",
       priceInr: "₹459",
       priceUsd: "$4.81",
       tag: "[BOSS]",
       perks: [
         "Chat Prefix: [BOSS]",
-        "Full Priority Slot Access",
-        "7x /sethome slots (Total: 8)",
-        "+8 Auction House listing slots",
-        "Access to /anvil & /heal (cooldown)",
-        "Special Boss particle trail",
+        "7 Homes (/sethome)",
+        "5 Personal Vaults",
+        "Claim Fly for 20 minutes",
+        "AntMan Custom Tool (10-day timer)",
+        "BOSS Exclusive Kit",
       ],
-      commands: ["/anvil", "/heal", "/ptime", "/pweather", "/ec"],
-      pvpKit: [
-        "Full Protection IV Diamond Armor Set",
-        "Sharpness IV Fire Aspect I Sword",
-        "Power III Bow + 64x Arrows",
-        "8x Golden Apples + 1x Enchanted GApple",
-      ],
+      commands: ["/antman — Custom Tool (10-day timer)"],
+      pvpKit: ["Diamond Armor Set — fully enchanted"],
     },
     {
       id: "god",
       name: "GOD",
       badge: "ELITE",
       color: "text-amber-400",
-      borderColor: "hover:border-amber-500/50",
       glowColor: "group-hover:bg-amber-500/10",
       priceInr: "₹899",
       priceUsd: "$9.42",
       tag: "[GOD]",
       perks: [
         "Chat Prefix: [GOD]",
-        "Unrestricted Server Slot Access",
-        "12x /sethome slots (Total: 13)",
-        "+15 Auction House listing slots",
-        "Access to /condense & /extinguish",
-        "Custom Discord VIP Role sync",
+        "8 Homes (/sethome)",
+        "8 Personal Vaults",
+        "Unlimited Claim Fly",
+        "Free Claim Blocks every 15 days",
+        "GOD Exclusive Kit",
       ],
-      commands: ["/condense", "/ext", "/repair hand", "/god (Lobby)", "/anvil"],
-      pvpKit: [
-        "Full Protection IV Netherite Armor Set",
-        "Sharpness V Netherite Sword",
-        "Power IV Flame Bow + 64x Arrows",
-        "16x Golden Apples + 2x Enchanted GApples",
-      ],
+      commands: ["/anvil", "/grindstone", "/enderchest", "/recipe", "/smithingtable", "/stonecutter", "/claimblocks"],
+      pvpKit: ["Netherite Armor Set — semi-fully enchanted"],
     },
     {
       id: "nex",
       name: "NEX",
       badge: "ULTIMATE",
       color: "text-[#ff4545]",
-      borderColor: "hover:border-[#ff2e2e]/60",
       glowColor: "group-hover:bg-[#ff2e2e]/10",
       priceInr: "₹1199",
       priceUsd: "$12.56",
       tag: "[NEX]",
       perks: [
         "Chat Prefix: [NEX]",
-        "Master Network Access",
-        "20x /sethome slots (Total: 21)",
-        "+25 Auction House listing slots",
-        "Access to /repair all (cooldown)",
-        "Exclusive Animated Chat Color tag",
+        "10 Homes (/sethome)",
+        "10 Personal Vaults",
+        "Unlimited Claim Fly",
+        "Free Claim Blocks every 15 days",
+        "NEX Exclusive Kit",
       ],
-      commands: ["/repair all", "/fly (SMP Claims)", "/nick", "/ptime", "/ec"],
-      pvpKit: [
-        "Full Godly Protection IV Unbreaking III Netherite Armor",
-        "Sharpness V Fire Aspect II Knockback II Netherite Sword",
-        "Power V Infinity Bow",
-        "32x Golden Apples + 4x Enchanted GApples",
-      ],
+      commands: ["/anvil", "/grindstone", "/enderchest", "/recipe", "/smithingtable", "/stonecutter", "/claimblocks"],
+      pvpKit: ["Netherite Armor Set — fully enchanted"],
     },
     {
       id: "custom",
       name: "CUSTOM",
       badge: "BESPOKE",
       color: "text-pink-400",
-      borderColor: "hover:border-pink-500/50",
       glowColor: "group-hover:bg-pink-500/10",
       priceInr: "₹1899",
       priceUsd: "$19.79",
       tag: "[CUSTOM]",
       perks: [
-        "Custom Tag Name & Hex Color in Chat",
-        "All NEX tier perks included",
-        "Unlimited /sethome slots",
-        "Unlimited Auction House listings",
-        "Direct Discord Developer Channel access",
-        "Permanent Custom Rank Trophy in Hub",
+        "Fully custom chat name & color",
+        "10 Homes, 20 Personal Vaults",
+        "Unlimited Claim Fly",
+        "Free Claim Blocks every 15 days",
+        "Custom Kit, built to your spec",
+        "2x OP Tools included",
       ],
-      commands: ["/customtag", "/customcolor", "/repair all", "/fly", "/nick"],
-      pvpKit: [
-        "Fully Custom Enchanted Armor Set with Player Name Tag",
-        "Custom Named Netherite Sword & Bow",
-        "64x Golden Apples + 8x Enchanted GApples",
-      ],
+      commands: ["Custom / no-OP commands — built on request"],
+      pvpKit: ["Fully custom enchanted armor — e.g. Protection V, Thorns IV, your pick"],
     },
   ];
 
+  const openBuyModal = (rank: Rank) => {
+    setBuyRank(rank);
+    setUsername("");
+    setAgreed(false);
+    setCheckoutError("");
+  };
+
+  const handleCheckoutSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!buyRank) return;
+
+    if (!USERNAME_PATTERN.test(username)) {
+      setCheckoutError("That doesn't look like a valid Minecraft username (3-16 characters, letters/numbers/underscore).");
+      return;
+    }
+    if (!agreed) {
+      setCheckoutError("Confirm your username's right before continuing — we can't undo a wrong delivery.");
+      return;
+    }
+
+    setCheckoutError("");
+    setCheckoutLoading(true);
+    try {
+      const res = await fetch("/api/tebex/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, rankId: buyRank.id }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.checkoutUrl) {
+        setCheckoutError(data.error || "Couldn't start checkout — try again.");
+        setCheckoutLoading(false);
+        return;
+      }
+      window.location.href = data.checkoutUrl;
+    } catch {
+      setCheckoutError("Connection hiccup — check your internet and try again.");
+      setCheckoutLoading(false);
+    }
+  };
+
+  const openCustomTicket = () => {
+    setCustomTicketOpen(true);
+    setCustomUsername("");
+    setCustomPlatform("java");
+    setCustomRequest("");
+    setCustomTicketError("");
+  };
+
+  const handleCustomTicketSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customUsername.trim()) {
+      setCustomTicketError("Enter your Minecraft username so staff know who's asking.");
+      return;
+    }
+    if (!customRequest.trim()) {
+      setCustomTicketError("Describe what you want in the CUSTOM rank (tag color, armor enchants, kit, etc).");
+      return;
+    }
+
+    const summary = [
+      "NexCoreMC — CUSTOM Rank Request",
+      `Username: ${customUsername.trim()}`,
+      `Platform: ${customPlatform === "java" ? "Java" : "Bedrock / Pocket Edition"}`,
+      `Request: ${customRequest.trim()}`,
+    ].join("\n");
+
+    navigator.clipboard.writeText(summary).catch(() => {});
+    window.open(DISCORD_URL, "_blank", "noopener,noreferrer");
+    setCustomTicketOpen(false);
+  };
+
   return (
-    <section id="store" className="py-28 lg:py-32 relative z-10 bg-[#0c0c10]">
+    <section id="store" className="py-28 lg:py-32 relative z-10 bg-[#0d0806] bg-pixel-grid">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
@@ -192,36 +253,37 @@ export function StoreRanks() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center max-w-2xl mx-auto mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff2e2e]/10 border border-[#ff2e2e]/25 text-[#ff4545] text-xs font-bold font-['Chakra_Petch'] tracking-wider uppercase mb-4 shadow-sm">
-            NETWORK STORE
+          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
+            Network Store
           </div>
-          <h2 className="font-['Plus_Jakarta_Sans'] text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-            SERVER RANKS & <span className="text-gradient-red">VIP PACKS</span>
+          <h2 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
+            SERVER RANKS &<br />
+            <span className="text-[#ff4545]">VIP PACKS</span>
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-            Support network infrastructure and unlock convenience perks, vault expansions, and custom cosmetics.
+            Fuel the network, skip the grind — extra homes, vault space, and kit perks that actually matter.
           </p>
 
           {/* Currency Toggle Switcher */}
-          <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-full bg-[#16161c] border border-white/10 shadow-xl">
-            <span className="text-xs font-semibold text-zinc-400 pl-3">Currency:</span>
+          <div className="mc-panel-sunken mt-8 inline-flex items-center gap-3 p-1.5 bg-[#15100c]">
+            <span className="text-[9px] font-pixel text-zinc-500 pl-2">CURRENCY</span>
             <div className="flex gap-1">
               <button
                 onClick={() => setCurrency("inr")}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold font-['Chakra_Petch'] tracking-wider transition-all cursor-pointer ${
+                className={`mc-outline px-4 py-1.5 text-[9px] font-pixel transition-all cursor-pointer ${
                   currency === "inr"
-                    ? "bg-[#ff2e2e] text-white shadow-md shadow-[#ff2e2e]/30"
-                    : "text-zinc-400 hover:text-white"
+                    ? "bg-[#ff2e2e] text-white"
+                    : "bg-[#1f1712] text-zinc-400 hover:text-white"
                 }`}
               >
                 INR (₹)
               </button>
               <button
                 onClick={() => setCurrency("usd")}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold font-['Chakra_Petch'] tracking-wider transition-all cursor-pointer ${
+                className={`mc-outline px-4 py-1.5 text-[9px] font-pixel transition-all cursor-pointer ${
                   currency === "usd"
-                    ? "bg-[#ff2e2e] text-white shadow-md shadow-[#ff2e2e]/30"
-                    : "text-zinc-400 hover:text-white"
+                    ? "bg-[#ff2e2e] text-white"
+                    : "bg-[#1f1712] text-zinc-400 hover:text-white"
                 }`}
               >
                 USD ($)
@@ -231,21 +293,23 @@ export function StoreRanks() {
         </motion.div>
 
         {/* Store Launch Notice */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.45 }}
-          className="mb-12 p-4 rounded-xl bg-[#14141e] border border-[#ff2e2e]/30 flex items-center justify-between gap-4 max-w-2xl mx-auto text-xs text-zinc-300 shadow-lg"
-        >
-          <div className="flex items-center gap-2.5">
-            <Info className="w-4 h-4 text-[#ff2e2e] shrink-0" />
-            <span>Store payment gateway is in final testing. Rank packages shown below preview live perk matrices.</span>
-          </div>
-          <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded bg-[#ff2e2e]/20 text-[#ff4545] border border-[#ff2e2e]/30">
-            COMING SOON
-          </span>
-        </motion.div>
+        {!TEBEX_ENABLED && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.45 }}
+            className="mc-panel mb-12 p-4 bg-[#1a120f] flex items-center justify-between gap-4 max-w-2xl mx-auto text-xs text-zinc-300"
+          >
+            <div className="flex items-center gap-2.5">
+              <Info className="w-4 h-4 text-[#ff2e2e] shrink-0" />
+              <span>Checkout&apos;s almost ready — here&apos;s a preview of what each rank unlocks.</span>
+            </div>
+            <span className="mc-outline shrink-0 text-[9px] font-pixel px-2 py-1 bg-[#ff2e2e]/20 text-[#ff4545]">
+              SOON
+            </span>
+          </motion.div>
+        )}
 
         {/* Ranks Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
@@ -256,25 +320,21 @@ export function StoreRanks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
-              whileHover={{ y: -4 }}
-              className={`p-7 rounded-2xl bg-[#111115]/95 border border-white/10 ${rank.borderColor} transition-all duration-300 flex flex-col justify-between hover:shadow-2xl hover:shadow-[#ff2e2e]/10 group relative overflow-hidden`}
+              className="mc-panel p-7 bg-[#1a120f] transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
             >
-              {/* Subtle top glow highlight */}
-              <div className={`absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-0 group-hover:opacity-100 transition-opacity ${rank.color}`} />
-
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className={`text-[10px] font-bold font-['Chakra_Petch'] px-3 py-1 rounded-full border border-white/10 bg-[#16161c] ${rank.color}`}>
+                  <span className={`mc-outline text-[9px] font-pixel px-3 py-1 bg-[#15100c] ${rank.color}`}>
                     {rank.badge}
                   </span>
                   <Crown className={`w-5 h-5 ${rank.color} group-hover:rotate-12 transition-transform`} />
                 </div>
 
                 <div className="mb-4">
-                  <h3 className={`font-['Chakra_Petch'] text-2xl font-extrabold ${rank.color}`}>
+                  <h3 className={`font-pixel text-lg ${rank.color}`}>
                     {rank.name}
                   </h3>
-                  <div className="flex items-baseline gap-2 mt-1">
+                  <div className="flex items-baseline gap-2 mt-2">
                     <span className="text-3xl font-extrabold font-mono text-white">
                       {currency === "inr" ? rank.priceInr : rank.priceUsd}
                     </span>
@@ -288,7 +348,7 @@ export function StoreRanks() {
                 <div className="space-y-2.5 pt-4 border-t border-white/5 mb-6">
                   {rank.perks.map((perk, idx) => (
                     <div key={idx} className="flex items-start gap-2.5 text-xs text-zinc-300">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ff2e2e] shrink-0 mt-1.5" />
+                      <span className="w-1.5 h-1.5 bg-[#ff2e2e] shrink-0 mt-1.5" />
                       <span>{perk}</span>
                     </div>
                   ))}
@@ -298,20 +358,37 @@ export function StoreRanks() {
               <div className="pt-4 border-t border-white/5 flex flex-col gap-2.5">
                 <button
                   onClick={() => setSelectedRank(rank)}
-                  className="w-full py-2.5 rounded-xl bg-[#181824] hover:bg-[#202030] border border-white/10 text-xs font-bold font-['Chakra_Petch'] text-zinc-200 tracking-wider flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  className="mc-btn w-full py-2.5 bg-[#241a15] hover:bg-[#2c1f18] text-[9px] font-pixel text-zinc-200 flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <Eye className="w-3.5 h-3.5" />
-                  <span>INSPECT KIT & COMMANDS</span>
+                  <span>INSPECT KIT</span>
                 </button>
 
-                <a
-                  href="https://discord.gg/7e6vX6EgFt"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-2.5 rounded-xl bg-[#ff2e2e]/15 hover:bg-[#ff2e2e]/25 border border-[#ff2e2e]/30 text-xs font-bold font-['Chakra_Petch'] text-[#ff4545] tracking-wider flex items-center justify-center gap-1.5 transition-colors"
-                >
-                  <span>CLAIM ON DISCORD (SOON)</span>
-                </a>
+                {rank.id === "custom" ? (
+                  <button
+                    onClick={openCustomTicket}
+                    className="mc-btn w-full py-2.5 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-400 hover:to-rose-500 text-[9px] font-pixel text-white flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>REQUEST CUSTOM RANK</span>
+                  </button>
+                ) : TEBEX_ENABLED ? (
+                  <button
+                    onClick={() => openBuyModal(rank)}
+                    className="mc-btn w-full py-2.5 bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-[9px] font-pixel text-white flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <span>BUY NOW</span>
+                  </button>
+                ) : (
+                  <a
+                    href={DISCORD_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mc-btn w-full py-2.5 bg-[#ff2e2e]/15 hover:bg-[#ff2e2e]/25 text-[9px] font-pixel text-[#ff4545] flex items-center justify-center gap-1.5"
+                  >
+                    <span>CLAIM ON DISCORD (SOON)</span>
+                  </a>
+                )}
               </div>
             </motion.div>
           ))}
@@ -323,19 +400,19 @@ export function StoreRanks() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5 }}
-          className="p-6 sm:p-8 rounded-2xl bg-[#111115]/95 border border-white/10 overflow-x-auto shadow-xl"
+          className="mc-panel p-6 sm:p-8 bg-[#1a120f] overflow-x-auto"
         >
-          <div className="mb-6 flex items-center justify-between">
-            <h3 className="font-['Chakra_Petch'] text-xl font-bold text-white">
-              RANK FEATURE COMPARISON MATRIX
+          <div className="mb-6 flex items-center justify-between flex-wrap gap-2">
+            <h3 className="font-pixel text-xs text-white">
+              RANK COMPARISON
             </h3>
             <span className="text-xs text-zinc-400 font-mono">All 6 Tiers</span>
           </div>
 
           <table className="w-full text-left text-xs border-collapse min-w-[650px]">
             <thead>
-              <tr className="border-b border-white/10 text-zinc-400 font-['Chakra_Petch'] uppercase tracking-wider">
-                <th className="py-3 px-4">Feature / Benefit</th>
+              <tr className="border-b-2 border-[#ff2e2e]/15 text-zinc-400 font-pixel text-[9px] uppercase">
+                <th className="py-3 px-4">Feature</th>
                 <th className="py-3 px-3 text-emerald-400">VIP+</th>
                 <th className="py-3 px-3 text-blue-400">CORE</th>
                 <th className="py-3 px-3 text-cyan-400">BOSS</th>
@@ -355,49 +432,49 @@ export function StoreRanks() {
                 <td className="py-3 px-3 font-mono">{currency === "inr" ? "₹1899" : "$19.79"}</td>
               </tr>
               <tr>
-                <td className="py-3 px-4">Priority Server Queue</td>
-                <td className="py-3 px-3 text-emerald-400">Yes</td>
-                <td className="py-3 px-3 text-blue-400">Instant</td>
-                <td className="py-3 px-3 text-cyan-400">Instant</td>
-                <td className="py-3 px-3 text-amber-400">Bypass</td>
-                <td className="py-3 px-3 text-[#ff4545]">Master</td>
-                <td className="py-3 px-3 text-pink-400">Master</td>
+                <td className="py-3 px-4">Homes (/sethome)</td>
+                <td className="py-3 px-3 font-mono">5</td>
+                <td className="py-3 px-3 font-mono">6</td>
+                <td className="py-3 px-3 font-mono">7</td>
+                <td className="py-3 px-3 font-mono">8</td>
+                <td className="py-3 px-3 font-mono">10</td>
+                <td className="py-3 px-3 font-mono">10</td>
               </tr>
               <tr>
-                <td className="py-3 px-4">/sethome Slots</td>
+                <td className="py-3 px-4">Personal Vaults</td>
                 <td className="py-3 px-3 font-mono">3</td>
+                <td className="py-3 px-3 font-mono">4</td>
                 <td className="py-3 px-3 font-mono">5</td>
                 <td className="py-3 px-3 font-mono">8</td>
-                <td className="py-3 px-3 font-mono">13</td>
-                <td className="py-3 px-3 font-mono">21</td>
-                <td className="py-3 px-3 font-mono">Unlimited</td>
+                <td className="py-3 px-3 font-mono">10</td>
+                <td className="py-3 px-3 font-mono">20</td>
               </tr>
               <tr>
-                <td className="py-3 px-4">Auction House Listings</td>
-                <td className="py-3 px-3 font-mono">3 Slots</td>
-                <td className="py-3 px-3 font-mono">5 Slots</td>
-                <td className="py-3 px-3 font-mono">10 Slots</td>
-                <td className="py-3 px-3 font-mono">18 Slots</td>
-                <td className="py-3 px-3 font-mono">30 Slots</td>
-                <td className="py-3 px-3 font-mono">Unlimited</td>
+                <td className="py-3 px-4">Claim Fly Duration</td>
+                <td className="py-3 px-3 font-mono">10 min</td>
+                <td className="py-3 px-3 font-mono">20 min</td>
+                <td className="py-3 px-3 font-mono">20 min</td>
+                <td className="py-3 px-3 text-amber-400 font-mono">∞</td>
+                <td className="py-3 px-3 text-[#ff4545] font-mono">∞</td>
+                <td className="py-3 px-3 text-pink-400 font-mono">∞</td>
               </tr>
               <tr>
-                <td className="py-3 px-4">Portable /craft & /enderchest</td>
+                <td className="py-3 px-4">Free Claim Blocks</td>
                 <td className="py-3 px-3 text-zinc-500">-</td>
-                <td className="py-3 px-3 text-emerald-400">Yes</td>
-                <td className="py-3 px-3 text-emerald-400">Yes</td>
-                <td className="py-3 px-3 text-emerald-400">Yes</td>
-                <td className="py-3 px-3 text-emerald-400">Yes</td>
-                <td className="py-3 px-3 text-emerald-400">Yes</td>
+                <td className="py-3 px-3 text-zinc-500">-</td>
+                <td className="py-3 px-3 text-zinc-500">-</td>
+                <td className="py-3 px-3 text-amber-400">Every 15 days</td>
+                <td className="py-3 px-3 text-[#ff4545]">Every 15 days</td>
+                <td className="py-3 px-3 text-pink-400">Every 15 days</td>
               </tr>
               <tr>
-                <td className="py-3 px-4">/fly in Claimed Lands</td>
-                <td className="py-3 px-3 text-zinc-500">-</td>
-                <td className="py-3 px-3 text-zinc-500">-</td>
-                <td className="py-3 px-3 text-zinc-500">-</td>
-                <td className="py-3 px-3 text-zinc-500">-</td>
-                <td className="py-3 px-3 text-[#ff4545]">Yes</td>
-                <td className="py-3 px-3 text-pink-400">Yes</td>
+                <td className="py-3 px-4">Armour Kit</td>
+                <td className="py-3 px-3 text-emerald-400">Diamond (half ench.)</td>
+                <td className="py-3 px-3 text-blue-400">Diamond (better ench.)</td>
+                <td className="py-3 px-3 text-cyan-400">Diamond (full ench.)</td>
+                <td className="py-3 px-3 text-amber-400">Netherite (semi-full)</td>
+                <td className="py-3 px-3 text-[#ff4545]">Netherite (full ench.)</td>
+                <td className="py-3 px-3 text-pink-400">Fully custom</td>
               </tr>
             </tbody>
           </table>
@@ -410,18 +487,18 @@ export function StoreRanks() {
         onOpenChange={(open) => !open && setSelectedRank(null)}
       >
         {selectedRank && (
-          <DialogContent className="bg-[#111115] border border-white/10 text-white max-w-lg p-6 sm:p-8 rounded-2xl shadow-2xl">
+          <DialogContent className="mc-panel bg-[#1a120f] border-0 text-white max-w-lg p-6 sm:p-8">
             <DialogHeader>
               <div className="flex items-center justify-between mb-2">
-                <span className={`text-xs font-bold font-['Chakra_Petch'] px-3 py-1 rounded-full border border-white/10 bg-[#16161c] ${selectedRank.color}`}>
+                <span className={`mc-outline text-[9px] font-pixel px-3 py-1 bg-[#15100c] ${selectedRank.color}`}>
                   {selectedRank.badge}
                 </span>
                 <span className="font-mono text-sm text-zinc-400">
                   {currency === "inr" ? selectedRank.priceInr : selectedRank.priceUsd} / mo
                 </span>
               </div>
-              <DialogTitle className={`font-['Chakra_Petch'] text-2xl font-extrabold ${selectedRank.color}`}>
-                {selectedRank.name} RANK SPECIFICATIONS
+              <DialogTitle className={`font-pixel text-lg ${selectedRank.color}`}>
+                {selectedRank.name}
               </DialogTitle>
               <DialogDescription className="text-zinc-400 text-xs mt-1">
                 Chat Tag Prefix: <span className="font-mono text-white font-bold">{selectedRank.tag}</span>
@@ -430,12 +507,12 @@ export function StoreRanks() {
 
             <div className="space-y-4 mt-4">
               <div>
-                <h4 className="text-xs font-bold font-['Chakra_Petch'] text-zinc-400 uppercase tracking-wider mb-2">
-                  Commands Unlocked
+                <h4 className="text-[9px] font-pixel text-zinc-400 uppercase mb-2">
+                  Commands
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {selectedRank.commands.map((cmd, i) => (
-                    <span key={i} className="px-2.5 py-1 rounded-md bg-[#16161c] border border-white/10 font-mono text-xs text-zinc-200">
+                    <span key={i} className="mc-outline px-2.5 py-1.5 bg-[#15100c] font-mono text-xs text-zinc-200">
                       {cmd}
                     </span>
                   ))}
@@ -443,13 +520,13 @@ export function StoreRanks() {
               </div>
 
               <div>
-                <h4 className="text-xs font-bold font-['Chakra_Petch'] text-zinc-400 uppercase tracking-wider mb-2">
-                  Monthly PvP & Survival Kit
+                <h4 className="text-[9px] font-pixel text-zinc-400 uppercase mb-2">
+                  Armour Kit
                 </h4>
-                <div className="p-3.5 rounded-xl bg-[#16161c] border border-white/5 space-y-1.5 text-xs text-zinc-300">
+                <div className="mc-panel-sunken p-3.5 bg-black/30 space-y-1.5 text-xs text-zinc-300">
                   {selectedRank.pvpKit.map((item, i) => (
                     <div key={i} className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ff2e2e]" />
+                      <span className="w-1.5 h-1.5 bg-[#ff2e2e]" />
                       <span>{item}</span>
                     </div>
                   ))}
@@ -457,17 +534,199 @@ export function StoreRanks() {
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between flex-wrap gap-3">
               <span className="text-[11px] text-zinc-500">Non-P2W Compliant</span>
-              <a
-                href="https://discord.gg/7e6vX6EgFt"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg bg-[#5865f2] hover:bg-[#4752c4] text-white text-xs font-bold font-['Chakra_Petch'] tracking-wider transition-colors"
-              >
-                JOIN DISCORD FOR LAUNCH
-              </a>
+              {selectedRank.id === "custom" ? (
+                <button
+                  onClick={() => {
+                    setSelectedRank(null);
+                    openCustomTicket();
+                  }}
+                  className="mc-btn px-4 py-2.5 bg-gradient-to-r from-pink-500 to-rose-600 text-white text-[9px] font-pixel cursor-pointer"
+                >
+                  REQUEST THIS RANK
+                </button>
+              ) : (
+                <a
+                  href={DISCORD_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mc-btn px-4 py-2.5 bg-[#5865f2] hover:bg-[#4752c4] text-white text-[9px] font-pixel"
+                >
+                  JOIN DISCORD FOR LAUNCH
+                </a>
+              )}
             </div>
+          </DialogContent>
+        )}
+      </Dialog>
+
+      {/* Tebex Checkout Modal */}
+      <Dialog
+        open={!!buyRank}
+        onOpenChange={(open) => !open && !checkoutLoading && setBuyRank(null)}
+      >
+        {buyRank && (
+          <DialogContent className="mc-panel bg-[#1a120f] border-0 text-white max-w-md p-6 sm:p-8">
+            <DialogHeader>
+              <DialogTitle className={`font-pixel text-base ${buyRank.color}`}>
+                {buyRank.name} CHECKOUT
+              </DialogTitle>
+              <DialogDescription className="text-zinc-400 text-xs mt-1">
+                {currency === "inr" ? buyRank.priceInr : buyRank.priceUsd} / month · instant delivery, no restart needed
+              </DialogDescription>
+            </DialogHeader>
+
+            <form onSubmit={handleCheckoutSubmit} className="space-y-4 mt-4">
+              <div>
+                <label className="block text-[9px] font-pixel text-zinc-400 uppercase mb-2">
+                  Minecraft Java Username
+                </label>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="e.g. Notch"
+                  maxLength={16}
+                  disabled={checkoutLoading}
+                  className="mc-panel-sunken w-full px-4 py-3 bg-black/30 text-white placeholder-zinc-500 text-sm font-mono focus:outline-none disabled:opacity-60"
+                  autoFocus
+                />
+              </div>
+
+              <label className="flex items-start gap-2.5 text-xs text-zinc-400 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  disabled={checkoutLoading}
+                  className="mt-0.5 accent-[#ff2e2e]"
+                />
+                <span>This is my exact IGN — ranks can&apos;t be transferred after delivery.</span>
+              </label>
+
+              {checkoutError && (
+                <div className="mc-outline p-3 bg-red-500/10 text-red-400 text-xs flex items-center gap-2">
+                  <Info className="w-4 h-4 shrink-0" />
+                  <span>{checkoutError}</span>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={checkoutLoading}
+                className="mc-btn w-full py-3 bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-white text-[9px] font-pixel cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
+              >
+                {checkoutLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>STARTING CHECKOUT...</span>
+                  </>
+                ) : (
+                  <span>CONTINUE TO TEBEX</span>
+                )}
+              </button>
+
+              <p className="text-[11px] text-zinc-500 text-center">
+                Secure checkout via Tebex — your rank activates the moment payment clears.
+              </p>
+            </form>
+          </DialogContent>
+        )}
+      </Dialog>
+
+      {/* CUSTOM Rank Request Modal - builds a plaintext ticket summary,
+          copies it to clipboard, and opens Discord so the player can
+          paste it straight into a ticket for staff. */}
+      <Dialog
+        open={customTicketOpen}
+        onOpenChange={(open) => setCustomTicketOpen(open)}
+      >
+        {customTicketOpen && (
+          <DialogContent className="mc-panel bg-[#1a120f] border-0 text-white max-w-md p-6 sm:p-8">
+            <DialogHeader>
+              <DialogTitle className="font-pixel text-base text-pink-400">
+                CUSTOM RANK REQUEST
+              </DialogTitle>
+              <DialogDescription className="text-zinc-400 text-xs mt-1">
+                Tag color, kit, fully custom enchanted armor — built to your spec. We&apos;ll open a Discord ticket with the details below.
+              </DialogDescription>
+            </DialogHeader>
+
+            <form onSubmit={handleCustomTicketSubmit} className="space-y-4 mt-4">
+              <div>
+                <label className="block text-[9px] font-pixel text-zinc-400 uppercase mb-2">
+                  Minecraft Username
+                </label>
+                <input
+                  type="text"
+                  value={customUsername}
+                  onChange={(e) => setCustomUsername(e.target.value)}
+                  placeholder="e.g. Notch"
+                  maxLength={24}
+                  className="mc-panel-sunken w-full px-4 py-3 bg-black/30 text-white placeholder-zinc-500 text-sm font-mono focus:outline-none"
+                  autoFocus
+                />
+              </div>
+
+              <div>
+                <label className="block text-[9px] font-pixel text-zinc-400 uppercase mb-2">
+                  Platform
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setCustomPlatform("java")}
+                    className={`mc-outline py-2.5 text-[9px] font-pixel cursor-pointer ${
+                      customPlatform === "java" ? "bg-pink-500/20 text-pink-300" : "bg-[#15100c] text-zinc-400 hover:text-white"
+                    }`}
+                  >
+                    JAVA
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCustomPlatform("bedrock")}
+                    className={`mc-outline py-2.5 text-[9px] font-pixel cursor-pointer ${
+                      customPlatform === "bedrock" ? "bg-pink-500/20 text-pink-300" : "bg-[#15100c] text-zinc-400 hover:text-white"
+                    }`}
+                  >
+                    BEDROCK / POCKET
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[9px] font-pixel text-zinc-400 uppercase mb-2">
+                  What do you want?
+                </label>
+                <textarea
+                  value={customRequest}
+                  onChange={(e) => setCustomRequest(e.target.value)}
+                  placeholder="e.g. Tag color #ff2e2e, custom kit with Protection V + Thorns IV netherite armor, custom name 'Nex'..."
+                  rows={4}
+                  className="mc-panel-sunken w-full px-4 py-3 bg-black/30 text-white placeholder-zinc-500 text-xs leading-relaxed focus:outline-none resize-none"
+                />
+              </div>
+
+              {customTicketError && (
+                <div className="mc-outline p-3 bg-red-500/10 text-red-400 text-xs flex items-center gap-2">
+                  <Info className="w-4 h-4 shrink-0" />
+                  <span>{customTicketError}</span>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="mc-btn w-full py-3 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-400 hover:to-rose-500 text-white text-[9px] font-pixel cursor-pointer flex items-center justify-center gap-2"
+              >
+                <span>COPY DETAILS & OPEN DISCORD</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </button>
+
+              <p className="text-[11px] text-zinc-500 text-center">
+                Your request is copied to your clipboard — paste it into a new ticket in our Discord.
+              </p>
+            </form>
           </DialogContent>
         )}
       </Dialog>

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft, Shield, Lock, FileText, Check } from "lucide-react";
+import { ArrowLeft, Shield } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { ToastProvider } from "@/components/landing/ToastContext";
@@ -13,18 +13,25 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <ToastProvider>
-      <div className="min-h-screen bg-[#09090b] text-[#f4f4f6] flex flex-col justify-between">
-        <Navbar />
+    <main className="pt-32 pb-24 px-4 sm:px-6 relative z-10 max-w-4xl mx-auto w-full">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 mb-8">
+            <Link href="/" className="hover:text-white transition-colors flex items-center gap-1">
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Home</span>
+            </Link>
+            <span className="text-zinc-600">/</span>
+            <span className="text-[#ff4545] font-semibold">Privacy Policy</span>
+          </div>
 
-        <main className="pt-36 pb-24 px-4 sm:px-6 relative z-10 max-w-4xl mx-auto w-full">
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff2e2e]/10 border border-[#ff2e2e]/25 text-[#ff4545] text-xs font-bold font-['Chakra_Petch'] tracking-wider uppercase mb-4">
-              LEGAL & DATA PROTECTION
+            <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
+              <Shield className="w-3.5 h-3.5" />
+              <span>Legal & Data Protection</span>
             </div>
-            <h1 className="font-['Plus_Jakarta_Sans'] text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
-              PRIVACY POLICY
+            <h1 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
+              PRIVACY<br /><span className="text-[#ff4545]">POLICY</span>
             </h1>
             <p className="text-zinc-400 text-sm font-mono">
               Effective Date: October 9, 2026 | Last Updated: October 2026
@@ -32,9 +39,9 @@ export default function PrivacyPage() {
           </div>
 
           {/* Content Card */}
-          <div className="p-8 sm:p-12 rounded-2xl bg-[#111115] border border-white/10 space-y-10 shadow-2xl text-zinc-300 text-sm sm:text-base leading-relaxed">
+          <div className="mc-panel p-8 sm:p-12 bg-[#1a120f] space-y-10 text-zinc-300 text-sm sm:text-base leading-relaxed">
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-white/10 flex items-center gap-2">
+              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15 flex items-center gap-2">
                 <span>1. Introduction</span>
               </h2>
               <p>
@@ -46,7 +53,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-white/10">
+              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
                 2. Information We Collect
               </h2>
               <p>We only collect the minimum amount of data required to operate and secure the server:</p>
@@ -59,7 +66,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-white/10">
+              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
                 3. How We Use Your Information
               </h2>
               <p>The information we collect is used strictly for the following purposes:</p>
@@ -72,7 +79,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-white/10">
+              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
                 4. Data Storage and Security
               </h2>
               <p>
@@ -81,7 +88,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-white/10">
+              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
                 5. Third-Party Integrations
               </h2>
               <p>Our platform interacts with select third-party services essential for multiplayer functionality:</p>
@@ -93,7 +100,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-white/10">
+              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
                 6. Children&apos;s Privacy
               </h2>
               <p>
@@ -102,18 +109,18 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-white/10">
+              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
                 7. Contact and Support
               </h2>
               <p>
                 If you have questions regarding this Privacy Policy or wish to request data review or deletion, please open a support ticket on our official Discord server at{" "}
                 <a
-                  href="https://discord.gg/7e6vX6EgFt"
+                  href="https://discord.gg/nexcoremc"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#ff2e2e] hover:underline font-medium"
                 >
-                  discord.gg/7e6vX6EgFt
+                  discord.gg/nexcoremc
                 </a>.
               </p>
             </section>
@@ -122,16 +129,12 @@ export default function PrivacyPage() {
           <div className="mt-8 text-center">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#16161c] hover:bg-[#1c1c24] border border-white/10 text-white font-['Chakra_Petch'] text-xs font-bold tracking-wider transition-colors"
+              className="mc-btn inline-flex items-center gap-2 px-6 py-3 bg-[#1a120f] text-white font-pixel text-[10px] tracking-wide"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>RETURN TO HOMEPAGE</span>
             </Link>
           </div>
         </main>
-
-        <Footer />
-      </div>
-    </ToastProvider>
   );
 }

@@ -8,7 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { HelpCircle, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 export function FAQSection() {
   const faqs = [
@@ -40,7 +40,7 @@ export function FAQSection() {
       id: "item-5",
       question: "How do I report hackers or submit a support ticket?",
       answer:
-        "Join our official Discord server at discord.gg/7e6vX6EgFt and open a ticket in the #support channel. Our staff team reviews player reports with in-game logs and anti-cheat replay captures.",
+        "Join our official Discord server at discord.gg/nexcoremc and open a ticket in the #support channel. Our staff team reviews player reports with in-game logs and anti-cheat replay captures.",
     },
     {
       id: "item-6",
@@ -61,11 +61,11 @@ export function FAQSection() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ff2e2e]/10 border border-[#ff2e2e]/25 text-[#ff4545] text-xs font-bold font-['Chakra_Petch'] tracking-wider uppercase mb-4 shadow-sm">
-            HELP & KNOWLEDGE BASE
+          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
+            Help & Knowledge Base
           </div>
-          <h2 className="font-['Plus_Jakarta_Sans'] text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-            FREQUENTLY ASKED <span className="text-gradient-red">QUESTIONS</span>
+          <h2 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
+            FREQUENTLY ASKED<br /><span className="text-[#ff4545]">QUESTIONS</span>
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
             Everything you need to know about connecting, gameplay mechanics, and server rules.
@@ -78,14 +78,14 @@ export function FAQSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-          className="p-6 sm:p-8 rounded-3xl bg-[#111115]/95 border border-white/10 shadow-2xl backdrop-blur-xl"
+          className="mc-panel p-6 sm:p-8 bg-[#1a120f]"
         >
           <Accordion className="w-full space-y-3">
             {faqs.map((faq) => (
               <AccordionItem
                 key={faq.id}
                 value={faq.id}
-                className="border border-white/5 bg-[#16161c]/90 rounded-2xl px-5 transition-all data-[state=open]:border-[#ff2e2e]/35 data-[state=open]:bg-[#181824]"
+                className="mc-outline bg-[#15100c] px-5 transition-all data-[state=open]:bg-[#1f1712]"
               >
                 <AccordionTrigger className="text-left font-['Plus_Jakarta_Sans'] text-base font-bold text-white hover:text-[#ff4545] hover:no-underline py-4 cursor-pointer">
                   {faq.question}
@@ -100,10 +100,10 @@ export function FAQSection() {
           <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
             <span>Still have questions or need technical help?</span>
             <a
-              href="https://discord.gg/7e6vX6EgFt"
+              href="https://discord.gg/nexcoremc"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-[#ff2e2e] hover:text-[#ff4545] font-bold font-['Chakra_Petch'] tracking-wider uppercase transition-colors"
+              className="inline-flex items-center gap-1.5 text-[#ff2e2e] hover:text-[#ff4545] font-pixel text-[9px] uppercase transition-colors"
             >
               <span>OPEN A DISCORD TICKET</span>
               <ExternalLink className="w-3.5 h-3.5" />

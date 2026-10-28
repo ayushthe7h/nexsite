@@ -44,18 +44,17 @@ export function StatsStrip() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
-              whileHover={{ y: -3 }}
-              className="p-5 rounded-2xl bg-[#111115]/95 border border-white/10 backdrop-blur-xl hover:border-[#ff2e2e]/40 hover:bg-[#15151c] transition-all duration-300 group shadow-lg shadow-black/40"
+              className="mc-panel p-5 bg-[#1a120f] hover:bg-[#201712] transition-all duration-300 group"
             >
               <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-[#ff2e2e]/10 border border-[#ff2e2e]/25 flex items-center justify-center text-[#ff2e2e] shrink-0 group-hover:scale-110 group-hover:bg-[#ff2e2e]/20 group-hover:border-[#ff2e2e]/50 transition-all duration-300 shadow-sm shadow-[#ff2e2e]/15">
+                <div className="mc-outline w-11 h-11 bg-[#ff2e2e]/10 flex items-center justify-center text-[#ff2e2e] shrink-0 group-hover:bg-[#ff2e2e]/20 transition-all duration-300">
                   <Icon className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
                   <div className="text-xl sm:text-2xl font-extrabold font-['Chakra_Petch'] text-white tracking-tight">
                     {stat.value}
                   </div>
-                  <div className="text-xs font-bold font-['Chakra_Petch'] text-zinc-300 uppercase tracking-wide">
+                  <div className="text-[10px] font-pixel text-zinc-300 uppercase tracking-wide mt-1">
                     {stat.label}
                   </div>
                   <div className="text-[11px] text-zinc-500 mt-0.5 font-mono">

@@ -26,12 +26,12 @@ export default function PrivacyPage() {
 
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
+            <div className="rounded-full inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 text-[#ff4545] text-sm font-medium mb-5">
               <Shield className="w-3.5 h-3.5" />
-              <span>Legal & Data Protection</span>
+              <span>Legal & data protection</span>
             </div>
-            <h1 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
-              PRIVACY<br /><span className="text-[#ff4545]">POLICY</span>
+            <h1 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+              Privacy<br /><span className="text-[#ff4545]">policy</span>
             </h1>
             <p className="text-zinc-400 text-sm font-mono">
               Effective Date: October 9, 2026 | Last Updated: October 2026
@@ -39,9 +39,9 @@ export default function PrivacyPage() {
           </div>
 
           {/* Content Card */}
-          <div className="mc-panel p-8 sm:p-12 bg-[#1a120f] space-y-10 text-zinc-300 text-sm sm:text-base leading-relaxed">
+          <div className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-8 sm:p-12 space-y-10 text-zinc-300 text-sm sm:text-base leading-relaxed">
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15 flex items-center gap-2">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10 flex items-center gap-2">
                 <span>1. Introduction</span>
               </h2>
               <p>
@@ -53,7 +53,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 2. Information We Collect
               </h2>
               <p>We only collect the minimum amount of data required to operate and secure the server:</p>
@@ -66,7 +66,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 3. How We Use Your Information
               </h2>
               <p>The information we collect is used strictly for the following purposes:</p>
@@ -79,7 +79,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 4. Data Storage and Security
               </h2>
               <p>
@@ -88,7 +88,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 5. Third-Party Integrations
               </h2>
               <p>Our platform interacts with select third-party services essential for multiplayer functionality:</p>
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 6. Children&apos;s Privacy
               </h2>
               <p>
@@ -109,7 +109,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 7. Contact and Support
               </h2>
               <p>
@@ -129,10 +129,10 @@ export default function PrivacyPage() {
           <div className="mt-8 text-center">
             <Link
               href="/"
-              className="mc-btn inline-flex items-center gap-2 px-6 py-3 bg-[#1a120f] text-white font-pixel text-[10px] tracking-wide"
+              className="rounded-full inline-flex items-center gap-2 px-6 py-3 bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white text-sm font-semibold transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>RETURN TO HOMEPAGE</span>
+              <span>Return to homepage</span>
             </Link>
           </div>
         </main>

@@ -14,18 +14,13 @@ import {
   ExternalLink,
   Lock,
   Unlock,
-  Radio,
   Clock,
-  ArrowRight,
-  ShieldAlert,
   Server
 } from "lucide-react";
 import { useSiteSettings } from "@/components/providers/SiteSettingsContext";
-import { useServerStatus } from "@/lib/useServerStatus";
 
 export function SiteOverlay() {
   const { settings, staffBypassed, setStaffBypassed } = useSiteSettings();
-  const status = useServerStatus();
   const pathname = usePathname();
 
   const [bannerDismissed, setBannerDismissed] = useState(false);
@@ -57,12 +52,12 @@ export function SiteOverlay() {
         <div
           className={`w-full text-xs py-2 px-4 border-b z-50 relative flex items-center justify-between gap-4 select-none ${
             settings.topBannerType === "urgent"
-              ? "bg-red-950/95 border-red-500/40 text-red-200"
+              ? "bg-red-500/10 border-red-500/20 text-red-200"
               : settings.topBannerType === "event"
-              ? "bg-gradient-to-r from-purple-950/95 via-[#1a1228] to-purple-950/95 border-purple-500/40 text-purple-200"
+              ? "bg-purple-500/10 border-purple-500/20 text-purple-200"
               : settings.topBannerType === "success"
-              ? "bg-emerald-950/95 border-emerald-500/40 text-emerald-200"
-              : "bg-blue-950/95 border-blue-500/40 text-blue-200"
+              ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-200"
+              : "bg-blue-500/10 border-blue-500/20 text-blue-200"
           }`}
         >
           <div className="max-w-[1240px] mx-auto flex items-center justify-center gap-2 flex-1 text-center font-medium">
@@ -83,9 +78,9 @@ export function SiteOverlay() {
                 href={settings.topBannerLink}
                 target={settings.topBannerLink.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="underline hover:text-white font-bold ml-1 inline-flex items-center gap-0.5"
+                className="underline hover:text-white font-semibold ml-1 inline-flex items-center gap-0.5"
               >
-                <span>Learn More</span>
+                <span>Learn more</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
             )}
@@ -93,7 +88,7 @@ export function SiteOverlay() {
 
           <button
             onClick={() => setBannerDismissed(true)}
-            className="p-1 rounded hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer shrink-0"
+            className="p-1 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer shrink-0"
             title="Dismiss announcement"
           >
             <X className="w-3.5 h-3.5" />
@@ -111,7 +106,7 @@ export function SiteOverlay() {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-2xl text-center relative z-10 p-8 sm:p-12 rounded-3xl bg-[#111115]/95 border border-amber-500/30 shadow-2xl shadow-black/80"
+            className="w-full max-w-2xl text-center relative z-10 p-8 sm:p-12 rounded-3xl bg-[#111115]/95 border border-amber-500/20 shadow-2xl shadow-black/80"
           >
             {/* Logo with Maintenance Aura */}
             <div className="relative mb-6">
@@ -127,13 +122,13 @@ export function SiteOverlay() {
             </div>
 
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold font-['Chakra_Petch'] tracking-wider uppercase mb-4 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-medium mb-4">
               <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-              <span>MAINTENANCE MODE ACTIVE</span>
+              <span>Maintenance mode active</span>
             </div>
 
-            <h1 className="font-['Plus_Jakarta_Sans'] text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
-              We&apos;ll Be Back Shortly!
+            <h1 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mb-3">
+              We&apos;ll be back shortly
             </h1>
 
             <p className="text-zinc-300 text-sm sm:text-base leading-relaxed mb-6 max-w-lg mx-auto">
@@ -141,43 +136,43 @@ export function SiteOverlay() {
             </p>
 
             {/* ETA Info Box */}
-            <div className="p-4 rounded-2xl bg-[#161622] border border-white/10 flex items-center justify-center gap-6 mb-8 text-xs font-mono text-zinc-300">
+            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center gap-6 mb-8 text-xs font-mono text-zinc-300 flex-wrap">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-amber-400" />
-                <span>Estimated Completion: <strong className="text-white">{settings.maintenanceEta}</strong></span>
+                <span>Estimated completion: <strong className="text-white">{settings.maintenanceEta}</strong></span>
               </div>
-              <div className="hidden sm:flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <Server className="w-4 h-4 text-emerald-400" />
                 <span>Server IP: <strong className="text-white">{settings.serverIp}</strong></span>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-3.5">
+            <div className="flex flex-wrap items-center justify-center gap-3">
               <a
                 href={settings.discordUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 rounded-xl bg-[#5865f2] hover:bg-[#4752c4] text-white text-xs font-bold font-['Chakra_Petch'] tracking-wide flex items-center gap-2 shadow-lg shadow-[#5865f2]/25 transition-all"
+                className="px-6 py-3 rounded-full bg-[#5865f2] hover:bg-[#4752c4] text-white text-sm font-semibold flex items-center gap-2 transition-colors"
               >
-                <span>JOIN DISCORD FOR UPDATES</span>
+                <span>Join Discord for updates</span>
                 <ExternalLink className="w-4 h-4" />
               </a>
 
               <Link
                 href="/uptime"
-                className="px-6 py-3 rounded-xl bg-[#181822] hover:bg-[#202030] border border-white/10 text-white text-xs font-bold font-['Chakra_Petch'] tracking-wide transition-all"
+                className="px-6 py-3 rounded-full bg-white/[0.06] hover:bg-white/10 border border-white/10 text-white text-sm font-semibold transition-colors"
               >
-                <span>CHECK UPTIME STATUS</span>
+                <span>Check uptime status</span>
               </Link>
 
               {settings.allowStaffBypass && (
                 <button
                   onClick={() => setShowBypassModal(true)}
-                  className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white text-xs font-bold font-['Chakra_Petch'] tracking-wide transition-all cursor-pointer flex items-center gap-1.5"
+                  className="px-6 py-3 rounded-full bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 text-zinc-400 hover:text-white text-sm font-semibold transition-colors cursor-pointer flex items-center gap-1.5"
                 >
                   <Lock className="w-3.5 h-3.5" />
-                  <span>STAFF BYPASS</span>
+                  <span>Staff bypass</span>
                 </button>
               )}
             </div>
@@ -191,13 +186,13 @@ export function SiteOverlay() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="w-full max-w-sm p-6 rounded-2xl bg-[#111115] border border-white/15 shadow-2xl text-center"
+                  className="w-full max-w-sm p-6 rounded-2xl bg-[#111115] border border-white/10 shadow-2xl text-center"
                 >
                   <div className="w-12 h-12 rounded-xl bg-[#ff2e2e]/10 border border-[#ff2e2e]/30 flex items-center justify-center mx-auto mb-4 text-[#ff2e2e]">
                     <Unlock className="w-6 h-6" />
                   </div>
-                  <h3 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white mb-1">
-                    Staff Maintenance Bypass
+                  <h3 className="font-heading text-lg font-bold text-white mb-1">
+                    Staff maintenance bypass
                   </h3>
                   <p className="text-zinc-400 text-xs mb-4">
                     Enter the authorized passcode to browse the site during maintenance.
@@ -212,25 +207,25 @@ export function SiteOverlay() {
                   <form onSubmit={handleBypassSubmit} className="space-y-3">
                     <input
                       type="password"
-                      placeholder="Enter Staff Passcode"
+                      placeholder="Enter staff passcode"
                       value={bypassPasscode}
                       onChange={(e) => setBypassPasscode(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#161622] border border-white/10 text-white text-xs font-mono focus:outline-none focus:border-[#ff2e2e]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm font-mono focus:outline-none focus:border-[#ff2e2e]"
                       autoFocus
                     />
                     <div className="flex gap-2">
                       <button
                         type="button"
                         onClick={() => setShowBypassModal(false)}
-                        className="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 text-xs font-bold font-['Chakra_Petch'] cursor-pointer"
+                        className="flex-1 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 text-sm font-semibold cursor-pointer transition-colors"
                       >
-                        CANCEL
+                        Cancel
                       </button>
                       <button
                         type="submit"
-                        className="flex-1 py-2.5 rounded-xl bg-[#ff2e2e] hover:bg-[#ff4545] text-white text-xs font-bold font-['Chakra_Petch'] cursor-pointer"
+                        className="flex-1 py-2.5 rounded-full bg-[#ff2e2e] hover:bg-[#ff4545] text-white text-sm font-semibold cursor-pointer transition-colors"
                       >
-                        UNLOCK
+                        Unlock
                       </button>
                     </div>
                   </form>

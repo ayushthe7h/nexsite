@@ -30,7 +30,7 @@ export function Navbar() {
     e.preventDefault();
     navigator.clipboard.writeText("nexcoremc.in");
     setCopied(true);
-    showToast("Server IP Copied!", "nexcoremc.in (Port: 25565 Java / 25567 Bedrock)");
+    showToast("Server IP copied", "nexcoremc.in (Port: 25565 Java / 25567 Bedrock)");
 
     confetti({
       particleCount: 35,
@@ -47,11 +47,11 @@ export function Navbar() {
     { label: "Game Modes", href: "/modes" },
     { label: "How to Join", href: "/how-to-join" },
     { label: "Features", href: "/features" },
-    { label: "Store", href: "/store", badge: "SOON" },
+    { label: "Store", href: "/store", badge: "Soon" },
     { label: "Vote", href: "/vote" },
     { label: "FAQ", href: "/faq" },
     { label: "Uptime", href: "/uptime" },
-    { label: "Panel", href: "/panel", badge: "STAFF" },
+    { label: "Panel", href: "/panel", badge: "Staff" },
   ];
 
   return (
@@ -66,10 +66,10 @@ export function Navbar() {
 
       {/* Main Navbar */}
       <div
-        className={`w-full h-[68px] sm:h-[72px] transition-all duration-300 border-b-2 ${
+        className={`w-full h-[68px] sm:h-[72px] transition-all duration-300 border-b ${
           isScrolled
-            ? "bg-[#0d0806]/97 border-[#ff2e2e]/25"
-            : "bg-[#0d0806]/90 border-[#ff2e2e]/10"
+            ? "bg-[#09090b]/97 border-white/[0.08]"
+            : "bg-[#09090b]/90 border-white/[0.04]"
         }`}
       >
         <div className="max-w-[1240px] mx-auto h-full px-4 sm:px-6 flex items-center justify-between">
@@ -85,38 +85,37 @@ export function Navbar() {
                 alt="NexCore MC Official Logo"
                 width={42}
                 height={42}
-                className="w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(255,46,46,0.6)] group-hover:scale-105 transition-transform"
+                className="w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(255,46,46,0.5)] group-hover:scale-105 transition-transform"
                 priority
-                style={{ imageRendering: "pixelated" }}
               />
             </motion.div>
             <div className="flex flex-col">
               <span className="font-['Chakra_Petch'] text-xl font-bold tracking-tight text-white leading-none">
                 NEXCORE<span className="text-[#ff2e2e]">MC</span>
               </span>
-              <span className="text-[9px] font-pixel tracking-wide text-zinc-500 uppercase">
+              <span className="text-[10px] tracking-wide text-zinc-500">
                 India Network
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-1 p-1 mc-panel-sunken bg-[#15100c]">
+          <nav className="hidden lg:flex items-center gap-0.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
             {navLinks.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3 py-1.5 text-[10px] font-pixel tracking-wide transition-all flex items-center gap-1.5 ${
+                  className={`px-3.5 py-1.5 rounded-full text-sm transition-colors flex items-center gap-1.5 ${
                     isActive
-                      ? "mc-outline bg-[#ff2e2e]/20 text-white"
-                      : "text-zinc-300 hover:text-white hover:bg-white/8"
+                      ? "bg-white/10 text-white"
+                      : "text-zinc-400 hover:text-white"
                   }`}
                 >
                   <span>{item.label}</span>
                   {item.badge && (
-                    <span className="mc-outline text-[8px] font-pixel px-1.5 py-0.5 bg-[#ff2e2e]/20 text-[#ff4545]">
+                    <span className="rounded-full text-[10px] font-medium px-1.5 py-0.5 bg-[#ff2e2e]/15 text-[#ff4545]">
                       {item.badge}
                     </span>
                   )}
@@ -127,39 +126,41 @@ export function Navbar() {
               href="https://discord.gg/nexcoremc"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 text-[10px] font-pixel tracking-wide text-zinc-300 hover:text-[#5865f2] hover:bg-[#5865f2]/15 transition-all flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-full text-sm text-zinc-400 hover:text-[#5865f2] transition-colors flex items-center gap-1.5"
             >
               <span>Discord</span>
-              <ExternalLink className="w-3.5 h-3.5 opacity-60" />
+              <ExternalLink className="w-3 h-3 opacity-60" />
             </a>
           </nav>
 
           {/* Right Actions: Live Status Badge + Copy IP Button */}
           <div className="hidden sm:flex items-center gap-3">
             <LiveStatusBadge compact />
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
               onClick={handleCopyIP}
-              className="mc-btn group relative inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-white text-[10px] font-pixel cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#ff2e2e] hover:bg-[#ff4545] text-white text-sm font-semibold cursor-pointer transition-colors"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-white" />
-                  <span>COPIED</span>
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Copied</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-white/90" />
-                  <span>COPY IP</span>
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>Copy IP</span>
                 </>
               )}
-            </button>
+            </motion.button>
           </div>
 
           {/* Mobile Hamburger Button */}
           <div className="flex sm:hidden items-center gap-2">
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="mc-btn p-2.5 bg-[#15100c] text-zinc-300 hover:text-white"
+              className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-zinc-300 hover:text-white transition-colors"
               aria-label="Toggle Menu"
             >
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -176,9 +177,9 @@ export function Navbar() {
             animate={{ opacity: 1, height: "calc(100vh - 110px)" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.28, ease: "easeInOut" }}
-            className="fixed inset-x-0 top-[108px] bg-[#0d0806]/98 border-t-2 border-[#ff2e2e]/20 p-6 flex flex-col justify-between overflow-y-auto lg:hidden z-50 bg-pixel-noise"
+            className="fixed inset-x-0 top-[108px] bg-[#09090b]/98 border-t border-white/[0.08] p-6 flex flex-col justify-between overflow-y-auto lg:hidden z-50"
           >
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2">
               <div className="mb-2">
                 <LiveStatusBadge />
               </div>
@@ -190,15 +191,15 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className={`mc-outline px-4 py-3 font-pixel text-[10px] transition-colors flex items-center justify-between ${
+                    className={`rounded-xl px-4 py-3 text-sm transition-colors flex items-center justify-between border ${
                       isActive
-                        ? "bg-[#ff2e2e]/15 text-white"
-                        : "bg-[#15100c] text-zinc-200 hover:text-white"
+                        ? "bg-[#ff2e2e]/10 border-[#ff2e2e]/30 text-white"
+                        : "bg-white/[0.03] border-white/10 text-zinc-300 hover:text-white"
                     }`}
                   >
                     <span>{link.label}</span>
                     {link.badge && (
-                      <span className="mc-outline text-[8px] font-pixel px-2 py-0.5 bg-[#ff2e2e]/20 text-[#ff4545]">
+                      <span className="rounded-full text-[10px] font-medium px-2 py-0.5 bg-[#ff2e2e]/15 text-[#ff4545]">
                         {link.badge}
                       </span>
                     )}
@@ -209,34 +210,34 @@ export function Navbar() {
               <Link
                 href="/privacy"
                 onClick={() => setMobileOpen(false)}
-                className="mc-outline px-4 py-2.5 bg-[#15100c]/60 text-zinc-400 font-medium text-xs hover:text-white transition-colors"
+                className="rounded-xl px-4 py-2.5 bg-white/[0.02] border border-white/[0.06] text-zinc-500 text-sm hover:text-white transition-colors"
               >
                 Privacy Policy
               </Link>
               <Link
                 href="/terms"
                 onClick={() => setMobileOpen(false)}
-                className="mc-outline px-4 py-2.5 bg-[#15100c]/60 text-zinc-400 font-medium text-xs hover:text-white transition-colors"
+                className="rounded-xl px-4 py-2.5 bg-white/[0.02] border border-white/[0.06] text-zinc-500 text-sm hover:text-white transition-colors"
               >
-                Terms & Conditions
+                Terms &amp; Conditions
               </Link>
             </div>
 
             <div className="pt-6 border-t border-white/10 flex flex-col gap-3">
               <button
                 onClick={handleCopyIP}
-                className="mc-btn w-full py-4 bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] text-white font-pixel text-[10px] flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3.5 rounded-xl bg-[#ff2e2e] hover:bg-[#ff4545] text-white text-sm font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors"
               >
                 <Copy className="w-4 h-4" />
-                <span>COPY SERVER IP</span>
+                <span>Copy server IP</span>
               </button>
               <a
                 href="https://discord.gg/nexcoremc"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mc-btn w-full py-4 bg-[#5865f2] hover:bg-[#4752c4] text-white font-pixel text-[10px] flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl bg-[#5865f2] hover:bg-[#4752c4] text-white text-sm font-semibold flex items-center justify-center gap-2 transition-colors"
               >
-                <span>JOIN OFFICIAL DISCORD</span>
+                <span>Join official Discord</span>
               </a>
             </div>
           </motion.div>

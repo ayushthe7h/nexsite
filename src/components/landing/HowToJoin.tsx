@@ -15,7 +15,7 @@ export function HowToJoin() {
   const handleCopyJava = () => {
     navigator.clipboard.writeText("nexcoremc.in");
     setCopiedJava(true);
-    showToast("Java Server IP Copied!", "nexcoremc.in (Default Port: 25565)");
+    showToast("Java server IP copied", "nexcoremc.in (Default Port: 25565)");
 
     confetti({
       particleCount: 40,
@@ -30,7 +30,7 @@ export function HowToJoin() {
   const handleCopyBedrock = () => {
     navigator.clipboard.writeText("nexcoremc.in:25567");
     setCopiedBedrock(true);
-    showToast("Bedrock Details Copied!", "IP: nexcoremc.in | Port: 25567");
+    showToast("Bedrock details copied", "IP: nexcoremc.in | Port: 25567");
 
     confetti({
       particleCount: 40,
@@ -99,7 +99,7 @@ export function HowToJoin() {
   const steps = activeTab === "java" ? javaSteps : bedrockSteps;
 
   return (
-    <section id="how-to-join" className="py-28 lg:py-32 relative z-10 bg-[#0d0806]">
+    <section id="how-to-join" className="py-28 lg:py-32 relative z-10">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
@@ -109,11 +109,11 @@ export function HowToJoin() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
-            Connection Guide
+          <div className="rounded-full inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 text-[#ff4545] text-sm font-medium mb-5">
+            Connection guide
           </div>
-          <h2 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
-            HOW TO<br /><span className="text-[#ff4545]">JOIN NEXCOREMC</span>
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+            How to<br /><span className="text-[#ff4545]">join NexCoreMC</span>
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
             Connect in under 60 seconds with full cross-play support for PC, Mobile, and Console.
@@ -122,29 +122,29 @@ export function HowToJoin() {
 
         {/* Edition Selector Tabs */}
         <div className="flex justify-center mb-12">
-          <div className="mc-panel-sunken p-1.5 bg-[#15100c] inline-flex gap-2">
+          <div className="rounded-full p-1.5 bg-white/[0.04] border border-white/[0.08] inline-flex gap-1.5">
             <button
               onClick={() => setActiveTab("java")}
-              className={`mc-outline relative flex items-center gap-2.5 px-6 py-3 font-pixel text-[9px] transition-all duration-200 cursor-pointer ${
+              className={`rounded-full relative flex items-center gap-2.5 px-6 py-2.5 text-sm font-semibold transition-colors duration-200 cursor-pointer ${
                 activeTab === "java"
-                  ? "bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] text-white"
-                  : "bg-[#1f1712] text-zinc-400 hover:text-white"
+                  ? "bg-[#ff2e2e] text-white"
+                  : "text-zinc-400 hover:text-white"
               }`}
             >
               <Monitor className="w-4 h-4" />
-              <span>JAVA (PC)</span>
+              <span>Java (PC)</span>
             </button>
 
             <button
               onClick={() => setActiveTab("bedrock")}
-              className={`mc-outline relative flex items-center gap-2.5 px-6 py-3 font-pixel text-[9px] transition-all duration-200 cursor-pointer ${
+              className={`rounded-full relative flex items-center gap-2.5 px-6 py-2.5 text-sm font-semibold transition-colors duration-200 cursor-pointer ${
                 activeTab === "bedrock"
-                  ? "bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] text-white"
-                  : "bg-[#1f1712] text-zinc-400 hover:text-white"
+                  ? "bg-[#ff2e2e] text-white"
+                  : "text-zinc-400 hover:text-white"
               }`}
             >
               <Smartphone className="w-4 h-4" />
-              <span>BEDROCK / MCPE</span>
+              <span>Bedrock / MCPE</span>
             </button>
           </div>
         </div>
@@ -164,19 +164,19 @@ export function HowToJoin() {
               return (
                 <div
                   key={idx}
-                  className="mc-panel relative p-6 bg-[#1a120f] hover:bg-[#201712] transition-all duration-300 group flex flex-col justify-between"
+                  className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] relative p-6 hover:bg-white/[0.04] transition-colors duration-300 group flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-6">
-                      <span className="font-pixel text-xl text-[#ff2e2e]">
+                      <span className="font-heading text-2xl font-bold text-[#ff2e2e]">
                         {step.step}
                       </span>
-                      <div className="mc-outline w-11 h-11 bg-[#15100c] flex items-center justify-center text-zinc-300 group-hover:text-white group-hover:scale-105 transition-all">
+                      <div className="rounded-xl w-11 h-11 bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-zinc-300 group-hover:text-white transition-all">
                         <Icon className="w-5 h-5" />
                       </div>
                     </div>
 
-                    <h3 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white mb-2">
+                    <h3 className="font-heading text-lg font-bold text-white mb-2">
                       {step.title}
                     </h3>
                     <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
@@ -184,9 +184,9 @@ export function HowToJoin() {
                     </p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-white/5 text-[11px] font-mono text-zinc-500 flex items-center justify-between">
+                  <div className="mt-6 pt-4 border-t border-white/[0.06] text-[11px] font-mono text-zinc-500 flex items-center justify-between">
                     <span>Step {idx + 1} of 4</span>
-                    <span className="w-1.5 h-1.5 bg-[#ff2e2e]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#ff2e2e]" />
                   </div>
                 </div>
               );
@@ -200,15 +200,15 @@ export function HowToJoin() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="mc-panel p-6 sm:p-8 bg-[#1a120f] flex flex-col md:flex-row items-center justify-between gap-6"
+          className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6"
         >
           <div className="flex items-center gap-4 text-left">
-            <div className="mc-outline w-12 h-12 bg-[#ff2e2e]/15 flex items-center justify-center text-[#ff2e2e] shrink-0">
+            <div className="rounded-xl w-12 h-12 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 flex items-center justify-center text-[#ff2e2e] shrink-0">
               <Server className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-[9px] font-pixel text-zinc-400 uppercase tracking-wide">
-                {activeTab === "java" ? "Java Server Address" : "Bedrock Address & Port"}
+              <div className="text-xs text-zinc-400">
+                {activeTab === "java" ? "Java server address" : "Bedrock address & port"}
               </div>
               <div className="text-xl sm:text-2xl font-mono font-extrabold text-white mt-1">
                 {activeTab === "java" ? "nexcoremc.in" : "nexcoremc.in : 25567"}
@@ -220,18 +220,18 @@ export function HowToJoin() {
             {activeTab === "java" ? (
               <button
                 onClick={handleCopyJava}
-                className="mc-btn w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-white text-[9px] font-pixel cursor-pointer"
+                className="rounded-full w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#ff2e2e] hover:bg-[#ff4545] text-white text-sm font-semibold cursor-pointer transition-colors"
               >
                 {copiedJava ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedJava ? "COPIED" : "COPY JAVA IP"}</span>
+                <span>{copiedJava ? "Copied" : "Copy Java IP"}</span>
               </button>
             ) : (
               <button
                 onClick={handleCopyBedrock}
-                className="mc-btn w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-white text-[9px] font-pixel cursor-pointer"
+                className="rounded-full w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#ff2e2e] hover:bg-[#ff4545] text-white text-sm font-semibold cursor-pointer transition-colors"
               >
                 {copiedBedrock ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedBedrock ? "COPIED" : "COPY BEDROCK IP"}</span>
+                <span>{copiedBedrock ? "Copied" : "Copy Bedrock IP"}</span>
               </button>
             )}
           </div>

@@ -61,11 +61,11 @@ export function FAQSection() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
-            Help & Knowledge Base
+          <div className="rounded-full inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 text-[#ff4545] text-sm font-medium mb-5">
+            Help & knowledge base
           </div>
-          <h2 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
-            FREQUENTLY ASKED<br /><span className="text-[#ff4545]">QUESTIONS</span>
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+            Frequently asked<br /><span className="text-[#ff4545]">questions</span>
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
             Everything you need to know about connecting, gameplay mechanics, and server rules.
@@ -78,16 +78,16 @@ export function FAQSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-          className="mc-panel p-6 sm:p-8 bg-[#1a120f]"
+          className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-6 sm:p-8"
         >
           <Accordion className="w-full space-y-3">
             {faqs.map((faq) => (
               <AccordionItem
                 key={faq.id}
                 value={faq.id}
-                className="mc-outline bg-[#15100c] px-5 transition-all data-[state=open]:bg-[#1f1712]"
+                className="rounded-xl bg-white/[0.03] border border-white/[0.08] px-5 transition-colors data-[state=open]:bg-white/[0.05]"
               >
-                <AccordionTrigger className="text-left font-['Plus_Jakarta_Sans'] text-base font-bold text-white hover:text-[#ff4545] hover:no-underline py-4 cursor-pointer">
+                <AccordionTrigger className="text-left font-heading text-base font-semibold text-white hover:text-[#ff4545] hover:no-underline py-4 cursor-pointer">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-zinc-300 text-sm leading-relaxed pb-4 pt-1">
@@ -103,9 +103,9 @@ export function FAQSection() {
               href="https://discord.gg/nexcoremc"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-[#ff2e2e] hover:text-[#ff4545] font-pixel text-[9px] uppercase transition-colors"
+              className="inline-flex items-center gap-1.5 text-[#ff2e2e] hover:text-[#ff4545] font-semibold text-sm transition-colors"
             >
-              <span>OPEN A DISCORD TICKET</span>
+              <span>Open a Discord ticket</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>

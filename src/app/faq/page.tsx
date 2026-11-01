@@ -26,12 +26,12 @@ export default function FAQPage() {
         </div>
 
         <div className="text-center max-w-3xl mx-auto">
-          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
+          <div className="rounded-full inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 text-[#ff4545] text-sm font-medium mb-5">
             <HelpCircle className="w-3.5 h-3.5" />
-            <span>Knowledge Base</span>
+            <span>Knowledge base</span>
           </div>
-          <h1 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
-            FREQUENTLY ASKED<br /><span className="text-[#ff4545]">QUESTIONS</span>
+          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+            Frequently asked<br /><span className="text-[#ff4545]">questions</span>
           </h1>
           <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
             Need help joining, understanding land claims, or reporting a bug? Find comprehensive answers and ticket guidelines below.
@@ -44,49 +44,49 @@ export default function FAQPage() {
 
       {/* Rules & Guidelines Summary Card */}
       <div className="max-w-[880px] mx-auto px-4 sm:px-6 mt-8 mb-16">
-        <div className="mc-panel p-8 bg-[#1a120f] space-y-6">
+        <div className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-8 space-y-6">
           <div className="flex items-center gap-3 pb-4 border-b border-white/10">
             <ShieldAlert className="w-5 h-5 text-[#ff2e2e]" />
-            <h3 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white">
-              Core Community Rules
+            <h3 className="font-heading text-lg font-bold text-white">
+              Core community rules
             </h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-zinc-300">
-            <div className="mc-outline p-4 bg-[#15100c] space-y-1.5">
-              <span className="font-bold text-white font-['Chakra_Petch'] flex items-center gap-2">
-                <span className="w-2 h-2 bg-[#ff2e2e]" />
-                1. No Cheating or Exploiting
+            <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4 space-y-1.5">
+              <span className="font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#ff2e2e]" />
+                1. No cheating or exploiting
               </span>
               <p className="text-zinc-400 text-xs">
                 X-ray, auto-clickers (&gt;15 CPS), flight, speed, and hacked clients result in permanent hardware bans.
               </p>
             </div>
 
-            <div className="mc-outline p-4 bg-[#15100c] space-y-1.5">
-              <span className="font-bold text-white font-['Chakra_Petch'] flex items-center gap-2">
-                <span className="w-2 h-2 bg-[#ff2e2e]" />
-                2. Respect All Players
+            <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4 space-y-1.5">
+              <span className="font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#ff2e2e]" />
+                2. Respect all players
               </span>
               <p className="text-zinc-400 text-xs">
                 Zero tolerance for toxicity, hate speech, doxxing, harassment, or advertising other servers in public chat.
               </p>
             </div>
 
-            <div className="mc-outline p-4 bg-[#15100c] space-y-1.5">
-              <span className="font-bold text-white font-['Chakra_Petch'] flex items-center gap-2">
-                <span className="w-2 h-2 bg-[#ff2e2e]" />
-                3. Protect Your Claims
+            <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4 space-y-1.5">
+              <span className="font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#ff2e2e]" />
+                3. Protect your claims
               </span>
               <p className="text-zinc-400 text-xs">
                 Always claim your bases using a golden shovel on Survival SMP. Griefing unclaimed builds is monitored.
               </p>
             </div>
 
-            <div className="mc-outline p-4 bg-[#15100c] space-y-1.5">
-              <span className="font-bold text-white font-['Chakra_Petch'] flex items-center gap-2">
-                <span className="w-2 h-2 bg-[#ff2e2e]" />
-                4. Fair Trade Economy
+            <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-4 space-y-1.5">
+              <span className="font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#ff2e2e]" />
+                4. Fair trade economy
               </span>
               <p className="text-zinc-400 text-xs">
                 Scamming in player shops or auction houses is penalized. Real-money trading outside the store is prohibited.
@@ -96,7 +96,7 @@ export default function FAQPage() {
 
           <div className="pt-2 flex items-center justify-between flex-wrap gap-4 text-xs text-zinc-400">
             <Link href="/terms" className="hover:text-white text-[#ff4545] font-semibold underline">
-              Read Complete Terms & Conditions
+              Read complete terms & conditions
             </Link>
             <a
               href="https://discord.gg/nexcoremc"
@@ -104,7 +104,7 @@ export default function FAQPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-zinc-300 hover:text-[#5865f2]"
             >
-              <span>Submit Ban Appeal on Discord</span>
+              <span>Submit ban appeal on Discord</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>

@@ -12,10 +12,134 @@ import {
   LogOut,
   ExternalLink,
   Power,
+  Megaphone,
+  Sparkles,
+  Database,
+  Home,
+  Copy,
+  Check,
+  MessageCircle,
 } from "lucide-react";
 import { useSiteSettings } from "@/components/providers/SiteSettingsContext";
 import { useToastNotification } from "@/components/landing/ToastContext";
 import confetti from "canvas-confetti";
+
+// ---------------------------------------------------------------------------
+// Small building blocks
+// ---------------------------------------------------------------------------
+
+// A spring-animated pill switch — used for the simple on/off settings
+// (banner visibility, visual FX). Maintenance mode gets its own explicit
+// button further down since it's the one genuinely consequential action
+// on this page and deserves to read as a decision, not a toggle.
+function PillSwitch({ on, onToggle, label }: { on: boolean; onToggle: () => void; label: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-pressed={on}
+      aria-label={label}
+      className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors cursor-pointer ${
+        on ? "bg-[#ff2e2e] border-[#ff2e2e]" : "bg-white/10 border-white/10"
+      }`}
+    >
+      <motion.span
+        layout
+        transition={{ type: "spring", stiffness: 500, damping: 32 }}
+        className="h-[18px] w-[18px] rounded-full bg-white shadow-sm"
+        style={{ marginLeft: on ? 22 : 2 }}
+      />
+    </button>
+  );
+}
+
+// A labeled value field with a one-click copy button — mirrors the
+// "Project ID" / credential pattern from a modern dashboard, and happens
+// to be genuinely useful here since these are the IP/ports staff share.
+function CopyField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <div>
+      <label className="text-xs text-zinc-400 block mb-1.5">{label}</label>
+      <div className="flex items-center gap-1.5 rounded-xl bg-white/[0.04] border border-white/10 pr-1.5 focus-within:border-[#ff2e2e]/60 transition-colors">
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="min-w-0 flex-1 px-3.5 py-2.5 bg-transparent text-white text-sm font-mono focus:outline-none"
+        />
+        <button
+          type="button"
+          onClick={() => {
+            navigator.clipboard.writeText(value);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1200);
+          }}
+          className="shrink-0 p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+          title="Copy"
+        >
+          {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// A card wrapper with the icon + title + subtitle header used throughout.
+function SettingsCard({
+  id,
+  icon,
+  title,
+  subtitle,
+  action,
+  children,
+}: {
+  id: string;
+  icon: React.ReactNode;
+  title: string;
+  subtitle: string;
+  action?: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.section
+      id={id}
+      variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}
+      className="scroll-mt-28 rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-6 sm:p-7"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-5 border-b border-white/[0.06]">
+        <div className="flex items-start gap-3">
+          <div className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#ff4545] shrink-0">
+            {icon}
+          </div>
+          <div>
+            <h3 className="text-white font-semibold text-[15px]">{title}</h3>
+            <p className="text-zinc-500 text-xs mt-0.5">{subtitle}</p>
+          </div>
+        </div>
+        {action}
+      </div>
+      {children}
+    </motion.section>
+  );
+}
+
+const cardStagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07 } },
+};
+
+// ---------------------------------------------------------------------------
+// Page
+// ---------------------------------------------------------------------------
 
 export default function AdminPanelPage() {
   const {
@@ -43,7 +167,7 @@ export default function AdminPanelPage() {
 
   useEffect(() => {
     if (saveError) {
-      showToast("Save Failed", saveError);
+      showToast("Save failed", saveError);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [saveError]);
@@ -66,10 +190,10 @@ export default function AdminPanelPage() {
       setAdminPasscode(normalized);
       localStorage.setItem("nexcore_panel_auth", "true");
       setAuthError("");
-      showToast("Access Granted!", "Authenticated to the NexCoreMC admin panel");
+      showToast("Access granted", "Authenticated to the NexCoreMC admin panel");
       confetti({ particleCount: 30, spread: 60, origin: { y: 0.2 } });
     } else {
-      setAuthError("Invalid staff passcode. Not staff? Use Demo / Guest Mode below to preview the panel.");
+      setAuthError("Invalid staff passcode. Not staff? Use guest mode below to preview the panel.");
     }
   };
 
@@ -78,7 +202,7 @@ export default function AdminPanelPage() {
     setIsGuestMode(true);
     setAdminPasscode(null); // Guest mode never writes to the live database.
     setAuthError("");
-    showToast("Demo Mode Activated", "Exploring the NexCoreMC admin panel as guest staff");
+    showToast("Guest mode", "Exploring the NexCoreMC admin panel as guest staff");
     confetti({ particleCount: 30, spread: 60, origin: { y: 0.2 } });
   };
 
@@ -87,476 +211,499 @@ export default function AdminPanelPage() {
     setIsGuestMode(false);
     setAdminPasscode(null);
     localStorage.removeItem("nexcore_panel_auth");
-    showToast("Logged Out", "Session ended successfully");
+    showToast("Logged out", "Session ended successfully");
   };
 
-  // If NOT authenticated, show the staff login screen
+  // ---------------------------------------------------------------------
+  // Not authenticated — staff sign-in
+  // ---------------------------------------------------------------------
   if (!isAuthenticated) {
     return (
-      <div className="pt-36 pb-24 px-4 sm:px-6 relative min-h-[85vh] flex items-center justify-center">
+      <div className="pt-32 pb-24 px-4 sm:px-6 relative min-h-[85vh] flex items-center justify-center bg-[#09090b]">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.96, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
-          className="w-full max-w-md p-8 sm:p-10 rounded-3xl bg-[#111115]/95 border border-white/10 shadow-2xl relative overflow-hidden text-center"
+          transition={{ duration: 0.4 }}
+          className="w-full max-w-sm p-8 rounded-2xl bg-[#111114] border border-white/10 relative overflow-hidden text-center"
         >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#ff2e2e]/10 blur-[100px] rounded-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-56 h-56 bg-[#ff2e2e]/10 blur-[90px] rounded-full pointer-events-none" />
 
-          {/* Logo & Header */}
-          <div className="w-16 h-16 rounded-2xl bg-[#ff2e2e]/10 border border-[#ff2e2e]/25 flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#ff2e2e]/20">
-            <Lock className="w-8 h-8 text-[#ff2e2e]" />
+          <div className="w-11 h-11 rounded-xl bg-[#ff2e2e]/10 border border-[#ff2e2e]/25 flex items-center justify-center mx-auto mb-5 text-[#ff4545]">
+            <Lock className="w-5 h-5" />
           </div>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-[10px] font-bold font-['Chakra_Petch'] tracking-wider uppercase mb-2">
-            <span>STAFF DASHBOARD ACCESS</span>
-          </div>
-
-          <h1 className="font-['Plus_Jakarta_Sans'] text-2xl sm:text-3xl font-extrabold text-white mb-2">
-            NexCoreMC Admin Panel
-          </h1>
-          <p className="text-zinc-400 text-xs sm:text-sm mb-6 leading-relaxed">
-            Enter the staff passcode to manage site-wide settings — maintenance mode, the announcement banner, and the server info shown on the website.
+          <h1 className="text-white text-lg font-semibold mb-1.5">Staff sign in</h1>
+          <p className="text-zinc-500 text-sm mb-6 leading-relaxed">
+            Enter the staff passcode to manage maintenance mode, the announcement banner, and the server info shown on the site.
           </p>
 
           {authError && (
-            <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/25 text-red-400 text-xs flex items-center gap-2 text-left">
-              <AlertTriangle className="w-4 h-4 shrink-0" />
+            <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-start gap-2 text-left">
+              <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
               <span>{authError}</span>
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <input
-                type="password"
-                placeholder="Enter Staff Passcode"
-                value={passcode}
-                onChange={(e) => setPasscode(e.target.value)}
-                className="w-full px-4 py-3.5 rounded-xl bg-[#161622] border border-white/10 text-white placeholder-zinc-500 text-sm font-mono focus:outline-none focus:border-[#ff2e2e] transition-colors"
-                autoFocus
-              />
-            </div>
+          <form onSubmit={handleLogin} className="space-y-3">
+            <input
+              type="password"
+              placeholder="Staff passcode"
+              value={passcode}
+              onChange={(e) => setPasscode(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-zinc-600 text-sm focus:outline-none focus:border-[#ff2e2e]/60 transition-colors"
+              autoFocus
+            />
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-white text-xs font-bold font-['Chakra_Petch'] tracking-wider uppercase shadow-lg shadow-[#ff2e2e]/30 cursor-pointer transition-all"
+              className="w-full py-3 rounded-xl bg-[#ff2e2e] hover:bg-[#ff4545] text-white text-sm font-semibold cursor-pointer transition-colors"
             >
-              AUTHENTICATE ACCESS
-            </button>
+              Sign in
+            </motion.button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-white/10 flex flex-col gap-3">
+          <div className="mt-6 pt-5 border-t border-white/[0.06] flex flex-col gap-3">
             <button
               onClick={handleGuestLogin}
-              className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 hover:text-white text-xs font-bold font-['Chakra_Petch'] tracking-wider transition-colors cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-zinc-300 hover:text-white text-sm font-medium transition-colors cursor-pointer"
             >
-              EXPLORE IN DEMO / GUEST MODE
+              Continue in guest mode
             </button>
-            <div className="text-[11px] text-zinc-500 font-mono">
-              Zero Database Required • 100% Free Hosting Ready
-            </div>
+            <p className="text-[11px] text-zinc-600">Guest mode is preview-only — nothing you change there reaches the live site.</p>
           </div>
         </motion.div>
       </div>
     );
   }
 
-  // Authenticated — Website Admin Panel
-  // This panel controls the WEBSITE only (maintenance overlay, banner,
-  // displayed server info, visual FX). It has no connection to the real
-  // Minecraft server — that's configured separately on the server itself.
+  // ---------------------------------------------------------------------
+  // Authenticated — dashboard
+  // ---------------------------------------------------------------------
+  const fxEnabledCount = [siteSettings.fxConfetti, siteSettings.fxGlow].filter(Boolean).length;
+
+  const navItems = [
+    { id: "maintenance", label: "Maintenance", icon: <Power className="w-4 h-4" /> },
+    { id: "announcement", label: "Announcement", icon: <Megaphone className="w-4 h-4" /> },
+    { id: "server-info", label: "Server info", icon: <Server className="w-4 h-4" /> },
+    { id: "visual-fx", label: "Visual FX", icon: <Sparkles className="w-4 h-4" /> },
+    { id: "data", label: "Data", icon: <Database className="w-4 h-4" /> },
+  ];
+
   return (
-    <div className="pt-32 pb-24 relative selection:bg-[#ff2e2e]/30 selection:text-white">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
-        {/* Top Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-white/10">
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-[#ff2e2e]/10 border border-[#ff2e2e]/30 flex items-center justify-center text-[#ff2e2e] shrink-0">
-              <Server className="w-6 h-6" />
+    <div className="pt-32 pb-16 relative bg-[#09090b] min-h-screen selection:bg-[#ff2e2e]/30 selection:text-white">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:grid lg:grid-cols-[220px_1fr] lg:gap-10">
+        {/* ---------------------------------------------------------- */}
+        {/* Sidebar */}
+        {/* ---------------------------------------------------------- */}
+        <aside className="hidden lg:flex flex-col h-[calc(100vh-8rem)] sticky top-32 pb-8">
+          <div className="flex items-center gap-2.5 px-1 mb-8">
+            <div className="w-8 h-8 rounded-lg bg-[#ff2e2e] flex items-center justify-center text-white font-bold text-sm shrink-0">
+              N
             </div>
-            <div>
-              <h1 className="font-['Plus_Jakarta_Sans'] text-2xl font-extrabold text-white">
-                Website Admin Panel
-              </h1>
-              <p className="text-zinc-400 text-xs">
-                Site-wide settings, maintenance mode, and the homepage announcement banner.
-              </p>
+            <div className="min-w-0">
+              <div className="text-white text-sm font-semibold truncate">NexCoreMC</div>
+              <div className="text-zinc-500 text-[11px] truncate">Staff panel</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <Link
-              href="/uptime"
-              className="px-3.5 py-2 rounded-xl bg-[#161622] hover:bg-[#202030] border border-white/10 text-xs font-bold font-['Chakra_Petch'] text-zinc-300 hover:text-white transition-colors flex items-center gap-1.5"
-            >
-              <Activity className="w-3.5 h-3.5 text-emerald-400" />
-              <span>PUBLIC UPTIME</span>
-            </Link>
+          <nav className="flex-1 space-y-6 text-sm">
+            <div>
+              <div className="px-2 text-[11px] font-medium text-zinc-600 uppercase tracking-wide mb-1.5">Overview</div>
+              <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg bg-white/[0.06] text-white">
+                <Home className="w-4 h-4" />
+                <span>Dashboard</span>
+              </div>
+            </div>
 
+            <div>
+              <div className="px-2 text-[11px] font-medium text-zinc-600 uppercase tracking-wide mb-1.5">Settings</div>
+              <div className="space-y-0.5">
+                {navItems.map((item) => (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-colors"
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="px-2 text-[11px] font-medium text-zinc-600 uppercase tracking-wide mb-1.5">Support</div>
+              <div className="space-y-0.5">
+                <Link
+                  href="/uptime"
+                  className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-colors"
+                >
+                  <Activity className="w-4 h-4" />
+                  <span>Public uptime</span>
+                </Link>
+                <a
+                  href={siteSettings.discordUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Discord</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+
+          <div className="pt-4 mt-4 border-t border-white/[0.06]">
+            <div className="flex items-center gap-2.5 px-2 py-2">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                isGuestMode ? "bg-amber-500/15 text-amber-400" : "bg-[#ff2e2e]/15 text-[#ff4545]"
+              }`}>
+                {isGuestMode ? "G" : "S"}
+              </div>
+              <div className="min-w-0">
+                <div className="text-white text-xs font-medium truncate">{isGuestMode ? "Guest staff" : "Staff"}</div>
+                <div className="text-zinc-500 text-[11px] truncate">{isGuestMode ? "Preview only" : "Full access"}</div>
+              </div>
+              <button
+                onClick={handleLogout}
+                title="Sign out"
+                className="ml-auto p-1.5 rounded-lg text-zinc-500 hover:text-white hover:bg-white/[0.06] transition-colors cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+            <Link
+              href="/"
+              className="flex items-center gap-1.5 px-2 py-2 text-[11px] text-zinc-600 hover:text-zinc-300 transition-colors"
+            >
+              <ExternalLink className="w-3 h-3" />
+              <span>View live site</span>
+            </Link>
+          </div>
+        </aside>
+
+        {/* ---------------------------------------------------------- */}
+        {/* Content */}
+        {/* ---------------------------------------------------------- */}
+        <div className="min-w-0">
+          {/* Mobile-only top bar (sidebar is lg+ only) */}
+          <div className="flex lg:hidden items-center justify-between mb-6 pb-4 border-b border-white/[0.06]">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-[#ff2e2e] flex items-center justify-center text-white font-bold text-xs">N</div>
+              <span className="text-white text-sm font-semibold">Staff panel</span>
+            </div>
             <button
               onClick={handleLogout}
-              className="px-3.5 py-2 rounded-xl bg-[#161622] hover:bg-[#202030] border border-white/10 text-xs font-bold font-['Chakra_Petch'] text-zinc-300 hover:text-red-400 transition-colors flex items-center gap-1.5 cursor-pointer"
-              title="Logout session"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-zinc-300 text-xs transition-colors cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span>EXIT</span>
+              <span>Sign out</span>
             </button>
           </div>
-        </div>
 
-        {/* Live/Preview status banner */}
-        {isGuestMode ? (
-          <div className="mb-6 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 shrink-0" />
-            <span>Demo / Guest Mode — these controls are preview-only and won&apos;t affect the live website.</span>
-          </div>
-        ) : isLive ? (
-          <div className="mb-6 p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 shrink-0" />
-            <span>Connected to the live database — changes here apply to every visitor.</span>
-          </div>
-        ) : (
-          <div className="mb-6 p-3.5 rounded-xl bg-white/5 border border-white/10 text-zinc-400 text-xs flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 shrink-0" />
-            <span>No live database connected yet — changes only apply in this browser until DATABASE_URL is configured.</span>
-          </div>
-        )}
+          <div className="text-xs text-zinc-600 mb-2 hidden sm:block">NexCoreMC / Staff / Dashboard</div>
+          <h1 className="text-white text-2xl font-semibold mb-1.5">Dashboard</h1>
+          <p className="text-zinc-500 text-sm mb-5">
+            Maintenance mode, the announcement banner, and the server info shown on the website.
+          </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-8"
-        >
-          {/* 1. Site Maintenance Mode — is the website public or not */}
-          <div className={`p-6 sm:p-8 rounded-3xl border shadow-xl transition-all ${
-            siteSettings.maintenanceMode
-              ? "bg-amber-950/20 border-amber-500/50 shadow-amber-500/10"
-              : "bg-[#111115]/90 border-white/10"
-          }`}>
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-white/10">
-              <div className="flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
-                  siteSettings.maintenanceMode
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/40"
-                    : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
-                }`}>
-                  {siteSettings.maintenanceMode ? <AlertTriangle className="w-6 h-6" /> : <CheckCircle2 className="w-6 h-6" />}
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h2 className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">
-                      Is the Website Public?
-                    </h2>
-                    <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold font-['Chakra_Petch'] uppercase tracking-wider ${
-                      siteSettings.maintenanceMode
-                        ? "bg-amber-500/20 text-amber-300 border border-amber-500/40"
-                        : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
-                    }`}>
-                      {siteSettings.maintenanceMode ? "MAINTENANCE — SITE LOCKED" : "LIVE & PUBLIC"}
-                    </span>
-                  </div>
-                  <p className="text-zinc-400 text-xs sm:text-sm mt-1">
-                    When enabled, every visitor sees the maintenance overlay with your message and ETA instead of the site. Staff logged in here can still browse normally.
-                  </p>
-                </div>
+          {/* Status chip row */}
+          <div className="flex flex-wrap items-center gap-2 mb-8">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-xs text-zinc-300">
+              {siteSettings.maintenanceMode ? (
+                <>
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  Site in maintenance
+                </>
+              ) : (
+                <>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  Site is public
+                </>
+              )}
+            </span>
+
+            {isGuestMode ? (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs text-amber-300">
+                <AlertTriangle className="w-3 h-3" />
+                Guest mode — preview only
+              </span>
+            ) : isLive ? (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-xs text-emerald-300">
+                <CheckCircle2 className="w-3 h-3" />
+                Live database connected
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-xs text-zinc-400">
+                <AlertTriangle className="w-3 h-3" />
+                No live database — changes stay in this browser
+              </span>
+            )}
+
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => {
+                const next = !siteSettings.maintenanceMode;
+                updateSiteSettings({ maintenanceMode: next });
+                showToast(
+                  next ? "Site maintenance enabled" : "Site maintenance disabled",
+                  next ? "Visitors now see the maintenance overlay" : "Website restored to public"
+                );
+              }}
+              className={`ml-auto inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition-colors ${
+                siteSettings.maintenanceMode
+                  ? "bg-emerald-500 hover:bg-emerald-400 text-black"
+                  : "bg-amber-500 hover:bg-amber-400 text-black"
+              }`}
+            >
+              <Power className="w-3.5 h-3.5" />
+              {siteSettings.maintenanceMode ? "Make public again" : "Take site down"}
+            </motion.button>
+          </div>
+
+          {/* Stat tiles */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+            <div className="rounded-xl bg-[#111114]/90 border border-white/[0.08] p-4">
+              <div className="flex items-center gap-1.5 text-zinc-500 text-xs mb-2">
+                <Megaphone className="w-3.5 h-3.5" />
+                <span>Banner</span>
               </div>
+              <div className="text-white text-lg font-semibold">{siteSettings.topBannerEnabled ? "Active" : "Off"}</div>
+            </div>
+            <div className="rounded-xl bg-[#111114]/90 border border-white/[0.08] p-4">
+              <div className="flex items-center gap-1.5 text-zinc-500 text-xs mb-2">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Visual FX</span>
+              </div>
+              <div className="text-white text-lg font-semibold">{fxEnabledCount}/2 enabled</div>
+            </div>
+            <div className="rounded-xl bg-[#111114]/90 border border-white/[0.08] p-4 col-span-2 sm:col-span-1">
+              <div className="flex items-center gap-1.5 text-zinc-500 text-xs mb-2">
+                <Database className="w-3.5 h-3.5" />
+                <span>Settings storage</span>
+              </div>
+              <div className="text-white text-lg font-semibold">{isLive ? "Live database" : "This browser only"}</div>
+            </div>
+          </div>
 
-              <div className="flex items-center gap-3 shrink-0">
-                <button
-                  onClick={() => {
-                    const next = !siteSettings.maintenanceMode;
-                    updateSiteSettings({ maintenanceMode: next });
-                    showToast(
-                      next ? "Site Maintenance ENABLED" : "Site Maintenance DISABLED",
-                      next ? "Website is now in maintenance mode" : "Website restored to live public mode"
-                    );
-                  }}
-                  className={`px-6 py-3 rounded-xl font-bold font-['Chakra_Petch'] text-xs tracking-wider uppercase transition-all cursor-pointer flex items-center gap-2 shadow-lg ${
-                    siteSettings.maintenanceMode
-                      ? "bg-emerald-500 hover:bg-emerald-600 text-black shadow-emerald-500/25"
-                      : "bg-amber-500 hover:bg-amber-600 text-black shadow-amber-500/25"
-                  }`}
-                >
-                  <Power className="w-4 h-4" />
-                  <span>{siteSettings.maintenanceMode ? "MAKE PUBLIC AGAIN" : "TAKE SITE DOWN"}</span>
-                </button>
-
+          {/* Settings cards */}
+          <motion.div
+            variants={cardStagger}
+            initial="hidden"
+            animate="show"
+            className="space-y-5"
+          >
+            {/* 1. Maintenance */}
+            <SettingsCard
+              id="maintenance"
+              icon={<Power className="w-4 h-4" />}
+              title="Maintenance mode"
+              subtitle="When enabled, visitors see the maintenance overlay instead of the site. Staff logged in here still browse normally."
+              action={
                 <a
                   href="/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 hover:text-white transition-colors cursor-pointer"
-                  title="Open Homepage in new tab to test"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-zinc-300 hover:text-white text-xs transition-colors"
                 >
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  Preview homepage
                 </a>
-              </div>
-            </div>
-
-            <div className="mt-6 space-y-5">
-              <div>
-                <label className="text-xs font-bold text-zinc-300 font-['Chakra_Petch'] uppercase block mb-1.5">
-                  Maintenance Message (shown to visitors)
-                </label>
-                <textarea
-                  rows={2}
-                  value={siteSettings.maintenanceMessage}
-                  onChange={(e) => updateSiteSettings({ maintenanceMessage: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-[#161622] border border-white/10 text-white text-xs sm:text-sm focus:outline-none focus:border-[#ff2e2e]"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              }
+            >
+              <div className="space-y-4">
                 <div>
-                  <label className="text-xs font-bold text-zinc-300 font-['Chakra_Petch'] uppercase block mb-1.5">
-                    Estimated Completion Time (ETA)
-                  </label>
-                  <input
-                    type="text"
-                    value={siteSettings.maintenanceEta}
-                    onChange={(e) => updateSiteSettings({ maintenanceEta: e.target.value })}
-                    placeholder="e.g. Today at 11:30 PM IST"
-                    className="w-full px-4 py-2.5 rounded-xl bg-[#161622] border border-white/10 text-white text-xs sm:text-sm focus:outline-none focus:border-[#ff2e2e]"
+                  <label className="text-xs text-zinc-400 block mb-1.5">Message shown to visitors</label>
+                  <textarea
+                    rows={2}
+                    value={siteSettings.maintenanceMessage}
+                    onChange={(e) => updateSiteSettings({ maintenanceMessage: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm focus:outline-none focus:border-[#ff2e2e]/60 transition-colors resize-none"
                   />
                 </div>
-
-                <div>
-                  <label className="text-xs font-bold text-zinc-300 font-['Chakra_Petch'] uppercase block mb-1.5">
-                    This Session
-                  </label>
-                  <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#161622] border border-white/10 text-xs text-zinc-300">
-                    <Lock className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Logged in on this browser only — not tied to any account.</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-zinc-400 block mb-1.5">Estimated completion</label>
+                    <input
+                      type="text"
+                      value={siteSettings.maintenanceEta}
+                      onChange={(e) => updateSiteSettings({ maintenanceEta: e.target.value })}
+                      placeholder="e.g. Today at 11:30 PM IST"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm focus:outline-none focus:border-[#ff2e2e]/60 transition-colors"
+                    />
+                  </div>
+                  <div className="flex items-end">
+                    <div className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs text-zinc-500 w-full">
+                      <Lock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span>This login is local to your browser, not tied to an account.</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </SettingsCard>
 
-          {/* 2. Global Top Announcement Banner */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#111115]/90 border border-white/10 shadow-xl space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
-              <div>
-                <h3 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white">
-                  Homepage Announcement Bar
-                </h3>
-                <p className="text-zinc-400 text-xs">
-                  Displays an alert marquee at the very top of every page across the website.
-                </p>
-              </div>
-
-              <button
-                onClick={() => {
-                  const next = !siteSettings.topBannerEnabled;
-                  updateSiteSettings({ topBannerEnabled: next });
-                  showToast(
-                    next ? "Announcement Bar Activated" : "Announcement Bar Hidden",
-                    next ? "Visible across all pages" : "Disabled"
-                  );
-                }}
-                className={`px-4 py-2 rounded-xl font-bold font-['Chakra_Petch'] text-xs tracking-wider uppercase transition-colors cursor-pointer ${
-                  siteSettings.topBannerEnabled
-                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40"
-                    : "bg-white/5 text-zinc-400 border border-white/10"
-                }`}
-              >
-                {siteSettings.topBannerEnabled ? "BANNER ACTIVE" : "BANNER DISABLED"}
-              </button>
-            </div>
-
-            <div>
-              <label className="text-xs font-bold text-zinc-300 font-['Chakra_Petch'] uppercase block mb-1.5">
-                Announcement Message
-              </label>
-              <input
-                type="text"
-                value={siteSettings.topBannerText}
-                onChange={(e) => updateSiteSettings({ topBannerText: e.target.value })}
-                placeholder="e.g. 🔥 Weekend 2x Coins & XP Event is LIVE! Join now."
-                className="w-full px-4 py-3 rounded-xl bg-[#161622] border border-white/10 text-white text-xs sm:text-sm focus:outline-none focus:border-[#ff2e2e]"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="text-xs font-bold text-zinc-300 font-['Chakra_Petch'] uppercase block mb-1.5">
-                  Banner Alert Style
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { id: "event", label: "🔥 Special Event" },
-                    { id: "urgent", label: "⚠️ Urgent Alert" },
-                    { id: "info", label: "ℹ️ Information" },
-                    { id: "success", label: "✅ Milestone" },
-                  ].map((theme) => (
-                    <button
-                      key={theme.id}
-                      onClick={() => updateSiteSettings({ topBannerType: theme.id as "event" | "urgent" | "info" | "success" })}
-                      className={`p-2.5 rounded-xl border text-left text-xs font-medium transition-all cursor-pointer ${
-                        siteSettings.topBannerType === theme.id
-                          ? "border-[#ff2e2e] bg-[#ff2e2e]/10 text-white font-bold"
-                          : "border-white/5 bg-[#161622] text-zinc-400 hover:text-white"
-                      }`}
-                    >
-                      {theme.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-zinc-300 font-['Chakra_Petch'] uppercase block mb-1.5">
-                  Target Action Link URL
-                </label>
-                <input
-                  type="text"
-                  value={siteSettings.topBannerLink}
-                  onChange={(e) => updateSiteSettings({ topBannerLink: e.target.value })}
-                  placeholder="https://discord.gg/nexcoremc or /store"
-                  className="w-full px-4 py-3 rounded-xl bg-[#161622] border border-white/10 text-white text-xs sm:text-sm font-mono focus:outline-none focus:border-[#ff2e2e]"
+            {/* 2. Announcement banner */}
+            <SettingsCard
+              id="announcement"
+              icon={<Megaphone className="w-4 h-4" />}
+              title="Homepage announcement bar"
+              subtitle="A dismissible alert strip at the top of every page."
+              action={
+                <PillSwitch
+                  on={siteSettings.topBannerEnabled}
+                  label="Toggle announcement bar"
+                  onToggle={() => {
+                    const next = !siteSettings.topBannerEnabled;
+                    updateSiteSettings({ topBannerEnabled: next });
+                    showToast(next ? "Announcement bar on" : "Announcement bar off", next ? "Visible across the site" : "Hidden");
+                  }}
                 />
-              </div>
-            </div>
-          </div>
-
-          {/* 3. Server Info shown on the website (display-only — doesn't touch the real server) */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#111115]/90 border border-white/10 shadow-xl space-y-6">
-            <div>
-              <h3 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white pb-1">
-                Server Info Displayed on the Website
-              </h3>
-              <p className="text-zinc-400 text-xs pb-3 border-b border-white/10">
-                Edits what&apos;s shown to visitors (Hero, footer, join pages). Doesn&apos;t reconfigure the real Minecraft server — that&apos;s done on the server itself.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-              <div>
-                <label className="font-bold text-zinc-400 uppercase font-['Chakra_Petch'] block mb-1">
-                  Displayed Server IP
-                </label>
-                <input
-                  type="text"
-                  value={siteSettings.serverIp}
-                  onChange={(e) => updateSiteSettings({ serverIp: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-[#161622] border border-white/10 text-white font-mono focus:outline-none focus:border-[#ff2e2e]"
-                />
-              </div>
-
-              <div>
-                <label className="font-bold text-zinc-400 uppercase font-['Chakra_Petch'] block mb-1">
-                  Java Edition Port
-                </label>
-                <input
-                  type="text"
-                  value={siteSettings.javaPort}
-                  onChange={(e) => updateSiteSettings({ javaPort: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-[#161622] border border-white/10 text-white font-mono focus:outline-none focus:border-[#ff2e2e]"
-                />
-              </div>
-
-              <div>
-                <label className="font-bold text-zinc-400 uppercase font-['Chakra_Petch'] block mb-1">
-                  Bedrock UDP Port
-                </label>
-                <input
-                  type="text"
-                  value={siteSettings.bedrockPort}
-                  onChange={(e) => updateSiteSettings({ bedrockPort: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-[#161622] border border-white/10 text-white font-mono focus:outline-none focus:border-[#ff2e2e]"
-                />
-              </div>
-
-              <div>
-                <label className="font-bold text-zinc-400 uppercase font-['Chakra_Petch'] block mb-1">
-                  Discord Invite URL
-                </label>
-                <input
-                  type="text"
-                  value={siteSettings.discordUrl}
-                  onChange={(e) => updateSiteSettings({ discordUrl: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-[#161622] border border-white/10 text-white font-mono focus:outline-none focus:border-[#ff2e2e]"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* 4. Visual FX & Website Client Controls */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#111115]/90 border border-white/10 shadow-xl space-y-6">
-            <h3 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white pb-3 border-b border-white/10">
-              Visual FX & Website Client Controls
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-2xl bg-[#161622] border border-white/5 flex items-center justify-between">
+              }
+            >
+              <div className="space-y-4">
                 <div>
-                  <span className="font-bold text-white text-xs font-['Chakra_Petch'] uppercase block">
-                    Confetti on Copy IP
-                  </span>
-                  <span className="text-[11px] text-zinc-400">Fires red & white particles when visitors copy the server IP</span>
+                  <label className="text-xs text-zinc-400 block mb-1.5">Message</label>
+                  <input
+                    type="text"
+                    value={siteSettings.topBannerText}
+                    onChange={(e) => updateSiteSettings({ topBannerText: e.target.value })}
+                    placeholder="e.g. 🔥 Weekend 2x Coins & XP Event is LIVE! Join now."
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm focus:outline-none focus:border-[#ff2e2e]/60 transition-colors"
+                  />
                 </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-zinc-400 block mb-1.5">Style</label>
+                    <div className="flex flex-wrap gap-1.5">
+                      {[
+                        { id: "event", label: "🔥 Event" },
+                        { id: "urgent", label: "⚠️ Urgent" },
+                        { id: "info", label: "ℹ️ Info" },
+                        { id: "success", label: "✅ Success" },
+                      ].map((theme) => (
+                        <button
+                          key={theme.id}
+                          onClick={() => updateSiteSettings({ topBannerType: theme.id as "event" | "urgent" | "info" | "success" })}
+                          className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer border ${
+                            siteSettings.topBannerType === theme.id
+                              ? "border-[#ff2e2e] bg-[#ff2e2e]/10 text-white"
+                              : "border-white/10 bg-transparent text-zinc-400 hover:text-white"
+                          }`}
+                        >
+                          {theme.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs text-zinc-400 block mb-1.5">Link URL</label>
+                    <input
+                      type="text"
+                      value={siteSettings.topBannerLink}
+                      onChange={(e) => updateSiteSettings({ topBannerLink: e.target.value })}
+                      placeholder="https://discord.gg/nexcoremc or /store"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm font-mono focus:outline-none focus:border-[#ff2e2e]/60 transition-colors"
+                    />
+                  </div>
+                </div>
+              </div>
+            </SettingsCard>
+
+            {/* 3. Server info */}
+            <SettingsCard
+              id="server-info"
+              icon={<Server className="w-4 h-4" />}
+              title="Server info shown on the website"
+              subtitle="Updates the Hero, footer, and join pages — not the real Minecraft server, which is configured separately."
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <CopyField label="Displayed server IP" value={siteSettings.serverIp} onChange={(v) => updateSiteSettings({ serverIp: v })} />
+                <CopyField label="Java edition port" value={siteSettings.javaPort} onChange={(v) => updateSiteSettings({ javaPort: v })} />
+                <CopyField label="Bedrock UDP port" value={siteSettings.bedrockPort} onChange={(v) => updateSiteSettings({ bedrockPort: v })} />
+                <CopyField label="Discord invite URL" value={siteSettings.discordUrl} onChange={(v) => updateSiteSettings({ discordUrl: v })} />
+              </div>
+            </SettingsCard>
+
+            {/* 4. Visual FX */}
+            <SettingsCard
+              id="visual-fx"
+              icon={<Sparkles className="w-4 h-4" />}
+              title="Visual FX"
+              subtitle="Client-side touches visitors see on the public site."
+            >
+              <div className="divide-y divide-white/[0.06]">
+                <div className="flex items-center justify-between gap-4 py-3.5 first:pt-0">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 shrink-0">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-white text-sm font-medium">Confetti on copy IP</div>
+                      <div className="text-zinc-500 text-xs">Fires red &amp; white particles when visitors copy the server IP</div>
+                    </div>
+                  </div>
+                  <PillSwitch
+                    on={siteSettings.fxConfetti}
+                    label="Toggle confetti effect"
+                    onToggle={() => updateSiteSettings({ fxConfetti: !siteSettings.fxConfetti })}
+                  />
+                </div>
+                <div className="flex items-center justify-between gap-4 py-3.5 last:pb-0">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 shrink-0">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-white text-sm font-medium">Ambient glow</div>
+                      <div className="text-zinc-500 text-xs">Pulsing red ambient glow in the Hero and page headers</div>
+                    </div>
+                  </div>
+                  <PillSwitch
+                    on={siteSettings.fxGlow}
+                    label="Toggle ambient glow effect"
+                    onToggle={() => updateSiteSettings({ fxGlow: !siteSettings.fxGlow })}
+                  />
+                </div>
+              </div>
+            </SettingsCard>
+
+            {/* 5. Data */}
+            <SettingsCard
+              id="data"
+              icon={<Database className="w-4 h-4" />}
+              title="Backup & reset"
+              subtitle="Export a snapshot of the current settings, or restore the factory defaults."
+            >
+              <div className="flex flex-wrap items-center gap-2.5">
                 <button
-                  onClick={() => updateSiteSettings({ fxConfetti: !siteSettings.fxConfetti })}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold font-mono transition-colors cursor-pointer ${
-                    siteSettings.fxConfetti ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-white/5 text-zinc-500"
-                  }`}
+                  onClick={() => {
+                    navigator.clipboard.writeText(JSON.stringify(siteSettings, null, 2));
+                    showToast("Settings copied", "JSON backup copied to clipboard");
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-zinc-200 text-xs font-medium transition-colors cursor-pointer"
                 >
-                  {siteSettings.fxConfetti ? "ENABLED" : "OFF"}
+                  <Copy className="w-3.5 h-3.5" />
+                  Export JSON
+                </button>
+                <button
+                  onClick={() => {
+                    if (confirm("Reset all website settings to factory defaults?")) {
+                      resetSiteSettings();
+                      showToast("Reset complete", "Default site settings restored");
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/15 border border-red-500/20 text-red-400 text-xs font-medium transition-colors cursor-pointer"
+                >
+                  Reset defaults
                 </button>
               </div>
-
-              <div className="p-4 rounded-2xl bg-[#161622] border border-white/5 flex items-center justify-between">
-                <div>
-                  <span className="font-bold text-white text-xs font-['Chakra_Petch'] uppercase block">
-                    Ambient Neon Glow Effects
-                  </span>
-                  <span className="text-[11px] text-zinc-400">Dynamic pulsing red ambient glow in Hero & headers</span>
-                </div>
-                <button
-                  onClick={() => updateSiteSettings({ fxGlow: !siteSettings.fxGlow })}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold font-mono transition-colors cursor-pointer ${
-                    siteSettings.fxGlow ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-white/5 text-zinc-500"
-                  }`}
-                >
-                  {siteSettings.fxGlow ? "ENABLED" : "OFF"}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* 5. Backup, Export & Factory Reset */}
-          <div className="p-6 rounded-2xl bg-[#161622] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <span className="font-bold text-white text-xs font-['Chakra_Petch'] uppercase block">
-                Configuration Management
-              </span>
-              <span className="text-[11px] text-zinc-400">Settings automatically persist in your browser with zero database dependency.</span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(JSON.stringify(siteSettings, null, 2));
-                  showToast("Settings JSON Copied", "Backup copied to clipboard");
-                }}
-                className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold font-['Chakra_Petch'] text-zinc-200 transition-colors cursor-pointer"
-              >
-                EXPORT JSON
-              </button>
-              <button
-                onClick={() => {
-                  if (confirm("Reset all website settings to factory defaults?")) {
-                    resetSiteSettings();
-                    showToast("Reset Complete", "Default site settings restored");
-                  }
-                }}
-                className="px-3.5 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/25 text-xs font-bold font-['Chakra_Petch'] text-red-400 transition-colors cursor-pointer"
-              >
-                RESET DEFAULTS
-              </button>
-            </div>
-          </div>
-        </motion.div>
+            </SettingsCard>
+          </motion.div>
+        </div>
       </div>
     </div>
   );

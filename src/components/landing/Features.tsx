@@ -8,32 +8,32 @@ export function Features() {
   const features = [
     {
       icon: Zap,
-      title: "Mumbai Ultra-Low Latency",
+      title: "Mumbai ultra-low latency",
       desc: "Hosted on Tier-4 Indian datacenter infrastructure ensuring crisp 10-20ms ping for Indian players and sub-50ms across South Asia.",
     },
     {
       icon: ShieldAlert,
-      title: "Enterprise Anti-Cheat Engine",
+      title: "Enterprise anti-cheat engine",
       desc: "Custom detection engine analyzing combat patterns, movement mechanics, and packet validation in real time for 100% fair competitive play.",
     },
     {
       icon: Coins,
-      title: "Player-Driven Balanced Economy",
+      title: "Player-driven balanced economy",
       desc: "Zero pay-to-win mechanics. Fair chest shops, player warps, auction house, and community marketplace designed for player trading.",
     },
     {
       icon: Trophy,
-      title: "Scheduled Cash & Rank Tournaments",
+      title: "Scheduled cash & rank tournaments",
       desc: "Monthly competitive Bedwars & Practice tournaments with real rewards, custom trophy tags, and live streamed finals.",
     },
     {
       icon: Sparkles,
-      title: "Custom Vanilla+ Optimizations",
+      title: "Custom vanilla+ optimizations",
       desc: "Enhanced performance engine maintaining consistent 20.0 TPS with custom land claims, vein miner QoL, and responsive bridging.",
     },
     {
       icon: Headphones,
-      title: "24/7 Dedicated Support Desk",
+      title: "24/7 dedicated support desk",
       desc: "Active moderation team and automated Discord ticket desk ready to resolve inquiries, rule violations, and account requests.",
     },
   ];
@@ -49,11 +49,11 @@ export function Features() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
-            Network Advantages
+          <div className="rounded-full inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 text-[#ff4545] text-sm font-medium mb-5">
+            Network advantages
           </div>
-          <h2 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
-            WHY PLAY ON <span className="text-[#ff4545]">NEXCOREMC</span>
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+            Why play on <span className="text-[#ff4545]">NexCoreMC</span>
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
             Built by competitive Minecraft veterans for gamers who demand high performance, fair play, and an active community.
@@ -71,14 +71,14 @@ export function Features() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.45, delay: idx * 0.08, ease: "easeOut" }}
-                className="mc-panel group relative p-7 bg-[#1a120f] hover:bg-[#201712] transition-all duration-300 flex flex-col justify-between"
+                className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] group relative p-7 hover:bg-white/[0.04] transition-colors duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="mc-outline w-12 h-12 bg-[#ff2e2e]/10 flex items-center justify-center text-[#ff2e2e] mb-6 group-hover:bg-[#ff2e2e]/20 group-hover:scale-110 transition-all duration-300">
+                  <div className="rounded-xl w-12 h-12 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 flex items-center justify-center text-[#ff2e2e] mb-6 group-hover:scale-110 transition-all duration-300">
                     <Icon className="w-6 h-6" />
                   </div>
 
-                  <h3 className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white mb-3 tracking-tight">
+                  <h3 className="font-heading text-xl font-bold text-white mb-3 tracking-tight">
                     {feature.title}
                   </h3>
 
@@ -87,12 +87,9 @@ export function Features() {
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-zinc-500">
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-[#ff2e2e]" />
-                    <span>Verified Infrastructure</span>
-                  </div>
-                  <span className="text-[9px] text-zinc-600 font-pixel">0{idx + 1}</span>
+                <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-zinc-500">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff2e2e]" />
+                  <span>Verified infrastructure</span>
                 </div>
               </motion.div>
             );

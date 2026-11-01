@@ -30,11 +30,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Press+Start+2P&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#0d0806] text-[#f4f4f6] selection:bg-[#ff2e2e]/30 selection:text-white flex flex-col font-sans bg-pixel-noise">
+      <body className="min-h-screen bg-[#09090b] text-[#f4f4f6] selection:bg-[#ff2e2e]/30 selection:text-white flex flex-col font-sans">
         <SmoothScrollProvider>
           <TooltipProvider delay={150}>
             <ToastProvider>

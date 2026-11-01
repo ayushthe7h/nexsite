@@ -26,99 +26,99 @@ export function GameModes() {
   const gameModes: GameMode[] = [
     {
       id: "survival",
-      title: "SURVIVAL SMP",
-      badge: "MOST POPULAR",
-      badgeColor: "bg-[#ff2e2e]/20 text-[#ff4545]",
+      title: "Survival SMP",
+      badge: "Most popular",
+      badgeColor: "bg-[#ff2e2e]/15 text-[#ff4545]",
       icon: Compass,
       image: "/assets/survival.jpg",
       description:
         "Classic survival elevated with custom player economy, golden shovel land claims, custom enchantments, player warps, and community boss dungeons.",
       features: [
-        "Grief Prevention & Land Claims",
-        "Player Warps & Player-driven Economy",
-        "Custom Dungeons & Boss Spawns",
-        "Auction House & Chest Shops",
+        "Grief prevention & land claims",
+        "Player warps & player-driven economy",
+        "Custom dungeons & boss spawns",
+        "Auction house & chest shops",
       ],
-      version: "1.20.x Compatible",
-      playerCapacity: "Dedicated SMP Realm",
+      version: "1.20.x compatible",
+      playerCapacity: "Dedicated SMP realm",
     },
     {
       id: "bedwars",
-      title: "COMPETITIVE BEDWARS",
-      badge: "ESPORTS FOCUS",
-      badgeColor: "bg-blue-500/20 text-blue-400",
+      title: "Competitive Bedwars",
+      badge: "Esports focus",
+      badgeColor: "bg-blue-500/15 text-blue-400",
       icon: Swords,
       image: "/assets/bedwars.jpg",
       description:
         "Fast-paced tactical bed protection with refined generator speeds, smooth bridging mechanics, custom shop balancing, and monthly competitive tournaments.",
       features: [
-        "Solo, Doubles, 3v3v3v3 & 4v4v4v4 Modes",
-        "Responsive Hit Registration & Fast Bridging",
-        "Ranked Elo & Monthly Trophy Ladders",
-        "Cosmetic Kill Effects & Win Celebrations",
+        "Solo, doubles, 3v3v3v3 & 4v4v4v4 modes",
+        "Responsive hit registration & fast bridging",
+        "Ranked Elo & monthly trophy ladders",
+        "Cosmetic kill effects & win celebrations",
       ],
-      version: "1.8 - 1.20+ Seamless",
-      playerCapacity: "Instant Matchmaking",
+      version: "1.8 - 1.20+ seamless",
+      playerCapacity: "Instant matchmaking",
     },
     {
       id: "practice",
-      title: "PRACTICE PVP",
-      badge: "RANKED LADDER",
-      badgeColor: "bg-emerald-500/20 text-emerald-400",
+      title: "Practice PvP",
+      badge: "Ranked ladder",
+      badgeColor: "bg-emerald-500/15 text-emerald-400",
       icon: Target,
       image: "/assets/survival.jpg",
       description:
         "High-performance 1v1 and team duels featuring NoDebuff, Boxing, Classic, Combo, GApple, and custom kits with pristine knockback profiles.",
       features: [
-        "Optimized Knockback & Hit Detection",
-        "Ranked & Unranked Match Queues",
-        "Post-Match Damage Analytics",
-        "Custom Kit Editor & FFA Arenas",
+        "Optimized knockback & hit detection",
+        "Ranked & unranked match queues",
+        "Post-match damage analytics",
+        "Custom kit editor & FFA arenas",
       ],
-      version: "1.8.9 Combat Mechanics",
-      playerCapacity: "Global Leaderboards",
+      version: "1.8.9 combat mechanics",
+      playerCapacity: "Global leaderboards",
     },
     {
       id: "parkour",
-      title: "PARKOUR REALMS",
-      badge: "SKILL & SPEED",
-      badgeColor: "bg-amber-500/20 text-amber-400",
+      title: "Parkour realms",
+      badge: "Skill & speed",
+      badgeColor: "bg-amber-500/15 text-amber-400",
       icon: Flame,
       image: "/assets/bedwars.jpg",
       description:
         "Precision jump courses spanning from beginner courses to elite master runs. Features millisecond time tracking, ghost replays, and checkpoint portals.",
       features: [
-        "50+ Linear & Open Jump Courses",
-        "Millisecond Precision Timer",
-        "Checkpoint Persistence & Quick Reset",
-        "Speedrun Leaderboard Trophies",
+        "50+ linear & open jump courses",
+        "Millisecond precision timer",
+        "Checkpoint persistence & quick reset",
+        "Speedrun leaderboard trophies",
       ],
-      version: "Universal Support",
-      playerCapacity: "Single & Multiplayer",
+      version: "Universal support",
+      playerCapacity: "Single & multiplayer",
     },
     {
       id: "minigames",
-      title: "MINI-GAMES HUB",
-      badge: "PARTY GAMES",
-      badgeColor: "bg-rose-500/20 text-rose-400",
+      title: "Mini-games hub",
+      badge: "Party games",
+      badgeColor: "bg-rose-500/15 text-rose-400",
       icon: Gamepad2,
       image: "/assets/hero_bg.jpg",
       description:
         "Fast-paced party games including The Bridge, SkyWars, and Wool Wars - quick rounds, easy to jump into with friends.",
       features: [
         "The Bridge (1v1 & 2v2)",
-        "Fast-Paced SkyWars",
-        "Wool Wars Team Battles",
-        "Weekend Community Events",
+        "Fast-paced SkyWars",
+        "Wool Wars team battles",
+        "Weekend community events",
       ],
-      version: "1.8 - 1.20+ Supported",
-      playerCapacity: "Party & Solo Queues",
+      version: "1.8 - 1.20+ supported",
+      playerCapacity: "Party & solo queues",
       isWide: true,
     },
   ];
 
   return (
-    <section id="modes" className="py-28 lg:py-32 relative z-10 bg-pixel-grid">
+    <section id="modes" className="py-28 lg:py-32 relative z-10">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
@@ -128,11 +128,11 @@ export function GameModes() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
-            Game Realms
+          <div className="rounded-full inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 text-[#ff4545] text-sm font-medium mb-5">
+            Game realms
           </div>
-          <h2 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
-            FEATURED<br /><span className="text-[#ff4545]">GAME MODES</span>
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+            Featured<br /><span className="text-[#ff4545]">game modes</span>
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
             Engineered from scratch for flawless competitive integrity, smooth
@@ -153,13 +153,13 @@ export function GameModes() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
-                className={`mc-panel group relative bg-[#1a120f] overflow-hidden transition-all duration-300 flex flex-col justify-between ${
+                className={`rounded-2xl bg-[#111114]/90 border border-white/[0.08] group relative overflow-hidden transition-all duration-300 flex flex-col justify-between ${
                   isWideCard ? "md:col-span-2" : ""
                 }`}
               >
                 {/* Mode Top Thumbnail Area */}
                 <div
-                  className={`relative w-full overflow-hidden bg-[#181114] border-b-2 border-black/40 ${
+                  className={`relative w-full overflow-hidden bg-[#161618] border-b border-white/[0.08] ${
                     isWideCard ? "h-52 sm:h-64" : "h-48 sm:h-56"
                   }`}
                 >
@@ -169,24 +169,23 @@ export function GameModes() {
                     fill
                     className="object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 100vw"
-                    style={{ imageRendering: "pixelated" }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a120f] via-[#1a120f]/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#111114] via-[#111114]/60 to-transparent" />
 
                   {/* Badge & Icon */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
                     <span
-                      className={`mc-outline text-[8px] font-pixel px-2.5 py-1.5 bg-[#15100c] uppercase ${mode.badgeColor}`}
+                      className={`rounded-full text-[11px] font-semibold px-2.5 py-1 bg-[#111114]/80 border border-white/10 ${mode.badgeColor}`}
                     >
                       {mode.badge}
                     </span>
-                    <div className="mc-outline w-9 h-9 bg-[#15100c] flex items-center justify-center text-[#ff2e2e] group-hover:scale-110 transition-transform">
+                    <div className="rounded-full w-9 h-9 bg-[#111114]/80 border border-white/10 flex items-center justify-center text-[#ff2e2e] group-hover:scale-110 transition-transform">
                       <Icon className="w-5 h-5" />
                     </div>
                   </div>
 
                   <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="font-pixel text-sm sm:text-base text-white leading-relaxed">
+                    <h3 className="font-heading text-lg sm:text-xl font-bold text-white">
                       {mode.title}
                     </h3>
                   </div>
@@ -208,7 +207,7 @@ export function GameModes() {
                         key={idx}
                         className="flex items-center gap-2.5 text-xs text-zinc-300"
                       >
-                        <span className="mc-outline w-4 h-4 bg-emerald-500/15 flex items-center justify-center text-emerald-400 shrink-0">
+                        <span className="rounded-full w-4 h-4 bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0">
                           <Check className="w-2.5 h-2.5" />
                         </span>
                         <span>{feature}</span>
@@ -216,15 +215,15 @@ export function GameModes() {
                     ))}
                   </div>
 
-                  <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                  <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between">
                     <span className="text-xs font-mono text-zinc-500">
                       {mode.version}
                     </span>
                     <button
                       onClick={() => setSelectedMode(mode)}
-                      className="inline-flex items-center gap-1.5 text-[9px] font-pixel text-[#ff2e2e] hover:text-[#ff4545] uppercase transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#ff2e2e] hover:text-[#ff4545] transition-colors cursor-pointer"
                     >
-                      <span>VIEW DETAILS</span>
+                      <span>View details</span>
                       <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -241,12 +240,12 @@ export function GameModes() {
         onOpenChange={(open) => !open && setSelectedMode(null)}
       >
         {selectedMode && (
-          <DialogContent className="mc-panel bg-[#1a120f] border-0 text-white max-w-lg p-6 sm:p-8">
+          <DialogContent className="rounded-2xl bg-[#111115] border border-white/10 text-white max-w-lg p-6 sm:p-8">
             <DialogHeader>
-              <div className="mc-outline inline-flex items-center gap-2 px-3 py-1.5 bg-[#ff2e2e]/10 text-[#ff4545] text-[8px] font-pixel uppercase w-fit mb-2">
+              <div className="rounded-full inline-flex items-center gap-2 px-3 py-1.5 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 text-[#ff4545] text-xs font-semibold w-fit mb-2">
                 {selectedMode.badge}
               </div>
-              <DialogTitle className="font-pixel text-base text-white">
+              <DialogTitle className="font-heading text-xl font-bold text-white">
                 {selectedMode.title}
               </DialogTitle>
               <DialogDescription className="text-zinc-300 text-sm leading-relaxed mt-2">
@@ -255,13 +254,13 @@ export function GameModes() {
             </DialogHeader>
 
             <div className="mt-4 space-y-3">
-              <h4 className="text-[9px] font-pixel text-zinc-400 uppercase">
-                Mode Features
+              <h4 className="text-xs font-semibold text-zinc-400">
+                Mode features
               </h4>
-              <div className="mc-panel-sunken space-y-2 bg-black/30 p-4">
+              <div className="rounded-xl space-y-2 bg-black/20 border border-white/[0.06] p-4">
                 {selectedMode.features.map((feat, i) => (
                   <div key={i} className="flex items-center gap-2.5 text-xs text-zinc-200">
-                    <span className="mc-outline w-4 h-4 bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                    <span className="rounded-full w-4 h-4 bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 flex items-center justify-center shrink-0">
                       <Check className="w-2.5 h-2.5" />
                     </span>
                     <span>{feat}</span>
@@ -277,9 +276,9 @@ export function GameModes() {
               <a
                 href="/#how-to-join"
                 onClick={() => setSelectedMode(null)}
-                className="mc-btn px-4 py-2.5 bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] text-white text-[9px] font-pixel hover:from-[#ff4545] hover:to-[#dc2626]"
+                className="rounded-full px-5 py-2.5 bg-[#ff2e2e] hover:bg-[#ff4545] text-white text-sm font-semibold transition-colors"
               >
-                JOIN MODE NOW
+                Join mode now
               </a>
             </div>
           </DialogContent>

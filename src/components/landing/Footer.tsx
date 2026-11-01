@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Copy, Check, ExternalLink } from "lucide-react";
 import { useToastNotification } from "./ToastContext";
 
@@ -14,12 +13,12 @@ export function Footer() {
   const handleCopy = () => {
     navigator.clipboard.writeText("nexcoremc.in");
     setCopied(true);
-    showToast("Server IP Copied!", "nexcoremc.in (Port: 25565 Java / 25567 Bedrock)");
+    showToast("Server IP copied", "nexcoremc.in (Port: 25565 Java / 25567 Bedrock)");
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <footer className="bg-[#060503] border-t-2 border-[#ff2e2e]/20 pt-20 pb-12 relative z-10 text-zinc-400 text-sm bg-pixel-noise">
+    <footer className="bg-[#09090b] border-t border-white/[0.08] pt-20 pb-12 relative z-10 text-zinc-400 text-sm">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-16 border-b border-white/10">
           {/* Col 1: Brand info */}
@@ -32,7 +31,6 @@ export function Footer() {
                   width={40}
                   height={40}
                   className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(255,46,46,0.5)] group-hover:scale-105 transition-transform"
-                  style={{ imageRendering: "pixelated" }}
                 />
               </div>
               <span className="font-['Chakra_Petch'] text-2xl font-bold tracking-tight text-white leading-none">
@@ -44,10 +42,10 @@ export function Footer() {
               India&apos;s premier dedicated Minecraft multiplayer network. Low-latency Mumbai hosting, active competitive tournaments, and custom survival realms.
             </p>
 
-            <div className="mc-panel p-3.5 bg-[#1a120f] flex items-center justify-between gap-4 w-full max-w-xs">
+            <div className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-3.5 flex items-center justify-between gap-4 w-full max-w-xs">
               <div className="flex flex-col">
-                <span className="text-[9px] font-pixel text-zinc-500 uppercase tracking-wide mb-1">
-                  Server Address
+                <span className="text-[11px] text-zinc-500 mb-1">
+                  Server address
                 </span>
                 <span className="font-mono text-sm font-bold text-white">
                   nexcoremc.in
@@ -55,8 +53,8 @@ export function Footer() {
               </div>
               <button
                 onClick={handleCopy}
-                className="mc-btn p-2 bg-[#241a15] hover:bg-[#2c1f18] text-zinc-300 hover:text-white cursor-pointer"
-                title="Copy Server Address"
+                className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-zinc-300 hover:text-white cursor-pointer transition-colors"
+                title="Copy server address"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
               </button>
@@ -65,51 +63,51 @@ export function Footer() {
 
           {/* Col 2: Navigation */}
           <div className="flex flex-col gap-3">
-            <h4 className="font-pixel text-[10px] text-[#ff4545] uppercase tracking-wide mb-2">
+            <h4 className="text-xs font-semibold text-white mb-1">
               Navigation
             </h4>
             <Link href="/" className="hover:text-white transition-colors">
               Home
             </Link>
             <Link href="/modes" className="hover:text-white transition-colors">
-              Game Modes
+              Game modes
             </Link>
             <Link href="/how-to-join" className="hover:text-white transition-colors">
-              How to Join
+              How to join
             </Link>
             <Link href="/features" className="hover:text-white transition-colors">
-              Network Features
+              Network features
             </Link>
             <Link href="/store" className="hover:text-white transition-colors">
-              Store & Ranks
+              Store & ranks
             </Link>
             <Link href="/uptime" className="hover:text-white transition-colors">
-              Network Status & Uptime
+              Network status & uptime
             </Link>
             <Link href="/panel" className="hover:text-white transition-colors">
-              Staff Control Panel
+              Staff control panel
             </Link>
           </div>
 
           {/* Col 3: Legal */}
           <div className="flex flex-col gap-3">
-            <h4 className="font-pixel text-[10px] text-[#ff4545] uppercase tracking-wide mb-2">
-              Legal & Rules
+            <h4 className="text-xs font-semibold text-white mb-1">
+              Legal & rules
             </h4>
             <Link href="/privacy" className="hover:text-white transition-colors">
-              Privacy Policy
+              Privacy policy
             </Link>
             <Link href="/terms" className="hover:text-white transition-colors">
-              Terms & Conditions
+              Terms & conditions
             </Link>
             <Link href="/faq" className="hover:text-white transition-colors">
-              Server Rules & FAQ
+              Server rules & FAQ
             </Link>
           </div>
 
           {/* Col 4: Community */}
           <div className="flex flex-col gap-3">
-            <h4 className="font-pixel text-[10px] text-[#ff4545] uppercase tracking-wide mb-2">
+            <h4 className="text-xs font-semibold text-white mb-1">
               Community
             </h4>
             <a
@@ -118,7 +116,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="hover:text-[#818cf8] transition-colors flex items-center gap-1.5"
             >
-              <span>Discord Server</span>
+              <span>Discord server</span>
               <ExternalLink className="w-3.5 h-3.5 opacity-60" />
             </a>
             <a

@@ -30,17 +30,17 @@ const REWARDS = [
 const STEPS = [
   {
     icon: MousePointerClick,
-    title: "Click Vote Now",
+    title: "Click vote now",
     desc: "Opens Minecraft-MP in a new tab — no download, no sign-up.",
   },
   {
     icon: ShieldCheck,
-    title: "Vote For NexCoreMC",
+    title: "Vote for NexCoreMC",
     desc: "Clear the quick captcha so the vote counts for your IGN.",
   },
   {
     icon: Sparkles,
-    title: "Claim In-Game",
+    title: "Claim in-game",
     desc: "Rewards apply automatically within minutes while you're online.",
   },
 ];
@@ -53,7 +53,7 @@ export function Vote() {
   };
 
   return (
-    <section className="py-16 lg:py-20 relative z-10 bg-pixel-grid">
+    <section className="py-16 lg:py-20 relative z-10">
       <div className="max-w-[1100px] mx-auto px-4 sm:px-6">
         {/* Rewards Grid */}
         <motion.div
@@ -66,12 +66,12 @@ export function Vote() {
           {REWARDS.map((reward) => (
             <div
               key={reward.label}
-              className="mc-panel p-5 bg-[#1a120f] hover:bg-[#201712] transition-colors text-center flex flex-col items-center gap-2.5 group"
+              className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-5 hover:bg-white/[0.04] transition-colors text-center flex flex-col items-center gap-2.5 group"
             >
-              <div className="mc-outline w-12 h-12 bg-[#ff2e2e]/10 flex items-center justify-center text-[#ff4545] group-hover:scale-105 transition-transform">
+              <div className="rounded-xl w-12 h-12 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 flex items-center justify-center text-[#ff4545] group-hover:scale-105 transition-transform">
                 <reward.icon className="w-5 h-5" />
               </div>
-              <span className="font-['Chakra_Petch'] font-bold text-white text-sm sm:text-[15px]">
+              <span className="font-heading font-bold text-white text-sm sm:text-[15px]">
                 {reward.label}
               </span>
               <span className="text-[11px] text-zinc-500 leading-snug">{reward.desc}</span>
@@ -85,16 +85,16 @@ export function Vote() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="mc-panel relative p-8 sm:p-12 bg-[#1a120f] text-center overflow-hidden"
+          className="rounded-3xl relative bg-[#111114]/90 border border-white/[0.08] p-8 sm:p-12 text-center overflow-hidden"
         >
           <div className="absolute -top-16 -right-16 w-64 h-64 bg-[#ff2e2e]/15 blur-[90px] rounded-full pointer-events-none" />
 
-          <div className="mc-outline w-14 h-14 bg-[#ff2e2e]/15 flex items-center justify-center mx-auto mb-5 text-[#ff2e2e]">
+          <div className="rounded-full w-14 h-14 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 flex items-center justify-center mx-auto mb-5 text-[#ff2e2e]">
             <Trophy className="w-7 h-7" />
           </div>
 
-          <h2 className="font-pixel text-base sm:text-xl text-white leading-[1.8] mb-4">
-            VOTE. UNLOCK REWARDS.<br /><span className="text-[#ff4545]">REPEAT EVERY 24H.</span>
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white tracking-tight mb-4">
+            Vote, unlock rewards.<br /><span className="text-[#ff4545]">Repeat every 24 hours.</span>
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base max-w-xl mx-auto mb-7">
             One click, no download — vote for NexCoreMC on Minecraft-MP and your rewards land in-game automatically.
@@ -105,9 +105,9 @@ export function Vote() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleVoteClick}
-            className="mc-btn inline-flex items-center gap-2.5 px-7 py-4 bg-gradient-to-r from-[#ff2e2e] to-[#b91c1c] hover:from-[#ff4545] hover:to-[#dc2626] text-white font-pixel text-[10px] cursor-pointer"
+            className="rounded-full inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#ff2e2e] hover:bg-[#ff4545] text-white font-semibold text-sm cursor-pointer transition-colors"
           >
-            <span>VOTE NOW ON MINECRAFT-MP</span>
+            <span>Vote now on Minecraft-MP</span>
             <ExternalLink className="w-4 h-4" />
           </a>
 
@@ -126,17 +126,17 @@ export function Vote() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="mc-panel p-6 bg-[#1a120f]/80 relative"
+              className="rounded-2xl bg-[#111114]/70 border border-white/[0.08] p-6 relative"
             >
               <div className="flex items-center gap-3 mb-3">
-                <div className="mc-outline w-9 h-9 bg-white/5 flex items-center justify-center text-[#ff4545] shrink-0">
+                <div className="rounded-lg w-9 h-9 bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-[#ff4545] shrink-0">
                   <step.icon className="w-4 h-4" />
                 </div>
-                <span className="text-[9px] font-pixel text-zinc-500 uppercase">
-                  STEP {i + 1}
+                <span className="text-xs text-zinc-500">
+                  Step {i + 1}
                 </span>
               </div>
-              <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-white text-base mb-1.5">
+              <h3 className="font-heading font-bold text-white text-base mb-1.5">
                 {step.title}
               </h3>
               <p className="text-zinc-400 text-xs leading-relaxed">{step.desc}</p>

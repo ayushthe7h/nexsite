@@ -46,7 +46,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 <Check className="w-4 h-4" />
               </div>
               <div className="flex flex-col gap-0.5 min-w-0">
-                <div className="text-sm font-bold font-['Chakra_Petch'] text-white">
+                <div className="text-sm font-bold font-heading text-white">
                   {toast.title}
                 </div>
                 <div className="text-xs text-zinc-300 break-words leading-relaxed font-mono">

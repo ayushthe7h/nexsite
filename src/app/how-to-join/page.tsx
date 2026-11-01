@@ -25,12 +25,12 @@ export default function HowToJoinPage() {
         </div>
 
         <div className="text-center max-w-3xl mx-auto">
-          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
+          <div className="rounded-full inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 text-[#ff4545] text-sm font-medium mb-5">
             <Play className="w-3.5 h-3.5" />
-            <span>Connection Tutorial</span>
+            <span>Connection tutorial</span>
           </div>
-          <h1 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
-            HOW TO<br /><span className="text-[#ff4545]">JOIN THE SERVER</span>
+          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+            How to<br /><span className="text-[#ff4545]">join the server</span>
           </h1>
           <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
             Connect in seconds from any device. We support all modern Minecraft Java Edition versions alongside full Bedrock / MCPE cross-play.
@@ -43,13 +43,13 @@ export default function HowToJoinPage() {
 
       {/* Connection FAQ Quick Card */}
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 mt-16">
-        <div className="mc-panel p-8 bg-[#1a120f] flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="mc-outline w-12 h-12 bg-[#ff2e2e]/15 flex items-center justify-center text-[#ff2e2e] shrink-0">
+            <div className="rounded-xl w-12 h-12 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 flex items-center justify-center text-[#ff2e2e] shrink-0">
               <HelpCircle className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-lg text-white">
+              <h3 className="font-heading font-bold text-lg text-white">
                 Trouble connecting or getting ping timeouts?
               </h3>
               <p className="text-zinc-400 text-xs sm:text-sm mt-0.5">
@@ -62,9 +62,9 @@ export default function HowToJoinPage() {
             href="https://discord.gg/nexcoremc"
             target="_blank"
             rel="noopener noreferrer"
-            className="mc-btn shrink-0 px-6 py-3 bg-[#5865f2] hover:bg-[#4752c4] text-white font-pixel text-[9px] flex items-center gap-2"
+            className="rounded-full shrink-0 px-6 py-3 bg-[#5865f2] hover:bg-[#4752c4] text-white font-semibold text-sm flex items-center gap-2 transition-colors"
           >
-            <span>GET DISCORD SUPPORT</span>
+            <span>Get Discord support</span>
             <ExternalLink className="w-4 h-4" />
           </a>
         </div>

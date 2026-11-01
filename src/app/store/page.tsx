@@ -26,12 +26,12 @@ export default function StorePage() {
         </div>
 
         <div className="text-center max-w-3xl mx-auto">
-          <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
+          <div className="rounded-full inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 text-[#ff4545] text-sm font-medium mb-5">
             <ShoppingBag className="w-3.5 h-3.5" />
-            <span>Network Store</span>
+            <span>Network store</span>
           </div>
-          <h1 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
-            SERVER RANKS &<br /><span className="text-[#ff4545]">MEMBERSHIPS</span>
+          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+            Server ranks &<br /><span className="text-[#ff4545]">memberships</span>
           </h1>
           <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
             Support the ongoing hosting and development of NexCoreMC. All ranks strictly adhere to Mojang Commercial Guidelines and feature cosmetic and quality-of-life perks.

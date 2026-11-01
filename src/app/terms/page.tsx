@@ -26,12 +26,12 @@ export default function TermsPage() {
 
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="mc-outline inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 text-[#ff4545] text-[9px] font-pixel tracking-wide uppercase mb-5">
+            <div className="rounded-full inline-flex items-center gap-2 px-3.5 py-2 bg-[#ff2e2e]/10 border border-[#ff2e2e]/20 text-[#ff4545] text-sm font-medium mb-5">
               <Scale className="w-3.5 h-3.5" />
-              <span>Terms of Service</span>
+              <span>Terms of service</span>
             </div>
-            <h1 className="font-pixel text-lg sm:text-2xl text-white leading-[1.8] mb-4">
-              TERMS &<br /><span className="text-[#ff4545]">CONDITIONS</span>
+            <h1 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+              Terms &<br /><span className="text-[#ff4545]">conditions</span>
             </h1>
             <p className="text-zinc-400 text-sm font-mono">
               Effective Date: October 9, 2026 | Last Updated: October 2026
@@ -39,9 +39,9 @@ export default function TermsPage() {
           </div>
 
           {/* Content Card */}
-          <div className="mc-panel p-8 sm:p-12 bg-[#1a120f] space-y-10 text-zinc-300 text-sm sm:text-base leading-relaxed">
+          <div className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-8 sm:p-12 space-y-10 text-zinc-300 text-sm sm:text-base leading-relaxed">
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 1. Agreement to Terms
               </h2>
               <p>
@@ -50,7 +50,7 @@ export default function TermsPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 2. Player Conduct & Fair Play Rules
               </h2>
               <p>NexCoreMC is committed to an enjoyable, competitive, and respectful gaming environment. You agree not to:</p>
@@ -63,7 +63,7 @@ export default function TermsPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 3. Virtual Goods & Store Purchases
               </h2>
               <p>When purchasing server ranks, cosmetic tags, or perks from our official Discord store:</p>
@@ -76,16 +76,16 @@ export default function TermsPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 4. Account Security & Registration
               </h2>
               <p>
-                Players are responsible for maintaining the confidentiality of their in-game account password set via <code className="px-2 py-0.5 mc-outline bg-black text-white font-mono text-xs">/register</code>. NexCoreMC staff will never ask for your password. We are not liable for unauthorized access resulting from compromised or shared passwords.
+                Players are responsible for maintaining the confidentiality of their in-game account password set via <code className="px-2 py-0.5 rounded-md bg-black/40 border border-white/10 text-white font-mono text-xs">/register</code>. NexCoreMC staff will never ask for your password. We are not liable for unauthorized access resulting from compromised or shared passwords.
               </p>
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 5. Mojang / Microsoft Commercial Usage & Disclaimer
               </h2>
               <p>
@@ -94,7 +94,7 @@ export default function TermsPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 6. Service Availability & Modifications
               </h2>
               <p>
@@ -103,7 +103,7 @@ export default function TermsPage() {
             </section>
 
             <section className="space-y-3">
-              <h2 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white pb-2 border-b border-[#ff2e2e]/15">
+              <h2 className="text-xl font-bold font-heading text-white pb-2 border-b border-white/10">
                 7. Appeals & Inquiries
               </h2>
               <p>
@@ -123,10 +123,10 @@ export default function TermsPage() {
           <div className="mt-8 text-center">
             <Link
               href="/"
-              className="mc-btn inline-flex items-center gap-2 px-6 py-3 bg-[#1a120f] text-white font-pixel text-[10px] tracking-wide"
+              className="rounded-full inline-flex items-center gap-2 px-6 py-3 bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white text-sm font-semibold transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>RETURN TO HOMEPAGE</span>
+              <span>Return to homepage</span>
             </Link>
           </div>
         </main>

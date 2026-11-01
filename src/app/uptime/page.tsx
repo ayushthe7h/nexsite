@@ -165,11 +165,11 @@ export default function UptimePage() {
             </span>
             <button
               onClick={handleManualRefresh}
-              className="mc-outline px-3 py-1.5 bg-[#15100c] hover:bg-[#1c1512] text-zinc-200 text-[9px] font-pixel flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="rounded-full px-3 py-1.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-zinc-200 text-sm font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
               title="Refresh live telemetry"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-[#ff2e2e]" : ""}`} />
-              <span>REFRESH</span>
+              <span>Refresh</span>
             </button>
           </div>
         </div>
@@ -179,21 +179,21 @@ export default function UptimePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mc-panel p-6 sm:p-8 bg-[#131f16] relative overflow-hidden mb-12"
+          className="rounded-2xl bg-emerald-500/[0.04] border border-emerald-500/20 p-6 sm:p-8 relative overflow-hidden mb-12"
         >
           <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 blur-[130px] rounded-full pointer-events-none" />
 
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
             <div className="flex items-start sm:items-center gap-4">
-              <div className="mc-outline w-14 h-14 bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+              <div className="rounded-full w-14 h-14 bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <div>
-                <div className="mc-outline inline-flex items-center gap-2 px-2.5 py-1.5 bg-emerald-500/20 text-emerald-400 text-[8px] font-pixel uppercase mb-2">
-                  <span className="w-1.5 h-1.5 bg-emerald-400 animate-pulse" />
-                  <span>ALL SYSTEMS OPERATIONAL</span>
+                <div className="rounded-full inline-flex items-center gap-2 px-2.5 py-1.5 bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 text-xs font-semibold mb-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>All systems operational</span>
                 </div>
-                <h1 className="font-pixel text-base sm:text-lg text-white leading-relaxed">
+                <h1 className="font-heading text-2xl font-bold text-white">
                   NexCoreMC Network Status
                 </h1>
                 <p className="text-zinc-400 text-xs sm:text-sm mt-0.5 font-mono">
@@ -204,27 +204,27 @@ export default function UptimePage() {
 
             {/* Quick Metrics Badge Group */}
             <div className="flex items-center gap-3 sm:gap-4 shrink-0 flex-wrap">
-              <div className="mc-outline px-4 py-2.5 bg-black/30 text-center">
-                <div className="text-[8px] font-pixel text-zinc-400 uppercase">
-                  90-DAY UPTIME
+              <div className="rounded-xl px-4 py-2.5 bg-black/20 border border-white/[0.08] text-center">
+                <div className="text-xs text-zinc-400">
+                  90-day uptime
                 </div>
                 <div className="text-xl font-bold font-mono text-emerald-400 mt-1">
                   99.98%
                 </div>
               </div>
 
-              <div className="mc-outline px-4 py-2.5 bg-black/30 text-center">
-                <div className="text-[8px] font-pixel text-zinc-400 uppercase">
-                  AVG MUMBAI PING
+              <div className="rounded-xl px-4 py-2.5 bg-black/20 border border-white/[0.08] text-center">
+                <div className="text-xs text-zinc-400">
+                  Avg Mumbai ping
                 </div>
                 <div className="text-xl font-bold font-mono text-white mt-1">
                   12ms
                 </div>
               </div>
 
-              <div className="mc-outline px-4 py-2.5 bg-black/30 text-center">
-                <div className="text-[8px] font-pixel text-zinc-400 uppercase">
-                  PLAYERS ONLINE
+              <div className="rounded-xl px-4 py-2.5 bg-black/20 border border-white/[0.08] text-center">
+                <div className="text-xs text-zinc-400">
+                  Players online
                 </div>
                 <div className="text-xl font-bold font-mono text-[#ff4545] mt-1">
                   {status.onlinePlayers} / {status.maxPlayers}
@@ -235,23 +235,23 @@ export default function UptimePage() {
         </motion.div>
 
         {/* 90-Day Uptime Bar Visualizer */}
-        <div className="mc-panel p-6 bg-[#1a120f] mb-12">
+        <div className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-6 mb-12">
           <div className="flex items-center justify-between mb-3 text-xs flex-wrap gap-2">
-            <span className="font-bold text-white font-['Chakra_Petch'] flex items-center gap-2">
+            <span className="font-semibold text-white flex items-center gap-2">
               <Activity className="w-4 h-4 text-emerald-400" />
-              <span>Overall Network History (Past 90 Days)</span>
+              <span>Overall network history (past 90 days)</span>
             </span>
             <span className="text-emerald-400 font-mono font-semibold">
-              99.98% Available
+              99.98% available
             </span>
           </div>
 
-          {/* 90 Bar ticks - each block is a day, pixel-grid style */}
+          {/* 90 Bar ticks - each block is a day */}
           <div className="grid grid-cols-45 sm:grid-cols-90 gap-1 h-8 items-center py-1">
             {Array.from({ length: 90 }).map((_, i) => (
               <div
                 key={i}
-                className="h-full bg-emerald-500 hover:bg-emerald-300 transition-colors cursor-pointer"
+                className="h-full rounded-sm bg-emerald-500 hover:bg-emerald-300 transition-colors cursor-pointer"
                 title={`Day ${90 - i} Days Ago: 100% Uptime`}
               />
             ))}
@@ -268,8 +268,8 @@ export default function UptimePage() {
         <div className="mb-14">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="font-pixel text-sm sm:text-base text-white leading-relaxed">
-                Core Services
+              <h2 className="font-heading text-xl font-bold text-white">
+                Core services
               </h2>
               <p className="text-zinc-400 text-xs sm:text-sm mt-1">
                 Individual operational status for network nodes, game realms, and bridging protocols.
@@ -284,18 +284,18 @@ export default function UptimePage() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: index * 0.04 }}
-                className="mc-panel p-4 sm:p-5 bg-[#1a120f] hover:bg-[#201712] transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-4 sm:p-5 hover:bg-white/[0.04] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4"
               >
                 <div className="flex items-start sm:items-center gap-3.5">
-                  <div className="mc-outline w-10 h-10 bg-white/5 flex items-center justify-center text-zinc-300 shrink-0">
+                  <div className="rounded-xl w-10 h-10 bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-zinc-300 shrink-0">
                     <Server className="w-5 h-5 text-[#ff2e2e]" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-white text-sm sm:text-base">
+                      <h3 className="font-heading font-bold text-white text-sm sm:text-base">
                         {service.name}
                       </h3>
-                      <span className="mc-outline text-[9px] px-2 py-0.5 bg-white/5 text-zinc-400 font-mono">
+                      <span className="rounded-full text-xs px-2.5 py-0.5 bg-white/[0.04] border border-white/[0.08] text-zinc-400">
                         {service.category}
                       </span>
                     </div>
@@ -307,7 +307,7 @@ export default function UptimePage() {
 
                 <div className="flex items-center gap-4 sm:gap-6 self-end sm:self-auto text-xs">
                   <div className="text-right">
-                    <span className="text-zinc-500 text-[9px] block font-pixel uppercase">
+                    <span className="text-zinc-500 text-xs block">
                       Latency
                     </span>
                     <span className="font-mono text-zinc-300 font-bold">
@@ -316,7 +316,7 @@ export default function UptimePage() {
                   </div>
 
                   <div className="text-right">
-                    <span className="text-zinc-500 text-[9px] block font-pixel uppercase">
+                    <span className="text-zinc-500 text-xs block">
                       Uptime
                     </span>
                     <span className="font-mono text-emerald-400 font-bold">
@@ -324,8 +324,8 @@ export default function UptimePage() {
                     </span>
                   </div>
 
-                  <div className="mc-outline inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/15 text-emerald-400 font-pixel text-[8px] uppercase">
-                    <span className="w-1.5 h-1.5 bg-emerald-400" />
+                  <div className="rounded-full inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 text-xs font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <span>Operational</span>
                   </div>
                 </div>
@@ -335,23 +335,23 @@ export default function UptimePage() {
         </div>
 
         {/* Past Incident & Maintenance Log */}
-        <div className="mc-panel p-6 sm:p-8 bg-[#1a120f] mb-12">
+        <div className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-6 sm:p-8 mb-12">
           <div className="flex items-center gap-2 pb-4 border-b border-white/10 mb-6">
             <Clock className="w-5 h-5 text-[#ff2e2e]" />
-            <h3 className="font-pixel text-sm text-white">
-              Past Incident Log
+            <h3 className="font-heading text-xl font-bold text-white">
+              Past incident log
             </h3>
           </div>
 
           <div className="space-y-6">
             {pastIncidents.map((incident, idx) => (
               <div key={idx} className="relative pl-6 border-l-2 border-emerald-500/50 pb-2">
-                <span className="absolute -left-[7px] top-1 w-3 h-3 bg-emerald-400" />
+                <span className="absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-emerald-400" />
                 <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
                   <h4 className="font-bold text-white text-sm sm:text-base">
                     {incident.title}
                   </h4>
-                  <span className="mc-outline text-[9px] px-2 py-0.5 bg-emerald-500/20 text-emerald-400 font-mono">
+                  <span className="rounded-full text-xs px-2.5 py-0.5 bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 font-medium">
                     Resolved
                   </span>
                 </div>
@@ -367,14 +367,14 @@ export default function UptimePage() {
         </div>
 
         {/* Subscribe / Discord Support Callout */}
-        <div className="mc-panel p-6 sm:p-8 bg-[#161320] flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="mc-outline w-12 h-12 bg-[#5865f2] flex items-center justify-center text-white shrink-0">
+            <div className="rounded-xl w-12 h-12 bg-[#5865f2] flex items-center justify-center text-white shrink-0">
               <Radio className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-white text-base sm:text-lg">
-                Get Instant Status Alerts on Discord
+              <h3 className="font-heading font-bold text-white text-base sm:text-lg">
+                Get instant status alerts on Discord
               </h3>
               <p className="text-zinc-300 text-xs sm:text-sm mt-0.5">
                 Join our Discord and follow the <code className="text-[#818cf8] font-mono">#announcements</code> channel for instant maintenance schedules.
@@ -386,9 +386,9 @@ export default function UptimePage() {
             href="https://discord.gg/nexcoremc"
             target="_blank"
             rel="noopener noreferrer"
-            className="mc-btn shrink-0 px-6 py-3 bg-[#5865f2] hover:bg-[#4752c4] text-white font-pixel text-[9px] flex items-center gap-2"
+            className="rounded-full shrink-0 px-6 py-3 bg-[#5865f2] hover:bg-[#4752c4] text-white font-semibold text-sm flex items-center gap-2 transition-colors"
           >
-            <span>DISCORD STATUS DESK</span>
+            <span>Discord status desk</span>
             <ExternalLink className="w-4 h-4" />
           </a>
         </div>

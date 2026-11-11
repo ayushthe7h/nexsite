@@ -29,16 +29,8 @@ const nextConfig: NextConfig = {
         destination: "/terms",
       },
       {
-        source: "/game-modes",
-        destination: "/modes",
-      },
-      {
         source: "/join",
         destination: "/how-to-join",
-      },
-      {
-        source: "/status",
-        destination: "/uptime",
       },
       {
         source: "/control-panel",

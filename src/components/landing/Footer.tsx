@@ -78,6 +78,9 @@ export function Footer() {
             <Link href="/store" className="hover:text-white transition-colors">
               Store & ranks
             </Link>
+            <Link href="/staff" className="hover:text-white transition-colors">
+              Meet the team
+            </Link>
             <Link href="/panel" className="hover:text-white transition-colors">
               Staff control panel
             </Link>

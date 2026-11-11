@@ -48,6 +48,7 @@ export function Navbar() {
     { label: "Features", href: "/features" },
     { label: "Store", href: "/store" },
     { label: "Vote", href: "/vote" },
+    { label: "Team", href: "/staff" },
     { label: "Panel", href: "/panel", badge: "Staff" },
   ];
 

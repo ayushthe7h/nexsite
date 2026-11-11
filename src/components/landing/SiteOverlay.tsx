@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -158,13 +157,6 @@ export function SiteOverlay() {
                 <span>Join Discord for updates</span>
                 <ExternalLink className="w-4 h-4" />
               </a>
-
-              <Link
-                href="/uptime"
-                className="px-6 py-3 rounded-full bg-white/[0.06] hover:bg-white/10 border border-white/10 text-white text-sm font-semibold transition-colors"
-              >
-                <span>Check uptime status</span>
-              </Link>
 
               {settings.allowStaffBypass && (
                 <button

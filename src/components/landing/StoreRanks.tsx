@@ -5,10 +5,6 @@ import { motion } from "framer-motion";
 import { Crown, ExternalLink, Eye, Info, Loader2, Sparkles } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
-// Flips the storefront from "Coming Soon" Discord links to live Tebex
-// checkout once TEBEX_PUBLIC_TOKEN + the package env vars are set on the
-// server. See .env.example and docs/ARCHITECTURE-tebex-checkout.md.
-const TEBEX_ENABLED = process.env.NEXT_PUBLIC_TEBEX_ENABLED === "true";
 const USERNAME_PATTERN = /^[A-Za-z0-9_]{3,16}$/;
 const DISCORD_URL = "https://discord.gg/nexcoremc";
 
@@ -292,25 +288,6 @@ export function StoreRanks() {
           </div>
         </motion.div>
 
-        {/* Store Launch Notice */}
-        {!TEBEX_ENABLED && (
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.45 }}
-            className="rounded-2xl bg-[#111114]/90 border border-white/[0.08] mb-12 p-4 flex items-center justify-between gap-4 max-w-2xl mx-auto text-xs text-zinc-300"
-          >
-            <div className="flex items-center gap-2.5">
-              <Info className="w-4 h-4 text-[#ff2e2e] shrink-0" />
-              <span>Checkout&apos;s almost ready — here&apos;s a preview of what each rank unlocks.</span>
-            </div>
-            <span className="rounded-full shrink-0 text-xs font-semibold px-2.5 py-1 bg-[#ff2e2e]/15 border border-[#ff2e2e]/25 text-[#ff4545]">
-              Soon
-            </span>
-          </motion.div>
-        )}
-
         {/* Ranks Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {ranks.map((rank, index) => (
@@ -372,22 +349,13 @@ export function StoreRanks() {
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Request custom rank</span>
                   </button>
-                ) : TEBEX_ENABLED ? (
+                ) : (
                   <button
                     onClick={() => openBuyModal(rank)}
                     className="rounded-full w-full py-2.5 bg-[#ff2e2e] hover:bg-[#ff4545] text-sm font-semibold text-white flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
                   >
                     <span>Buy now</span>
                   </button>
-                ) : (
-                  <a
-                    href={DISCORD_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-full w-full py-2.5 bg-[#ff2e2e]/10 hover:bg-[#ff2e2e]/15 border border-[#ff2e2e]/20 text-sm font-semibold text-[#ff4545] flex items-center justify-center gap-1.5 transition-colors"
-                  >
-                    <span>Claim on Discord (soon)</span>
-                  </a>
                 )}
               </div>
             </motion.div>

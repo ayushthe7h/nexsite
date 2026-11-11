@@ -44,13 +44,10 @@ export function Navbar() {
 
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "Game Modes", href: "/modes" },
     { label: "How to Join", href: "/how-to-join" },
     { label: "Features", href: "/features" },
-    { label: "Store", href: "/store", badge: "Soon" },
+    { label: "Store", href: "/store" },
     { label: "Vote", href: "/vote" },
-    { label: "FAQ", href: "/faq" },
-    { label: "Uptime", href: "/uptime" },
     { label: "Panel", href: "/panel", badge: "Staff" },
   ];
 

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Server,
-  Activity,
   Lock,
   AlertTriangle,
   CheckCircle2,
@@ -336,13 +335,6 @@ export default function AdminPanelPage() {
             <div>
               <div className="px-2 text-[11px] font-medium text-zinc-600 uppercase tracking-wide mb-1.5">Support</div>
               <div className="space-y-0.5">
-                <Link
-                  href="/uptime"
-                  className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-colors"
-                >
-                  <Activity className="w-4 h-4" />
-                  <span>Public uptime</span>
-                </Link>
                 <a
                   href={siteSettings.discordUrl}
                   target="_blank"

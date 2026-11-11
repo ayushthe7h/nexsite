@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Copy, Check, ExternalLink, ArrowRight, Swords, Play } from "lucide-react";
+import { Copy, Check, ExternalLink, ArrowRight, Play } from "lucide-react";
 import { LiveStatusBadge } from "./LiveStatusBadge";
 import { useToastNotification } from "./ToastContext";
 import confetti from "canvas-confetti";
@@ -197,14 +197,6 @@ export function Hero() {
             <Play className="w-4 h-4 fill-white" />
             <span>How to join</span>
             <ArrowRight className="w-4 h-4" />
-          </Link>
-
-          <Link
-            href="/modes"
-            className="rounded-full inline-flex items-center gap-2.5 px-6 py-3.5 bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white font-semibold text-sm transition-colors"
-          >
-            <Swords className="w-4 h-4 text-[#ff2e2e]" />
-            <span>Game modes</span>
           </Link>
 
           <a

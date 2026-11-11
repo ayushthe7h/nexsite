@@ -69,9 +69,6 @@ export function Footer() {
             <Link href="/" className="hover:text-white transition-colors">
               Home
             </Link>
-            <Link href="/modes" className="hover:text-white transition-colors">
-              Game modes
-            </Link>
             <Link href="/how-to-join" className="hover:text-white transition-colors">
               How to join
             </Link>
@@ -80,9 +77,6 @@ export function Footer() {
             </Link>
             <Link href="/store" className="hover:text-white transition-colors">
               Store & ranks
-            </Link>
-            <Link href="/uptime" className="hover:text-white transition-colors">
-              Network status & uptime
             </Link>
             <Link href="/panel" className="hover:text-white transition-colors">
               Staff control panel
@@ -99,9 +93,6 @@ export function Footer() {
             </Link>
             <Link href="/terms" className="hover:text-white transition-colors">
               Terms & conditions
-            </Link>
-            <Link href="/faq" className="hover:text-white transition-colors">
-              Server rules & FAQ
             </Link>
           </div>
 

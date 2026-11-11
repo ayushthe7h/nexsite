@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { Copy, Check, Users, ExternalLink } from "lucide-react";
 import { useServerStatus } from "@/lib/useServerStatus";
 import { useSiteSettings } from "@/components/providers/SiteSettingsContext";
@@ -35,18 +34,17 @@ export function TopServerBar() {
       <div className="max-w-[1240px] mx-auto flex items-center justify-between gap-3 flex-wrap sm:flex-nowrap">
         {/* Left: Server Status Indicator & IP with copy */}
         <div className="flex items-center gap-2 flex-wrap">
-          {/* Live pulsing online badge linking to /uptime */}
-          <Link
-            href="/uptime"
-            className="rounded-full flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/10 hover:bg-emerald-500/15 text-emerald-400 text-[11px] font-medium transition-colors"
-            title="View Live Network Uptime & Incident Log"
+          {/* Live pulsing online badge */}
+          <div
+            className="rounded-full flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/10 text-emerald-400 text-[11px] font-medium"
+            title="Live server status"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <span>{status.online ? "Online" : "Ready"}</span>
-          </Link>
+          </div>
 
           {/* Click to copy IP button */}
           <button

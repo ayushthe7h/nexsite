@@ -8,15 +8,28 @@ import type { SkinViewer } from "skinview3d";
 // it's a heavy, canvas/WebGL-dependent package that has no business running
 // during server-side rendering.
 //
-// The skin texture itself is fetched by username via minotar.net, which
-// resolves the username to its current Mojang skin server-side and serves
-// it with permissive CORS headers (required for WebGL to use it as a
-// texture without tainting the canvas).
+// The skin texture is resolved via our own /api/skin route, which goes
+// straight to Mojang rather than a third-party proxy (see that route for
+// why). If resolution fails for any reason, we fall back to minotar.net
+// so a card never ends up fully blank.
 interface SkinViewer3DProps {
   username: string;
   width?: number;
   height?: number;
   className?: string;
+}
+
+async function resolveSkinUrl(username: string): Promise<string> {
+  try {
+    const res = await fetch(`/api/skin?username=${encodeURIComponent(username)}`);
+    if (res.ok) {
+      const data = (await res.json()) as { skinUrl?: string | null };
+      if (data.skinUrl) return data.skinUrl;
+    }
+  } catch {
+    // fall through to the fallback below
+  }
+  return `https://minotar.net/skin/${encodeURIComponent(username)}`;
 }
 
 export function SkinViewer3D({ username, width = 220, height = 280, className = "" }: SkinViewer3DProps) {
@@ -27,7 +40,7 @@ export function SkinViewer3D({ username, width = 220, height = 280, className = 
   useEffect(() => {
     let cancelled = false;
 
-    import("skinview3d").then(({ SkinViewer }) => {
+    Promise.all([import("skinview3d"), resolveSkinUrl(username)]).then(([{ SkinViewer }, skinUrl]) => {
       if (cancelled || !canvasRef.current) return;
 
       const prefersReducedMotion =
@@ -37,7 +50,7 @@ export function SkinViewer3D({ username, width = 220, height = 280, className = 
         canvas: canvasRef.current,
         width,
         height,
-        skin: `https://minotar.net/skin/${encodeURIComponent(username)}`,
+        skin: skinUrl,
         zoom: 0.72,
         fov: 32,
       });

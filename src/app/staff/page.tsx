@@ -11,14 +11,14 @@ export const metadata: Metadata = {
 };
 
 const LEADERSHIP = [
-  { username: "akashxd", role: "Founder", accent: "gold" as const },
-  { username: "Notayush_XD", role: "Owner", accent: "red" as const },
-  { username: "Charizard_verma", role: "Co-Owner", accent: "pink" as const },
+  { username: "AkashXD", role: "Founder", accent: "gold" as const },
+  { username: "NotAyush_XD", role: "Owner", accent: "red" as const },
+  { username: "Charizard_Verma", role: "Co-Owner", accent: "pink" as const },
 ];
 
 const STAFF = [
   { username: "Harsuu", role: "Manager", accent: "blue" as const },
-  { username: "Devilmindv", role: "Partner", accent: "emerald" as const },
+  { username: "DevilMindV", role: "Partner", accent: "emerald" as const },
 ];
 
 export default function StaffPage() {

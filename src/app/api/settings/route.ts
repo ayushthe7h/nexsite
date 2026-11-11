@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { getDb, isDbConfigured } from "@/lib/db";
 import { siteSettings } from "@/lib/schema";
 import { DEFAULT_SETTINGS, mergeWithDefaults, type SiteSettings } from "@/lib/site-settings-defaults";
+import { verifyPasscode } from "@/lib/admin-auth";
 
 const ROW_ID = 1;
 
@@ -17,16 +18,6 @@ function tooManyRequests(ip: string): boolean {
   recent.push(now);
   hits.set(ip, recent);
   return recent.length > 20;
-}
-
-// Passcodes that are allowed to write settings. Defaults to the same two
-// demo passcodes the panel's login screen already uses, so this keeps
-// working with zero config - set ADMIN_PASSCODES (comma-separated) to
-// change them without touching code.
-function getValidPasscodes(): string[] {
-  const raw = process.env.ADMIN_PASSCODES;
-  if (!raw) return ["admin123", "nexcore2026"];
-  return raw.split(",").map((p) => p.trim().toLowerCase()).filter(Boolean);
 }
 
 // GET is public - every visitor's browser calls this to know whether
@@ -80,7 +71,7 @@ export async function POST(req: NextRequest) {
 
   const { passcode, settings } = (body ?? {}) as { passcode?: string; settings?: Partial<SiteSettings> };
 
-  if (typeof passcode !== "string" || !getValidPasscodes().includes(passcode.toLowerCase())) {
+  if (typeof passcode !== "string" || !(await verifyPasscode(passcode))) {
     return NextResponse.json({ error: "Invalid staff passcode." }, { status: 401 });
   }
   if (typeof settings !== "object" || settings === null) {

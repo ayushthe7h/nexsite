@@ -18,6 +18,7 @@ import {
   Copy,
   Check,
   MessageCircle,
+  KeyRound,
 } from "lucide-react";
 import { useSiteSettings } from "@/components/providers/SiteSettingsContext";
 import { useToastNotification } from "@/components/landing/ToastContext";
@@ -160,9 +161,16 @@ export default function AdminPanelPage() {
   // sends that passcode, so it stays a local-only preview and can never
   // touch the live site.
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isGuestMode, setIsGuestMode] = useState<boolean>(false);
   const [passcode, setPasscode] = useState<string>("");
   const [authError, setAuthError] = useState<string>("");
+  const [loginLoading, setLoginLoading] = useState<boolean>(false);
+
+  // Change-password form (Security card, below).
+  const [currentPasscodeInput, setCurrentPasscodeInput] = useState<string>("");
+  const [newPasscodeInput, setNewPasscodeInput] = useState<string>("");
+  const [confirmPasscodeInput, setConfirmPasscodeInput] = useState<string>("");
+  const [changePasswordError, setChangePasswordError] = useState<string>("");
+  const [changePasswordLoading, setChangePasswordLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (saveError) {
@@ -180,34 +188,77 @@ export default function AdminPanelPage() {
     }
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const normalized = passcode.toLowerCase();
-    if (normalized === "admin123" || normalized === "nexcore2026") {
-      setIsAuthenticated(true);
-      setIsGuestMode(false);
-      setAdminPasscode(normalized);
-      localStorage.setItem("nexcore_panel_auth", "true");
-      setAuthError("");
-      showToast("Access granted", "Authenticated to the NexCoreMC admin panel");
-      confetti({ particleCount: 30, spread: 60, origin: { y: 0.2 } });
-    } else {
-      setAuthError("Invalid staff passcode. Not staff? Use guest mode below to preview the panel.");
+    setLoginLoading(true);
+    setAuthError("");
+    try {
+      const res = await fetch("/api/panel/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ passcode: normalized }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        setIsAuthenticated(true);
+        setAdminPasscode(normalized);
+        localStorage.setItem("nexcore_panel_auth", "true");
+        setAuthError("");
+        showToast("Access granted", "Authenticated to the NexCoreMC admin panel");
+        confetti({ particleCount: 30, spread: 60, origin: { y: 0.2 } });
+      } else {
+        setAuthError(data.error || "Invalid staff passcode.");
+      }
+    } catch {
+      setAuthError("Couldn't reach the server — check your connection and try again.");
+    } finally {
+      setLoginLoading(false);
     }
   };
 
-  const handleGuestLogin = () => {
-    setIsAuthenticated(true);
-    setIsGuestMode(true);
-    setAdminPasscode(null); // Guest mode never writes to the live database.
-    setAuthError("");
-    showToast("Guest mode", "Exploring the NexCoreMC admin panel as guest staff");
-    confetti({ particleCount: 30, spread: 60, origin: { y: 0.2 } });
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setChangePasswordError("");
+
+    if (newPasscodeInput.trim().length < 6) {
+      setChangePasswordError("New passcode must be at least 6 characters.");
+      return;
+    }
+    if (newPasscodeInput !== confirmPasscodeInput) {
+      setChangePasswordError("New passcode and confirmation don't match.");
+      return;
+    }
+
+    setChangePasswordLoading(true);
+    try {
+      const res = await fetch("/api/panel/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          currentPasscode: currentPasscodeInput,
+          newPasscode: newPasscodeInput,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        setAdminPasscode(newPasscodeInput.trim().toLowerCase());
+        setCurrentPasscodeInput("");
+        setNewPasscodeInput("");
+        setConfirmPasscodeInput("");
+        showToast("Passcode updated", "Use the new passcode next time you sign in.");
+      } else {
+        setChangePasswordError(data.error || "Couldn't update the passcode — try again.");
+      }
+    } catch {
+      setChangePasswordError("Couldn't reach the server — check your connection and try again.");
+    } finally {
+      setChangePasswordLoading(false);
+    }
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    setIsGuestMode(false);
     setAdminPasscode(null);
     localStorage.removeItem("nexcore_panel_auth");
     showToast("Logged out", "Session ended successfully");
@@ -254,24 +305,15 @@ export default function AdminPanelPage() {
             />
 
             <motion.button
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: loginLoading ? 1 : 1.01 }}
+              whileTap={{ scale: loginLoading ? 1 : 0.98 }}
               type="submit"
-              className="w-full py-3 rounded-xl bg-[#ff2e2e] hover:bg-[#ff4545] text-white text-sm font-semibold cursor-pointer transition-colors"
+              disabled={loginLoading}
+              className="w-full py-3 rounded-xl bg-[#ff2e2e] hover:bg-[#ff4545] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold cursor-pointer transition-colors"
             >
-              Sign in
+              {loginLoading ? "Signing in..." : "Sign in"}
             </motion.button>
           </form>
-
-          <div className="mt-6 pt-5 border-t border-white/[0.06] flex flex-col gap-3">
-            <button
-              onClick={handleGuestLogin}
-              className="w-full py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-zinc-300 hover:text-white text-sm font-medium transition-colors cursor-pointer"
-            >
-              Continue in guest mode
-            </button>
-            <p className="text-[11px] text-zinc-600">Guest mode is preview-only — nothing you change there reaches the live site.</p>
-          </div>
         </motion.div>
       </div>
     );
@@ -288,6 +330,7 @@ export default function AdminPanelPage() {
     { id: "server-info", label: "Server info", icon: <Server className="w-4 h-4" /> },
     { id: "visual-fx", label: "Visual FX", icon: <Sparkles className="w-4 h-4" /> },
     { id: "data", label: "Data", icon: <Database className="w-4 h-4" /> },
+    { id: "security", label: "Security", icon: <KeyRound className="w-4 h-4" /> },
   ];
 
   return (
@@ -350,14 +393,12 @@ export default function AdminPanelPage() {
 
           <div className="pt-4 mt-4 border-t border-white/[0.06]">
             <div className="flex items-center gap-2.5 px-2 py-2">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
-                isGuestMode ? "bg-amber-500/15 text-amber-400" : "bg-[#ff2e2e]/15 text-[#ff4545]"
-              }`}>
-                {isGuestMode ? "G" : "S"}
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 bg-[#ff2e2e]/15 text-[#ff4545]">
+                S
               </div>
               <div className="min-w-0">
-                <div className="text-white text-xs font-medium truncate">{isGuestMode ? "Guest staff" : "Staff"}</div>
-                <div className="text-zinc-500 text-[11px] truncate">{isGuestMode ? "Preview only" : "Full access"}</div>
+                <div className="text-white text-xs font-medium truncate">Staff</div>
+                <div className="text-zinc-500 text-[11px] truncate">Full access</div>
               </div>
               <button
                 onClick={handleLogout}
@@ -418,12 +459,7 @@ export default function AdminPanelPage() {
               )}
             </span>
 
-            {isGuestMode ? (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs text-amber-300">
-                <AlertTriangle className="w-3 h-3" />
-                Guest mode — preview only
-              </span>
-            ) : isLive ? (
+            {isLive ? (
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-xs text-emerald-300">
                 <CheckCircle2 className="w-3 h-3" />
                 Live database connected
@@ -693,6 +729,58 @@ export default function AdminPanelPage() {
                   Reset defaults
                 </button>
               </div>
+            </SettingsCard>
+
+            {/* 6. Security */}
+            <SettingsCard
+              id="security"
+              icon={<KeyRound className="w-4 h-4" />}
+              title="Staff passcode"
+              subtitle="Change the passcode used to sign in to this panel."
+            >
+              <form onSubmit={handleChangePassword} className="space-y-4 max-w-sm">
+                  {changePasswordError && (
+                    <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-start gap-2">
+                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                      <span>{changePasswordError}</span>
+                    </div>
+                  )}
+                  <div>
+                    <label className="text-xs text-zinc-400 block mb-1.5">Current passcode</label>
+                    <input
+                      type="password"
+                      value={currentPasscodeInput}
+                      onChange={(e) => setCurrentPasscodeInput(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm focus:outline-none focus:border-[#ff2e2e]/60 transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-zinc-400 block mb-1.5">New passcode</label>
+                    <input
+                      type="password"
+                      value={newPasscodeInput}
+                      onChange={(e) => setNewPasscodeInput(e.target.value)}
+                      placeholder="At least 6 characters"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm focus:outline-none focus:border-[#ff2e2e]/60 transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-zinc-400 block mb-1.5">Confirm new passcode</label>
+                    <input
+                      type="password"
+                      value={confirmPasscodeInput}
+                      onChange={(e) => setConfirmPasscodeInput(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm focus:outline-none focus:border-[#ff2e2e]/60 transition-colors"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={changePasswordLoading}
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#ff2e2e] hover:bg-[#ff4545] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors cursor-pointer"
+                  >
+                    {changePasswordLoading ? "Updating..." : "Update passcode"}
+                  </button>
+                </form>
             </SettingsCard>
           </motion.div>
         </div>

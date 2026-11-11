@@ -117,9 +117,17 @@ export async function createCheckoutUrl(opts: {
   }
 
   // 2. Add the selected rank's package to the basket.
+  // IMPORTANT: this is a basket-scoped endpoint - it takes NO account token
+  // in its path, only the basket's own ident:
+  //   https://headless.tebex.io/api/baskets/{ident}/packages
+  // Using the token-scoped `${base}/...` (accounts/{token}/...) form looks
+  // "correct" per Tebex's own OpenAPI spec server block, but 404s for real
+  // requests - confirmed by testing directly against the live API. Tebex's
+  // docs mark this endpoint's tag as "requiring only a basket ident with no
+  // token", which is the actual, working shape.
   let addRes: Response;
   try {
-    addRes = await fetch(`${base}/${ident}/packages`, {
+    addRes = await fetch(`https://headless.tebex.io/api/baskets/${ident}/packages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ package_id: packageId, quantity: 1 }),
